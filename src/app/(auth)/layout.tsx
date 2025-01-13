@@ -32,7 +32,7 @@ export default function RootLayout({
             <Image src={logo} width={90} alt="Heavy dumbbel" />{" "}
           </Link>
         </nav>
-        <main className="mt-5">{children}</main>
+        <main className="mt-5 lg:mt-12">{children}</main>
       </body>
     </html>
   );

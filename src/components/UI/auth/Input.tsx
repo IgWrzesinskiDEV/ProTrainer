@@ -15,7 +15,7 @@ export default function Input({ label, type, ...props }: InputProps) {
         type={type}
         name={label}
         {...props}
-        className="px-3 py-2 rounded-lg text-xl focus:outline-none text-background"
+        className="px-4 py-2 rounded-lg text-lg font-medium focus:outline-none text-background"
       />
     </div>
   );

@@ -8,6 +8,11 @@
   --primary: #99d5f0;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #101114;
