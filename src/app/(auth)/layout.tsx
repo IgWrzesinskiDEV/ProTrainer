@@ -8,7 +8,7 @@ import "../globals.css";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["200", "400", "500", "600", "700"],
   variable: "--font-inter",
 });
 
@@ -32,7 +32,7 @@ export default function RootLayout({
             <Image src={logo} width={90} alt="Heavy dumbbel" />{" "}
           </Link>
         </nav>
-        <main>{children}</main>
+        <main className="mt-5">{children}</main>
       </body>
     </html>
   );
