@@ -1,5 +1,5 @@
-import { IUser } from "@/interfaces/auth/IUser";
-import User from "@/models/auth/user";
+import { IUser } from "./models/user.model";
+import { User } from "./models/user.model";
 import connectMongoDb from "./mogodb";
 export async function createUser(user: IUser) {
   await connectMongoDb();

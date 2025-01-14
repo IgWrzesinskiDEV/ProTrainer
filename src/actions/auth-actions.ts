@@ -1,6 +1,9 @@
 "use server";
-import { createUser } from "@/libs/user";
+import { createUser } from "@/lib/user";
 import { hashUserPassword } from "@/util/hash";
+import { redirect } from "next/navigation";
+import { createAuthSession } from "@/lib/lucia/auth";
+
 interface errors {
   email: string;
   password: string;
@@ -26,12 +29,22 @@ export async function signup(prevState: unknown, formData: FormData) {
   }
   console.log(errors);
   const password = hashUserPassword(unHashedpassword);
-  const data = await createUser({ email, password, userName, role: "user" });
-  console.log(data);
-  //   const response = await fetch("/api/auth/signup", {
-  //     method: "POST",
-  //     body: formData,
-  //   });
-  //   const data = await response.json();
-  //   return data;re
+  try {
+    const data = await createUser({ email, password, userName, role: "user" });
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+    await createAuthSession(data._id.toString(), expiresAt);
+  } catch (error: unknown) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === 11000
+    ) {
+      return { errors: { email: "Email already exists" } };
+    }
+    throw error;
+  }
+
+  redirect("/login");
 }
