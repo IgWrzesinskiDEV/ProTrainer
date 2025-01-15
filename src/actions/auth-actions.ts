@@ -3,7 +3,7 @@ import { createUser } from "@/lib/user";
 import { hashUserPassword } from "@/util/hash";
 import { redirect } from "next/navigation";
 import { createAuthSession } from "@/lib/lucia/auth";
-
+import { generateIdFromEntropySize } from "lucia";
 interface errors {
   email: string;
   password: string;
@@ -30,6 +30,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   const hashedPassword = hashUserPassword(password);
   try {
     const data = await createUser({
+      _id: generateIdFromEntropySize(24),
       email,
       password: hashedPassword,
       userName,

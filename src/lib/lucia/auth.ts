@@ -3,6 +3,13 @@ import { Lucia, TimeSpan } from "lucia";
 
 import { adapter } from "../adapter";
 import { cookies } from "next/headers";
+import connectMongoDb from "../mogodb";
+
+await connectMongoDb();
+export interface DatabaseUserAttributes {
+  userName: string;
+  email: string;
+}
 
 const luciaAuth = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(5, "d"),
@@ -13,14 +20,19 @@ const luciaAuth = new Lucia(adapter, {
       secure: process.env.NODE_ENV === "production",
     },
   },
+  getUserAttributes: (attributes) => {
+    return {
+      userName: attributes.userName,
+      email: attributes.email,
+    };
+  },
 });
-
 declare module "lucia" {
   interface Register {
     Lucia: typeof luciaAuth;
+    DatabaseUserAttributes: DatabaseUserAttributes;
   }
 }
-
 export async function createAuthSession(userId: string) {
   const session = await luciaAuth.createSession(userId, {});
 

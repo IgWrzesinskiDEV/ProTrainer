@@ -6,18 +6,20 @@ interface ISession {
   expires_at: Date;
 }
 
-const sessionSchema = new Schema<ISession>({
-  _id: { type: String, required: true },
-  user_id: {
-    type: String,
-    ref: "User",
-    required: true,
-    unique: true,
-  },
-  expires_at: {
-    type: Date,
-    required: true,
-  },
-});
+const sessionSchema = new Schema<ISession>(
+  {
+    _id: { type: String, required: true },
+    user_id: {
+      type: String,
+
+      required: true,
+    },
+    expires_at: {
+      type: Date,
+      required: true,
+    },
+  } as const,
+  { _id: false }
+);
 
 export const Session = models.Session || model("Session", sessionSchema);
