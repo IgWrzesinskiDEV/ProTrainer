@@ -28,7 +28,7 @@ export default function Auth({ isLogin }: AuthProps) {
         <p className="text-stone-400 text-sm">Or with email</p>
         <div className="h-[1px] opacity-20  bg-stone-200 flex-1 rounded-lg mx-1" />
       </div>
-      <AuthForm isLogin={isLogin} />
+      <AuthForm />
       <div className="flex flex-col items-center gap-3">
         {isLogin && (
           <button className="text-blue-400 font-normal underline">

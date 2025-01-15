@@ -2,19 +2,20 @@
 
 import Input from "./Input";
 
-import { signup } from "@/actions/auth-actions";
+import { signup, login } from "@/actions/auth-actions";
+
 import { useActionState } from "react";
-import { ComponentProps } from "react";
-interface AuthFormProps extends ComponentProps<"form"> {
-  isLogin: boolean;
-}
+
+import { usePathname } from "next/navigation";
 
 const initialState = {
   errors: {},
 };
 
-export default function AuthForm({ isLogin }: AuthFormProps) {
-  const [formState, formAction] = useActionState(signup, initialState);
+export default function AuthForm() {
+  const isLogin = usePathname() === "/login";
+  const authMode = isLogin ? login : signup;
+  const [formState, formAction] = useActionState(authMode, initialState);
   return (
     <form action={formAction} className="flex flex-col gap-6 w-1/6">
       {!isLogin && <Input label="username" type="text" />}

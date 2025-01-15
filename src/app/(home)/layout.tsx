@@ -29,7 +29,7 @@ export default function RootLayout({
           <div className="flex-shrink-0">
             <Image src={logo} width={110} alt="Heavy dumbbel" />{" "}
           </div>
-          <ul className="flex gap-3 w-full  ">
+          <ul className="flex gap-3 w-full  justify-center items-center">
             <li>
               <Link
                 href="/"
