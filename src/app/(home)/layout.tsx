@@ -54,6 +54,15 @@ export default function RootLayout({
                 About us
               </Link>
             </li>
+            <li>
+              <Link
+                href="/profile"
+                className="hover:text-blue-500 transition-colors duration-300"
+              >
+                Profile
+              </Link>
+            </li>
+
             <li className="ml-auto">
               <Link href="/login" className="text-blue-500">
                 Log In

@@ -10,8 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@lucia-auth/adapter-mongoose": "^3.0.1",
-    "mongodb": "^6.12.0",
+    "@lucia-auth/adapter-mongodb": "^1.0.3",
+    "lucia": "^3.2.2",
     "mongoose": "^8.9.4",
     "next": "15.1.4",
     "react": "^19.0.0",

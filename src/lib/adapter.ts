@@ -1,11 +1,7 @@
-import { mongoose } from "@lucia-auth/adapter-mongoose";
+import { MongodbAdapter } from "@lucia-auth/adapter-mongodb";
+import mongoose from "mongoose";
 
-import { User } from "./models/user.model";
-import { Key } from "./models/key.model";
-import { Session } from "./models/session.model";
-
-export const adapter = mongoose({
-  User,
-  Key,
-  Session,
-});
+export const adapter = new MongodbAdapter(
+  mongoose.connection.collection("sessions"),
+  mongoose.connection.collection("users")
+);

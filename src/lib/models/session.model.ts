@@ -1,13 +1,15 @@
 import { Schema, model, models } from "mongoose";
 
 interface ISession {
-  user_id: Schema.Types.ObjectId;
+  _id: string;
+  user_id: string;
   expires_at: Date;
 }
 
 const sessionSchema = new Schema<ISession>({
+  _id: { type: String, required: true },
   user_id: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "User",
     required: true,
     unique: true,

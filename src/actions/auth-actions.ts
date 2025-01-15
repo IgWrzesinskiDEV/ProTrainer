@@ -11,7 +11,7 @@ interface errors {
 }
 export async function signup(prevState: unknown, formData: FormData) {
   const email = formData.get("email") as string;
-  const unHashedpassword = formData.get("password") as string;
+  const password = formData.get("password") as string;
   const userName = formData.get("username") as string;
   const errors = {} as errors;
   if (userName.trim().length === 0) {
@@ -20,20 +20,25 @@ export async function signup(prevState: unknown, formData: FormData) {
   if (!email || !email.includes("@")) {
     errors.email = "Invalid email";
   }
-  if (!unHashedpassword.trim() || unHashedpassword.trim().length < 6) {
+  if (!password.trim() || password.trim().length < 6) {
     errors.password = "Password must be at least 6 characters long";
   }
-
   if (Object.keys(errors).length > 0) {
     return { errors };
   }
-  console.log(errors);
-  const password = hashUserPassword(unHashedpassword);
+
+  const hashedPassword = hashUserPassword(password);
   try {
-    const data = await createUser({ email, password, userName, role: "user" });
+    const data = await createUser({
+      email,
+      password: hashedPassword,
+      userName,
+      role: "user",
+    });
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
-    await createAuthSession(data._id.toString(), expiresAt);
+    await createAuthSession(data._id.toString());
+    redirect("/login");
   } catch (error: unknown) {
     if (
       error &&
@@ -45,6 +50,4 @@ export async function signup(prevState: unknown, formData: FormData) {
     }
     throw error;
   }
-
-  redirect("/login");
 }

@@ -1,11 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
 interface IKey {
+  _id: string;
   user_id: Schema.Types.ObjectId;
   hashed_password: string;
 }
 
 const keySchema = new Schema<IKey>({
+  _id: {
+    type: String,
+    required: true,
+  },
   user_id: {
     type: Schema.Types.ObjectId,
     ref: "User",
