@@ -1,6 +1,6 @@
-import { signup } from "@/actions/auth-actions";
-import { createUser } from "@/lib/user";
-import { hashUserPassword } from "@/util/hash";
+import { signup } from "@/actions/auth.actions";
+import { createUser } from "@/utils/data/user";
+import { hashUserPassword } from "@/utils/hash";
 import { ObjectId } from "mongodb";
 
 // Mock the createUser function

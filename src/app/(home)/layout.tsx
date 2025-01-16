@@ -64,12 +64,15 @@ export default function RootLayout({
             </li>
 
             <li className="ml-auto">
-              <Link href="/login" className="text-blue-500">
+              <Link href="/auth/login" className="text-blue-500">
                 Log In
               </Link>
             </li>
             <li>
-              <Link href="/signup" className="bg-blue-500 px-3 py-2 rounded-lg">
+              <Link
+                href="/auth/signup"
+                className="bg-blue-500 px-3 py-2 rounded-lg"
+              >
                 Get Started
               </Link>
             </li>

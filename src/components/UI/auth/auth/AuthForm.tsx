@@ -1,8 +1,8 @@
 "use client";
 
-import Input from "./Input";
+import Input from "../Input";
 
-import { signup, login } from "@/actions/auth-actions";
+import { signup, login } from "@/actions/auth.actions";
 
 import { useActionState } from "react";
 

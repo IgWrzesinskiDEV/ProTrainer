@@ -38,7 +38,7 @@ export default function Auth({ isLogin }: AuthProps) {
         <p>
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <Link
-            href={`/${isLogin ? "signup" : "login"}`}
+            href={`/auth/${isLogin ? "signup" : "login"}`}
             className="text-blue-400 font-normal underline"
           >
             {isLogin ? "Sign up" : "Log in"}

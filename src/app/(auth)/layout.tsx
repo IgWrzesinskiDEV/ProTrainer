@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 import logo from "/public/logos/b.png";
 import "../globals.css";
-import { logout } from "@/actions/auth-actions";
+import { logout } from "@/actions/auth.actions";
 
 const inter = Inter({
   subsets: ["latin"],

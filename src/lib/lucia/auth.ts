@@ -1,4 +1,7 @@
+"use server";
+
 // auth/lucia.ts
+
 import { Lucia, TimeSpan } from "lucia";
 
 import { adapter } from "../adapter";
@@ -9,6 +12,7 @@ await connectMongoDb();
 export interface DatabaseUserAttributes {
   userName: string;
   email: string;
+  email_verified: boolean;
 }
 
 const luciaAuth = new Lucia(adapter, {
@@ -24,6 +28,7 @@ const luciaAuth = new Lucia(adapter, {
     return {
       userName: attributes.userName,
       email: attributes.email,
+      email_verified: attributes.email_verified,
     };
   },
 });

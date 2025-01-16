@@ -1,10 +1,12 @@
 "use server";
-import { createUser } from "@/lib/user";
-import { hashUserPassword, verifyPassword } from "@/util/hash";
+import { createUser } from "@/utils/data/user";
+import { hashUserPassword, verifyPassword } from "@/utils/hash";
 import { redirect } from "next/navigation";
 import { createAuthSession, destroySession } from "@/lib/lucia/auth";
 import { generateIdFromEntropySize } from "lucia";
 import { User } from "@/lib/models/user.model";
+import { createEmailVerificationToken } from "@/utils/tokens";
+import { sendVerificationEmail } from "@/utils/mails";
 
 interface errors {
   email: string;
@@ -31,17 +33,23 @@ export async function signup(prevState: unknown, formData: FormData) {
 
   const hashedPassword = hashUserPassword(password);
   try {
-    const data = await createUser({
+    await createUser({
       _id: generateIdFromEntropySize(24),
       email,
       password: hashedPassword,
       userName,
       role: "user",
     });
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-    await createAuthSession(data._id.toString());
-    redirect("/profile");
+
+    const verificationToken = await createEmailVerificationToken(email);
+
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
+    redirect("/auth/verify-email-send");
+    //await createAuthSession(data._id.toString());
+    //redirect("/profile");
   } catch (error: unknown) {
     if (
       error &&

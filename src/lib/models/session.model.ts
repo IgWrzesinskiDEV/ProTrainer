@@ -22,4 +22,4 @@ const sessionSchema = new Schema<ISession>(
   { _id: false }
 );
 
-export const Session = models.Session || model("Session", sessionSchema);
+export const Session = models?.Session || model("Session", sessionSchema);
