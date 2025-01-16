@@ -10,8 +10,8 @@ interface AuthProps extends ComponentProps<"div"> {
 
 export default function Auth({ isLogin }: AuthProps) {
   return (
-    <div className="flex h-screen items-center flex-col  gap-10">
-      <div className="flex items-center flex-col gap-1 ">
+    <div className="flex h-[60vh] items-center flex-col  gap-10">
+      <div className="flex items-center flex-col gap-2 ">
         <h1 className="text-4xl">{isLogin ? "Log in" : "Sign up"}</h1>
         <p className="text-stone-400 text-sm ">
           {isLogin
@@ -31,9 +31,12 @@ export default function Auth({ isLogin }: AuthProps) {
       <AuthForm />
       <div className="flex flex-col items-center gap-3">
         {isLogin && (
-          <button className="text-blue-400 font-normal underline">
+          <Link
+            href="/auth/password-reset"
+            className="text-blue-400 font-normal underline"
+          >
             Forgot password
-          </button>
+          </Link>
         )}
         <p>
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
