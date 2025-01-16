@@ -5,7 +5,7 @@ export default async function Profile() {
   const result = await verifyAuth();
   console.log(result, "result");
   if (!result.user) {
-    return redirect("/login");
+    return redirect("/auth/login");
   }
 
   return <div>profile: </div>;
