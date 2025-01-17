@@ -1,4 +1,4 @@
-import { EmailVerification } from "@/lib/models/email_verification.model";
+import { EmailVerification } from "@/lib/models/emailVerification.model";
 
 export async function getEmailVerificationTokenByEmail(email: string) {
   try {

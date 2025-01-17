@@ -1,12 +1,12 @@
 import { Schema, model, models } from "mongoose";
 
-interface IEmail_Verification {
+interface IEmailVerification {
   email: string;
   token: string;
   expires_at: Date;
 }
 
-const EmailVerificationSchema = new Schema<IEmail_Verification>(
+const EmailVerificationSchema = new Schema<IEmailVerification>(
   {
     email: {
       type: String,

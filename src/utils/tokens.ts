@@ -1,5 +1,5 @@
 import { generateIdFromEntropySize } from "lucia";
-import { EmailVerification } from "@/lib/models/email_verification.model";
+import { EmailVerification } from "@/lib/models/emailVerification.model";
 import { getEmailVerificationTokenByEmail } from "./data/verificationToken";
 export async function createEmailVerificationToken(email: string) {
   const tokenId = generateIdFromEntropySize(24);

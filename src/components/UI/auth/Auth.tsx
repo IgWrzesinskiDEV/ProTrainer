@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ComponentProps } from "react";
 import { FcGoogle } from "react-icons/fc";
 import AuthForm from "./AuthForm";
-
+import { Button } from "@mui/material";
 interface AuthProps extends ComponentProps<"div"> {
   isLogin: boolean;
 }
@@ -19,10 +19,10 @@ export default function Auth({ isLogin }: AuthProps) {
             : "Create account to get started!"}
         </p>
       </div>
-      <button className="relative flex justify-center items-center border-2 border-stone-400 bg-background text-white font-medium rounded-md w-1/6 shadow-xl py-2">
+      <Button className="relative flex justify-center items-center border-2 border-stone-400 bg-background text-white font-medium rounded-md w-1/6 shadow-xl py-2">
         <FcGoogle className="text-2xl absolute left-5  h-full" />
         {isLogin ? "Login with Google" : "Sign up with Google"}
-      </button>
+      </Button>
       <div className="flex items-center justify-around gap-2 w-1/6">
         <div className="h-[1px] opacity-20  bg-stone-200 rounded-lg flex-1 mx-1" />
         <p className="text-stone-400 text-sm">Or with email</p>

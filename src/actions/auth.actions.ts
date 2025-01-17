@@ -14,6 +14,7 @@ interface errors {
   userName: string;
 }
 export async function signup(prevState: unknown, formData: FormData) {
+  //await new Promise((resolve) => setTimeout(resolve, 2000));
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const userName = formData.get("username") as string;

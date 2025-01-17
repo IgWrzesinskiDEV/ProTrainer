@@ -2,7 +2,7 @@
 
 import Input from "../Input";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { Button } from "@mui/material";
 import { useActionState } from "react";
 
 const initialState = {
@@ -31,13 +31,13 @@ export default function ResetPasswordForm() {
           ))}
         </ul>
       )} */}
-      <button
+      <Button
         // disabled={isPending}
         className=" py-2 text-xl bg-blue-500 rounded-lg flex items-center justify-center w-full mx-auto mt-4 disabled:bg-opacity-0 disabled:border-stone-700 disabled:border-2"
       >
         {/* {!isPending ? "Send reset link" : <CircularProgress size={25} />} */}
         Send reset link
-      </button>
+      </Button>
     </form>
   );
 }

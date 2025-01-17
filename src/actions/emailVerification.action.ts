@@ -1,6 +1,6 @@
 "use server";
 
-import { EmailVerification } from "@/lib/models/email_verification.model";
+import { EmailVerification } from "@/lib/models/emailVerification.model";
 import { getVerificationTokenByToken } from "@/utils/data/verificationToken";
 import { getUserByEmail } from "@/utils/data/user";
 import { User } from "@/lib/models/user.model";
