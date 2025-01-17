@@ -1,43 +1,46 @@
 "use client";
 
 import Input from "../Input";
+import { useCallback, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Button } from "@mui/material";
-import { useActionState } from "react";
 
-const initialState = {
-  errors: {},
-};
+import { useActionState } from "react";
+import { sendPasswordReset } from "@/actions/passwordReset.action";
+import AuthButton from "./AuthButton";
+import SnackBarToast from "../SnackBarToast";
+const initialState = { error: "" };
 
 export default function ResetPasswordForm() {
-  //   const [formState, formAction, isPending] = useActionState(
-  //     authMode,
-  //     initialState
-  //   );
-  return (
-    <form className="flex flex-col gap-6 w-1/6">
-      <Input
-        label="email"
-        type="text"
-        // disabled={isPending}
-      />
+  const [open, setOpen] = useState(false);
+  const [formState, formAction, isPending] = useActionState(
+    sendPasswordReset,
+    initialState
+  );
 
-      {/* {formState?.errors && (
-        <ul className="flex flex-col gap-2 text-red-500">
-          {Object.keys(formState.errors).map((error) => (
-            <li key={error}>
-              {formState.errors[error as keyof typeof formState.errors]}
-            </li>
-          ))}
-        </ul>
-      )} */}
-      <Button
-        // disabled={isPending}
-        className=" py-2 text-xl bg-blue-500 rounded-lg flex items-center justify-center w-full mx-auto mt-4 disabled:bg-opacity-0 disabled:border-stone-700 disabled:border-2"
-      >
-        {/* {!isPending ? "Send reset link" : <CircularProgress size={25} />} */}
-        Send reset link
-      </Button>
-    </form>
+  const handleClose = useCallback(function handleClose() {
+    setOpen(false);
+  }, []);
+
+  if (formState?.success) {
+    setOpen(true);
+  }
+
+  return (
+    <>
+      <form className="flex flex-col gap-6 w-1/6" action={formAction}>
+        <Input label="email" type="text" disabled={isPending} />
+
+        {formState?.error && <p></p>}
+        <AuthButton disabled={isPending} type="submit">
+          {!isPending ? "Send reset link" : <CircularProgress size={25} />}
+        </AuthButton>
+      </form>
+      <SnackBarToast
+        message="Email sent!"
+        closeTime={5000}
+        isOpen={open}
+        onCloseHandler={handleClose}
+      />
+    </>
   );
 }

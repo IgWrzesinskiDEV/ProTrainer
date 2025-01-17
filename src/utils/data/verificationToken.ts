@@ -10,17 +10,12 @@ export async function getEmailVerificationTokenByEmail(email: string) {
 }
 export const getVerificationTokenByToken = async (token: string) => {
   try {
-    console.log(token, "token in getVerificationTokenByToken");
     const verificationToken = await EmailVerification.findOne({
       token,
     });
-    console.log(
-      verificationToken,
-      "verificationToken in getVerificationTokenByToken"
-    );
+
     return verificationToken;
-  } catch (err) {
-    console.log(err, "err");
+  } catch {
     return null;
   }
 };

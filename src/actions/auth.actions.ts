@@ -25,7 +25,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   if (!email || !email.includes("@")) {
     errors.email = "Invalid email";
   }
-  if (!password.trim() || password.trim().length < 6) {
+  if (password.trim().length < 6) {
     errors.password = "Password must be at least 6 characters long";
   }
   if (Object.keys(errors).length > 0) {

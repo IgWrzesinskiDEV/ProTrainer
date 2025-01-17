@@ -2,7 +2,8 @@
 
 import Input from "../Input";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Button } from "@mui/material";
+
+import AuthButton from "./AuthButton";
 import { signup, login } from "@/actions/auth.actions";
 
 import { useActionState } from "react";
@@ -34,14 +35,10 @@ export default function AuthForm() {
           ))}
         </ul>
       )}
-      <Button
-        disabled={isPending}
-        type="submit"
-        className=" py-2 text-xl bg-blue-500 rounded-lg flex items-center justify-center w-full mx-auto mt-4 disabled:bg-opacity-0 disabled:border-stone-700 disabled:border-2"
-      >
+      <AuthButton disabled={isPending} type="submit">
         {isPending ? null : isLogin ? "Log in" : "Sign up"}
         {isPending && <CircularProgress size={25} />}
-      </Button>
+      </AuthButton>
     </form>
   );
 }

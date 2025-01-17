@@ -1,22 +1,20 @@
 import { Schema, model, models } from "mongoose";
 
-interface IPassowordReset {
+interface IPasswordReset {
   email: string;
   token: string;
   expires_at: Date;
 }
 
-const IPassowordResetSchema = new Schema<IPassowordReset>(
+const PasswordResetSchema = new Schema<IPasswordReset>(
   {
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     token: {
       type: String,
       required: true,
-      unique: true,
     },
     expires_at: {
       type: Date,
@@ -26,5 +24,5 @@ const IPassowordResetSchema = new Schema<IPassowordReset>(
   { timestamps: true }
 );
 
-export const PassowordReset =
-  models?.PassowordReset || model("PassowordReset", IPassowordResetSchema);
+export const PasswordReset =
+  models?.PasswordReset || model("PasswordReset", PasswordResetSchema);
