@@ -5,7 +5,7 @@ export interface IUser {
   userName: string;
   email: string;
   emailVerified?: boolean;
-  password: string;
+  password?: string;
   role: "user" | "coach" | "admin";
 }
 
@@ -19,7 +19,7 @@ const userSchema = new Schema<IUser>(
       default: false,
       required: true,
     },
-    password: { type: String, required: true, minlength: 6 },
+    password: { type: String, minlength: 6 },
     role: {
       type: String,
       default: "user",

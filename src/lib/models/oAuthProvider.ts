@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 export interface IoAuthAccount {
-  userId: Schema.Types.ObjectId;
+  userId: string;
   provider: string;
   email: string;
   providerUserId: string;
@@ -12,7 +12,7 @@ export interface IoAuthAccount {
 
 const OAuthAccountSchema = new Schema<IoAuthAccount>(
   {
-    userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+    userId: { type: String, required: true, ref: "User" },
     email: { type: String, required: true },
     provider: { type: String, required: true },
     providerUserId: { type: String, required: true },

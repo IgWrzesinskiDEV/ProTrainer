@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { google } from "@/lib/oauth/oauthProvieders";
 import mongoose from "mongoose";
-import { OAuthAccount, IoAuthAccount } from "@/lib/models/OAuthProvider";
+import { OAuthAccount, IoAuthAccount } from "@/lib/models/oAuthProvider";
 import { User } from "@/lib/models/user.model";
 import { luciaAuth } from "@/lib/lucia/auth";
+import { generateIdFromEntropySize } from "lucia";
+
 interface GoogleUser {
   id: string;
   email: string;
@@ -53,7 +55,14 @@ export const GET = async (req: NextRequest) => {
     //   await google.validateAuthorizationCode(code, codeVerifier);
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
     const accessToken = tokens.accessToken();
-    const refreshToken = tokens.refreshToken();
+    //console.log(tokens);
+    let refreshToken = null;
+    try {
+      refreshToken = tokens.refreshToken();
+    } catch (e) {
+      console.log("No refresh token", e);
+    }
+
     const accessTokenExpiresAt = tokens.accessTokenExpiresAt();
 
     const googleRes = await fetch(
@@ -75,17 +84,19 @@ export const GET = async (req: NextRequest) => {
       const user = await User.findOne({ email: googleData.email }, null, {
         session: mongoSession,
       });
-
+      console.log("user", user);
       if (!user) {
         const createdUser = await User.create(
           [
             {
+              _id: generateIdFromEntropySize(24),
               email: googleData.email,
-              name: googleData.name,
-              profilePictureUrl: googleData.picture,
+              userName: googleData.name,
               emailVerified: true,
+              role: "user",
             },
           ],
+
           { session: mongoSession }
         );
 
@@ -143,7 +154,9 @@ export const GET = async (req: NextRequest) => {
       }
 
       await mongoSession.commitTransaction();
+
       const session = await luciaAuth.createSession(userForSession, {});
+
       const sessionCookie = luciaAuth.createSessionCookie(session.id);
 
       (await cookies()).set(
@@ -155,19 +168,21 @@ export const GET = async (req: NextRequest) => {
       (await cookies()).set("state", "", {
         expires: new Date(0),
       });
+
       (await cookies()).set("codeVerifier", "", {
         expires: new Date(0),
       });
 
       return NextResponse.redirect(
-        new URL("/profile", process.env.NEXT_PUBLIC_BASE_URL),
+        new URL("/profile", process.env.NEXT_BASE_URL),
         {
           status: 302,
         }
       );
     } catch (err) {
-      await mongoSession.abortTransaction();
       console.log("Error in transaction", err);
+      await mongoSession.abortTransaction();
+
       throw err;
     }
   } catch (error: unknown) {

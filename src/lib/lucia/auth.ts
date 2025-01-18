@@ -1,5 +1,3 @@
-"use server";
-
 // auth/lucia.ts
 
 import { Lucia, TimeSpan } from "lucia";
