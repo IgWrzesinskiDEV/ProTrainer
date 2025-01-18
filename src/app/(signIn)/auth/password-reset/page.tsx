@@ -1,5 +1,5 @@
 import PasswordReset from "@/components/UI/auth/PasswordReset";
 
-export default function PasswordResetPage() {
+export default function SendPasswordResetPage() {
   return <PasswordReset />;
 }

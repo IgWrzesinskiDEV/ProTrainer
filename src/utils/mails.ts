@@ -21,7 +21,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 
 export async function sendPasswordResetEmail(email: string, token: string) {
   // const confirmLink = `${domain}/auth/new-verification?token=${token}`;
-  const confirmLink = `http://localhost:3000/auth/password-reset-send?token=${token}`;
+  const confirmLink = `http://localhost:3000/auth/set-new-password?token=${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",

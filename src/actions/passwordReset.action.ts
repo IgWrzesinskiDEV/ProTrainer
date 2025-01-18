@@ -6,7 +6,7 @@ import { getUserByEmail } from "@/utils/data/user";
 import { User } from "@/lib/models/user.model";
 import { createAuthSession } from "@/lib/lucia/auth";
 import { createPasswordResetToken } from "@/utils/tokens";
-import { hashUserPassword } from "@/utils/hash";
+import { hashUserPassword, verifyPassword } from "@/utils/hash";
 
 import { sendPasswordResetEmail } from "@/utils/mails";
 export async function sendPasswordReset(
@@ -29,7 +29,7 @@ export async function sendPasswordReset(
   return { success: "Password reset email sent" };
 }
 
-export async function newPassword(
+export async function CreateNewPassword(
   prevState: unknown,
   formData: FormData,
   token: string
@@ -55,8 +55,21 @@ export async function newPassword(
   if (!existingUser) {
     return { error: "User not found" };
   }
-
+  const oldPassword = formData.get("oldPassword") as string;
   const password = formData.get("password") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
+  const isOldPasswordValid = verifyPassword(existingUser.password, oldPassword);
+
+  if (!isOldPasswordValid) {
+    return { error: "Old password is incorrect" };
+  }
+  if (password.trim().length < 6) {
+    return { error: "Password must be at least 6 characters long" };
+  }
+  if (password !== confirmPassword) {
+    return { error: "Passwords do not match" };
+  }
+
   const hashedPassword = hashUserPassword(password);
 
   await User.updateOne(

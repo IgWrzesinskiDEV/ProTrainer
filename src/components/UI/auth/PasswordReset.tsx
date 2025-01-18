@@ -12,7 +12,6 @@ export default function PasswordReset() {
         </p>
       </div>
 
-      {/* <AuthForm /> */}
       <ResetPasswordForm />
 
       <Link href="/auth/login" className="text-blue-400 font-normal underline">
