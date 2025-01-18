@@ -1,31 +1,32 @@
 "use client";
 
 import Input from "../Input";
-import { useCallback, useState, useEffect } from "react";
+import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdMarkEmailRead } from "react-icons/md";
 import { useActionState } from "react";
 import { sendPasswordReset } from "@/actions/passwordReset.action";
 
 import AuthButton from "./AuthButton";
-import SnackBarToast from "../SnackBarToast";
 
+import { toastify } from "../Toastify";
 const initialState = { error: "" };
 
 export default function ResetPasswordForm() {
-  const [open, setOpen] = useState(false);
   const [formState, formAction, isPending] = useActionState(
     sendPasswordReset,
     initialState
   );
 
-  const handleClose = useCallback(function handleClose() {
-    setOpen(false);
-  }, []);
-
   useEffect(() => {
     if (formState?.success) {
-      setOpen(true);
+      toastify(
+        <div className="flex items-center gap-2">
+          <MdMarkEmailRead className="text-blue-500 mr-2 text-3xl" />
+          <h2 className="text-xl">Email sent, check your inbox</h2>
+        </div>,
+        3000
+      );
     }
   }, [formState?.success]);
 
@@ -41,13 +42,6 @@ export default function ResetPasswordForm() {
           {!isPending ? "Send reset link" : <CircularProgress size={25} />}
         </AuthButton>
       </form>
-      <SnackBarToast
-        message="Email sent"
-        icon={<MdMarkEmailRead className="text-lime-400 mr-2 text-3xl" />}
-        closeTime={5000}
-        isOpen={open}
-        onCloseHandler={handleClose}
-      />
     </>
   );
 }

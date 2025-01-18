@@ -2,7 +2,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,6 +28,7 @@ export default function RootLayout({
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           {children}
         </AppRouterCacheProvider>
+        <ToastContainer />
       </body>
     </html>
   );

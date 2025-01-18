@@ -4,9 +4,9 @@
 
 import { Lucia, TimeSpan } from "lucia";
 
-import { adapter } from "../adapter";
+import { adapter } from "../mongodb/adapter";
 import { cookies } from "next/headers";
-import connectMongoDb from "../mogodb";
+import connectMongoDb from "../mongodb/mogodb";
 
 await connectMongoDb();
 export interface DatabaseUserAttributes {
@@ -15,7 +15,7 @@ export interface DatabaseUserAttributes {
   email_verified: boolean;
 }
 
-const luciaAuth = new Lucia(adapter, {
+export const luciaAuth = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(5, "d"),
   sessionCookie: {
     expires: false,
@@ -61,10 +61,9 @@ export async function verifyAuth() {
   if (!sessionId) {
     return { user: null, session: null };
   }
-  console.log(sessionId, "sessionCookie");
+
   const result = await luciaAuth.validateSession(sessionId);
-  console.log(result, "result");
-  //const user = await luciaAuth.getUser(result.user.userId);
+
   try {
     if (result.session && result.session.fresh) {
       const sessionCookie = luciaAuth.createSessionCookie(result.session.id);

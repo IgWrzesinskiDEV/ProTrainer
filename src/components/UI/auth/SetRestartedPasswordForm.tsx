@@ -1,7 +1,7 @@
 "use client";
 
 import Input from "../Input";
-import { useCallback, useState, useEffect } from "react";
+import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useActionState } from "react";
@@ -10,11 +10,12 @@ import { CreateNewPassword } from "@/actions/passwordReset.action";
 import AuthButton from "./AuthButton";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { redirect } from "next/navigation";
-import SnackBarToast from "../SnackBarToast";
+import { toastify } from "../Toastify";
+
 const initialState = { error: "" };
 
 export default function SetRestartedPasswordForm() {
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
   const [formState, formAction, isPending] = useActionState(
@@ -23,13 +24,23 @@ export default function SetRestartedPasswordForm() {
     initialState
   );
 
-  const handleClose = useCallback(function handleClose() {
-    setOpen(false);
-  }, []);
-
   useEffect(() => {
     if (formState?.success) {
-      setOpen(true);
+      toastify(
+        <div className="flex items-center gap-2">
+          <RiLockPasswordFill className="text-blue-500  text-7xl" />
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl">
+              Your password has been successfully updated
+            </h2>
+            <p className="text-sm text-stone-400 font-normal">
+              You will be redirected to profile page in{" "}
+              <strong className="font-bold">3s</strong>
+            </p>
+          </div>
+        </div>,
+        3000
+      );
       setTimeout(() => {
         redirect("/profile");
       }, 3000);
@@ -60,22 +71,6 @@ export default function SetRestartedPasswordForm() {
           {!isPending ? "Set new password" : <CircularProgress size={25} />}
         </AuthButton>
       </form>
-      <SnackBarToast
-        icon={<RiLockPasswordFill className="text-lime-400 mr-2 text-3xl" />}
-        message={
-          <>
-            <h2 className="text-2xl">New password set successfully</h2>
-            <p className="text-base">
-              You will be redirected to profile page in{" "}
-              <strong className="font-bold">3s</strong>
-            </p>
-          </>
-        }
-        className="px-5"
-        closeTime={3000}
-        isOpen={open}
-        onCloseHandler={handleClose}
-      />
     </>
   );
 }

@@ -21,6 +21,7 @@ export default function AuthForm() {
     authMode,
     initialState
   );
+
   return (
     <form action={formAction} className="flex flex-col gap-6 w-1/6">
       {!isLogin && <Input label="username" type="text" disabled={isPending} />}
