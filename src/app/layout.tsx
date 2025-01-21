@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className} font-bold  antialiased`}>
+      <body className={` ${inter.className} font-bold  antialiased h-screen`}>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           {children}
         </AppRouterCacheProvider>

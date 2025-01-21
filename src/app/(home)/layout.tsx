@@ -39,14 +39,6 @@ export default function HomeLayout({
               About us
             </Link>
           </li>
-          <li>
-            <Link
-              href="/profile"
-              className="hover:text-blue-500 transition-colors duration-300"
-            >
-              Profile
-            </Link>
-          </li>
 
           <li className="ml-auto">
             <Link href="/auth/login" className="text-blue-500">

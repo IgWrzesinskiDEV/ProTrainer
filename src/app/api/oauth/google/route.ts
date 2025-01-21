@@ -32,14 +32,12 @@ export const GET = async (req: NextRequest) => {
     const codeVerifier = (await cookies()).get("codeVerifier")?.value;
     const savedState = (await cookies()).get("state")?.value;
 
-    //    if there is no code verifier or saved state, return an error
     if (!codeVerifier || !savedState) {
       return new Response("Code verifier or saved state is not exists", {
         status: 400,
       });
     }
 
-    //    if the state does not match, return an error
     if (savedState !== state) {
       return Response.json(
         {
@@ -51,11 +49,9 @@ export const GET = async (req: NextRequest) => {
       );
     }
 
-    // const { accessToken, idToken, refreshToken, accessTokenExpiresAt } =
-    //   await google.validateAuthorizationCode(code, codeVerifier);
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
     const accessToken = tokens.accessToken();
-    //console.log(tokens);
+
     let refreshToken = null;
     try {
       refreshToken = tokens.refreshToken();
@@ -84,7 +80,7 @@ export const GET = async (req: NextRequest) => {
       const user = await User.findOne({ email: googleData.email }, null, {
         session: mongoSession,
       });
-      console.log("user", user);
+
       if (!user) {
         const createdUser = await User.create(
           [
@@ -180,7 +176,6 @@ export const GET = async (req: NextRequest) => {
         }
       );
     } catch (err) {
-      console.log("Error in transaction", err);
       await mongoSession.abortTransaction();
 
       throw err;
