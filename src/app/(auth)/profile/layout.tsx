@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ProfileLink from "@/components/UI/profile/ProfileLink";
 export default function profileLayout({
   children,

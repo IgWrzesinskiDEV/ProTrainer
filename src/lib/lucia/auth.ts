@@ -1,41 +1,55 @@
 // auth/lucia.ts
+"use server";
+// import { Lucia, TimeSpan } from "lucia";
 
-import { Lucia, TimeSpan } from "lucia";
-
-import { adapter } from "../mongodb/adapter";
+// import { adapter } from "../mongodb/adapter";
 import { cookies } from "next/headers";
-import connectMongoDb from "../mongodb/mogodb";
+//import connectMongoDb from "../mongodb/mogodb";
+import { luciaAuth } from "./lucia";
+import { cache } from "react";
+//await connectMongoDb();
 
-await connectMongoDb();
-export interface DatabaseUserAttributes {
-  userName: string;
-  email: string;
-  email_verified: boolean;
+// export const luciaAuth = new Lucia(adapter, {
+//   sessionExpiresIn: new TimeSpan(5, "d"),
+//   sessionCookie: {
+//     expires: false,
+
+//     attributes: {
+//       secure: process.env.NODE_ENV === "production",
+//     },
+//   },
+//   getUserAttributes: (attributes) => {
+//     return {
+//       userName: attributes.userName,
+//       email: attributes.email,
+//       email_verified: attributes.email_verified,
+//     };
+//   },
+// });
+// declare module "lucia" {
+//   interface Register {
+//     Lucia: typeof luciaAuth;
+//     DatabaseUserAttributes: DatabaseUserAttributes;
+//   }
+// }
+
+export interface verifiedUserData {
+  user: {
+    id: string;
+    email: string;
+    userName: string;
+  };
 }
 
-export const luciaAuth = new Lucia(adapter, {
-  sessionExpiresIn: new TimeSpan(5, "d"),
-  sessionCookie: {
-    expires: false,
-
-    attributes: {
-      secure: process.env.NODE_ENV === "production",
-    },
-  },
-  getUserAttributes: (attributes) => {
-    return {
-      userName: attributes.userName,
-      email: attributes.email,
-      email_verified: attributes.email_verified,
-    };
-  },
-});
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof luciaAuth;
-    DatabaseUserAttributes: DatabaseUserAttributes;
-  }
+export interface verifiedSessionData {
+  session: {
+    id: string;
+    userId: string;
+    fresh: boolean;
+    expiresAt: Date;
+  };
 }
+
 export async function createAuthSession(userId: string) {
   const session = await luciaAuth.createSession(userId, {});
 
@@ -48,7 +62,7 @@ export async function createAuthSession(userId: string) {
   );
 }
 
-export async function verifyAuth() {
+export const verifyAuth = cache(async function verifyAuth() {
   const sessionCookie = (await cookies()).get(luciaAuth.sessionCookieName);
 
   if (!sessionCookie) {
@@ -83,7 +97,7 @@ export async function verifyAuth() {
   } catch {}
 
   return result;
-}
+});
 
 export async function destroySession() {
   const { session } = await verifyAuth();

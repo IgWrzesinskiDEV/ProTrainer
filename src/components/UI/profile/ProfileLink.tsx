@@ -9,7 +9,7 @@ export default function ProfileLink({
   text: string;
 }) {
   const path = usePathname();
-  console.log(path);
+
   return (
     <Link
       href={href}

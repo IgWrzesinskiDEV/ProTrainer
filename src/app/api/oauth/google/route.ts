@@ -4,7 +4,7 @@ import { google } from "@/lib/oauth/oauthProvieders";
 import mongoose from "mongoose";
 import { OAuthAccount, IoAuthAccount } from "@/lib/models/oAuthProvider";
 import { User } from "@/lib/models/user.model";
-import { luciaAuth } from "@/lib/lucia/auth";
+import { luciaAuth } from "@/lib/lucia/lucia";
 import { generateIdFromEntropySize } from "lucia";
 
 interface GoogleUser {
@@ -176,6 +176,7 @@ export const GET = async (req: NextRequest) => {
         }
       );
     } catch (err) {
+      console.log(err);
       await mongoSession.abortTransaction();
 
       throw err;

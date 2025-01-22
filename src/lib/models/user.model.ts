@@ -7,6 +7,13 @@ export interface IUser {
   emailVerified?: boolean;
   password?: string;
   role: "user" | "coach" | "admin";
+  fullName?: string;
+  bio?: string;
+  units: {
+    weight: "kg" | "lbs";
+    height: "cm" | "ft";
+    bodyMeasurement: "cm" | "in";
+  };
 }
 
 const userSchema = new Schema<IUser>(
@@ -25,6 +32,13 @@ const userSchema = new Schema<IUser>(
       default: "user",
       enum: ["user", "coach", "admin"],
       required: true,
+    },
+    fullName: { type: String },
+    bio: { type: String },
+    units: {
+      weight: { type: String, default: "kg" },
+      height: { type: String, default: "cm" },
+      bodyMeasurement: { type: String, default: "cm" },
     },
   } as const,
   { _id: false }
