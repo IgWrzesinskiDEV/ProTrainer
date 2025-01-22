@@ -1,19 +1,27 @@
 "use server";
 
-import { IUser, User } from "@/lib/models/user.model";
-
+import { User } from "@/lib/models/user.model";
+import saveAvatarImage from "@/lib/aws/saveAvatarImage";
 import { revalidatePath } from "next/cache";
 import { verifyAuth } from "@/lib/lucia/auth";
-export async function saveProfileData(
-  prevState: unknown,
-  formData: FormData,
-  id: string
-) {
+export async function saveProfileData(prevState: unknown, formData: FormData) {
+  const { user } = await verifyAuth();
+  const id = user?.id;
+  if (!id) {
+    return { error: "User not found" };
+  }
   const fullName = formData.get("fullName") as string;
   const bio = formData.get("bio") as string;
   const avatar = formData.get("avatar") as File;
+  if (!avatar) {
+    return { error: "Avatar not found" };
+  }
 
-  //const user = await User.findByIdAndUpdate(id, { fullName, bio });
+  const avatarFileName = await saveAvatarImage(avatar, id);
+  console.log("avatar", avatarFileName);
+  await User.findByIdAndUpdate(id, { fullName, bio, avatarFileName });
+  revalidatePath("/profile");
+  return { success: "Profile saved" };
 }
 
 export default async function saveProfileUnits(

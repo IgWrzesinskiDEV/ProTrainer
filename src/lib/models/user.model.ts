@@ -14,6 +14,7 @@ export interface IUser {
     height: "cm" | "ft";
     bodyMeasurement: "cm" | "in";
   };
+  avatarFileName?: string;
 }
 
 const userSchema = new Schema<IUser>(
@@ -40,6 +41,7 @@ const userSchema = new Schema<IUser>(
       height: { type: String, default: "cm" },
       bodyMeasurement: { type: String, default: "cm" },
     },
+    avatarFileName: { type: String },
   } as const,
   { _id: false }
 );

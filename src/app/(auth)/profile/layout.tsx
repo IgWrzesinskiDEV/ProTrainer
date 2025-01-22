@@ -1,15 +1,28 @@
 import ProfileLink from "@/components/UI/profile/ProfileLink";
-export default function profileLayout({
+import { Avatar } from "@mui/material";
+import { verifyAuth } from "@/lib/lucia/auth";
+export default async function profileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { user } = await verifyAuth();
+  const { userName, avatarFileName } = user!;
+
   return (
     <>
       <aside className="flex gap-4 flex-col ">
         <div className="flex items-center gap-2 ">
-          <div className="w-14 h-14 rounded-full bg-stone-300"></div>
-          <h2 className="text-4xl ">John Doe</h2>
+          <Avatar
+            src={
+              avatarFileName
+                ? `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${avatarFileName}`
+                : undefined
+            }
+            alt="The image selected by the user."
+            className="w-20 h-20 border-stone-600 border-2 p-1"
+          />
+          <h2 className="text-4xl ">{userName}</h2>
         </div>
         <nav className="">
           <ul className="flex  gap-1">

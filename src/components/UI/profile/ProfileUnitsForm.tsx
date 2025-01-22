@@ -3,9 +3,7 @@
 import AuthButton from "../auth/AuthButton";
 import saveProfileUnits from "@/actions/profile.actions";
 import { verifyAuth } from "@/lib/lucia/auth";
-import { IUser } from "@/lib/models/user.model";
-import { revalidatePath } from "next/cache";
-import { verifiedUserData } from "@/lib/lucia/auth";
+
 import { useActionState, useEffect, useState } from "react";
 
 const initialState = {
@@ -13,7 +11,6 @@ const initialState = {
 };
 
 export default function ProfileUnitsForm() {
-  const [user, setUser] = useState<User | null>(null);
   const [units, setUnits] = useState({
     height: "cm",
     weight: "kg",
@@ -36,8 +33,6 @@ export default function ProfileUnitsForm() {
 
     getData().catch(console.error);
   }, [formState]);
-
-  console.log(user?.units.weight);
 
   return (
     <form
