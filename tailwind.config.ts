@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         background: "var(--background)",
+        backgroundLite: "var(--backgroundLite)",
         foreground: "var(--foreground)",
         primary: "var(--primary)",
       },
