@@ -1,6 +1,6 @@
 import { cn } from "@/lib/twMergeUtill";
 import AuthButton from "../UI/auth/AuthButton";
-import DatePickerMes from "../UI/calendar";
+import DatePickerMeasurements from "../UI/DatePickerMeasurements";
 
 export default function MeasurementsForm({
   TABLE_HEAD,
@@ -8,11 +8,11 @@ export default function MeasurementsForm({
   TABLE_HEAD: string[];
 }) {
   return (
-    <div className="p-4 flex flex-col gap-4 bg-backgroundLite items-center">
+    <div className="p-4 flex flex-col gap-4 bg-backgroundLite rounded-lg shadow-2xl items-center">
       <h1>Add your mesurements</h1>
       <form action="" className="w-2/3  flex flex-col gap-4 items-center ">
         <div className="w-full rounded-lg border-2 border-blue-500 ">
-          <DatePickerMes />
+          <DatePickerMeasurements />
           {TABLE_HEAD.map((field, index) => {
             const className = ` border-[#aaaabc]/50 border-2 bg-[#1C2025] border-b-0    w-2/3 p-2 ${
               index === 0 ? "border-t-0" : ""
