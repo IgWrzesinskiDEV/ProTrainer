@@ -31,6 +31,7 @@ export default function TablePaginationComponent({
     <CustomTablePagination
       rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
       colSpan={TABLE_HEAD.length}
+      className="ml-auto"
       count={TABLE_ROWS.length}
       rowsPerPage={rowsPerPage}
       page={page}

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/twMergeUtill";
 import AuthButton from "../UI/auth/AuthButton";
-import DatePickerMeasurements from "../UI/DatePickerMeasurements";
+import DatePickerMeasurements from "./DatePickerMeasurements";
 
 export default function MeasurementsForm({
   TABLE_HEAD,

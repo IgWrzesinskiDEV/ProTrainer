@@ -28,7 +28,12 @@ export default function DatePickerMeasurements() {
               {value}
               <FiCalendar className="text-stone-50 text-xl" />
             </button>
-            <input type="date" className="hidden" defaultValue={value} />
+            <input
+              type="date"
+              name="mesurementDate"
+              className="hidden"
+              defaultValue={value}
+            />
           </>
         );
       }}

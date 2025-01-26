@@ -7,7 +7,7 @@ import ProfileWrapper from "./ProfileWrapper";
 import ModalUnstyled from "../Modal";
 import TablePaginationComponent from "@/components/measurements/TablePagination";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
-
+import TableRowPopper from "@/components/measurements/TableRowPopper";
 export default function Measurement() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -53,18 +53,18 @@ export default function Measurement() {
                 )
               : TABLE_ROWS
             ).map((data) => (
-              <tr key={data.id}>
+              <TableRowPopper key={data.id} id={data.id}>
                 {Object.keys(data)
                   .filter((measurementData) => measurementData !== "id")
                   .map((key) => (
                     <td
-                      className="p-4 border-b border-r border-[#aaaabc]/50"
+                      className="p-4 border-b border-r border-[#aaaabc]/50 "
                       key={key}
                     >
                       {data[key as keyof typeof data]}
                     </td>
                   ))}
-              </tr>
+              </TableRowPopper>
             ))}
             {emptyRows > 0 && (
               <tr style={{ height: 41 * emptyRows }}>
@@ -77,14 +77,15 @@ export default function Measurement() {
               <TablePaginationComponent
                 TABLE_HEAD={TABLE_HEAD}
                 TABLE_ROWS={TABLE_ROWS}
-                page={page}
                 rowsPerPage={rowsPerPage}
+                page={page}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
               />
             </tr>
           </tfoot>
         </table>
+
         <button className="w-10 " onClick={() => modalRef.current?.open()}>
           <MdAddCircleOutline className="text-4xl text-blue-500" />
         </button>
