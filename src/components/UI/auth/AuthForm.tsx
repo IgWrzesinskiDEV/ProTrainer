@@ -11,7 +11,7 @@ import { useActionState } from "react";
 import { usePathname } from "next/navigation";
 
 const initialState = {
-  errors: {},
+  errors: [],
 };
 
 export default function AuthForm() {
@@ -29,10 +29,8 @@ export default function AuthForm() {
       <Input label="password" type="password" disabled={isPending} />
       {formState?.errors && (
         <ul className="flex flex-col gap-2 text-red-500">
-          {Object.keys(formState.errors).map((error) => (
-            <li key={error}>
-              {formState.errors[error as keyof typeof formState.errors]}
-            </li>
+          {formState.errors.map((error, index) => (
+            <li key={index}>{error}</li>
           ))}
         </ul>
       )}

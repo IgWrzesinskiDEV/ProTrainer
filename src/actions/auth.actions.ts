@@ -7,30 +7,20 @@ import { generateIdFromEntropySize } from "lucia";
 import { User } from "@/lib/models/user.model";
 import { createEmailVerificationToken } from "@/utils/tokens";
 import { sendVerificationEmail } from "@/utils/mails";
+import { SignUpSchema, SignInSchema } from "@/schemas/zSchemas";
 
-interface errors {
-  email: string;
-  password: string;
-  userName: string;
-}
 export async function signup(prevState: unknown, formData: FormData) {
-  //await new Promise((resolve) => setTimeout(resolve, 2000));
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const userName = formData.get("username") as string;
-  const errors = {} as errors;
-  if (userName.trim().length === 0) {
-    errors.userName = "Username is required";
+  const validateData = SignUpSchema.safeParse({
+    email: formData.get("email") as string,
+    password: formData.get("password") as string,
+    userName: formData.get("username") as string,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
   }
-  if (!email || !email.includes("@")) {
-    errors.email = "Invalid email";
-  }
-  if (password.trim().length < 6) {
-    errors.password = "Password must be at least 6 characters long";
-  }
-  if (Object.keys(errors).length > 0) {
-    return { errors };
-  }
+
+  const { email, password, userName } = validateData.data;
 
   const hashedPassword = hashUserPassword(password);
   try {
@@ -49,8 +39,6 @@ export async function signup(prevState: unknown, formData: FormData) {
       verificationToken.token
     );
     redirect("/auth/verify-email-send");
-    //await createAuthSession(data._id.toString());
-    //redirect("/profile");
   } catch (error: unknown) {
     if (
       error &&
@@ -58,23 +46,32 @@ export async function signup(prevState: unknown, formData: FormData) {
       "code" in error &&
       error.code === 11000
     ) {
-      return { errors: { email: "Email already exists" } };
+      return { errors: ["Email already exists"] };
     }
     throw error;
   }
 }
 
 export async function login(prevState: unknown, formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const validateData = SignInSchema.safeParse({
+    email: formData.get("email") as string,
+    password: formData.get("password") as string,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
+  }
+
+  const { email, password } = validateData.data;
+
   const existingUser = await User.findOne({ email });
 
   if (!existingUser || !existingUser.password || !existingUser.email) {
-    return { errors: { email: "User not found" } };
+    return { errors: ["User not found"] };
   }
   const isValid = verifyPassword(existingUser.password, password);
   if (!isValid) {
-    return { errors: { password: "Invalid password" } };
+    return { errors: ["Invalid password"] };
   }
   await createAuthSession(existingUser._id);
   redirect("/profile");

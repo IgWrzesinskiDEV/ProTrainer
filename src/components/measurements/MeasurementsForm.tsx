@@ -1,16 +1,25 @@
+"use client";
 import { cn } from "@/lib/twMergeUtill";
 import AuthButton from "../UI/auth/AuthButton";
 import DatePickerMeasurements from "./DatePickerMeasurements";
-
+import { useActionState } from "react";
+import { saveMessurement } from "@/actions/profile.actions";
+const initialState = {
+  error: "",
+};
 export default function MeasurementsForm({
   TABLE_HEAD,
 }: {
   TABLE_HEAD: string[];
 }) {
+  const [formState, formAction] = useActionState(saveMessurement, initialState);
   return (
     <div className="p-4 flex flex-col gap-4 bg-backgroundLite rounded-lg shadow-2xl items-center">
       <h1>Add your mesurements</h1>
-      <form action="" className="w-2/3  flex flex-col gap-4 items-center ">
+      <form
+        action={formAction}
+        className="w-2/3  flex flex-col gap-4 items-center "
+      >
         <div className="w-full rounded-lg border-2 border-blue-500 ">
           <DatePickerMeasurements />
           {TABLE_HEAD.map((field, index) => {

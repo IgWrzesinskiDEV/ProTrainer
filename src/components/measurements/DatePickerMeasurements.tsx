@@ -17,7 +17,12 @@ export default function DatePickerMeasurements() {
       calendarPosition="top"
       format="DD.MM.YYYY"
       maxDate={new Date()}
-      render={(value, openCalendar) => {
+      render={(renderValue, openCalendar) => {
+        let day, month, year;
+        if (renderValue && typeof renderValue === "string") {
+          [day, month, year] = renderValue.split(".");
+        }
+
         return (
           <>
             <button
@@ -25,14 +30,18 @@ export default function DatePickerMeasurements() {
               className="w-full p-1 flex items-center justify-center gap-x-2"
               onClick={openCalendar}
             >
-              {value}
+              {renderValue}
               <FiCalendar className="text-stone-50 text-xl" />
             </button>
             <input
               type="date"
-              name="mesurementDate"
               className="hidden"
-              defaultValue={value}
+              name="mesurementDate"
+              defaultValue={
+                renderValue && typeof renderValue === "string"
+                  ? `${year}-${month}-${day}`
+                  : ""
+              }
             />
           </>
         );

@@ -12,7 +12,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { redirect } from "next/navigation";
 import { toastify } from "../Toastify";
 
-const initialState = { error: "" };
+const initialState = { error: [] };
 
 export default function SetRestartedPasswordForm() {
   //const [open, setOpen] = useState(false);
@@ -64,8 +64,12 @@ export default function SetRestartedPasswordForm() {
           disabled={isPending}
         />
 
-        {formState?.error && (
-          <p className=" text-red-500">{formState?.error}</p>
+        {formState?.errors && (
+          <ul className="flex flex-col gap-2 text-red-500">
+            {formState.errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
         )}
         <AuthButton disabled={isPending} type="submit">
           {!isPending ? "Set new password" : <CircularProgress size={25} />}

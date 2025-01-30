@@ -10,7 +10,7 @@ import { sendPasswordReset } from "@/actions/passwordReset.action";
 import AuthButton from "./AuthButton";
 
 import { toastify } from "../Toastify";
-const initialState = { error: "" };
+const initialState = { errors: [] };
 
 export default function ResetPasswordForm() {
   const [formState, formAction, isPending] = useActionState(
@@ -35,8 +35,12 @@ export default function ResetPasswordForm() {
       <form className="flex flex-col gap-6 w-1/6" action={formAction}>
         <Input label="email" type="text" disabled={isPending} />
 
-        {formState?.error && (
-          <p className=" text-red-500">{formState?.error}</p>
+        {formState?.errors && (
+          <ul className="flex flex-col gap-2 text-red-500">
+            {formState.errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
         )}
         <AuthButton disabled={isPending} type="submit">
           {!isPending ? "Send reset link" : <CircularProgress size={25} />}

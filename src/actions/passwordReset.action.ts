@@ -7,19 +7,25 @@ import { User } from "@/lib/models/user.model";
 import { createAuthSession } from "@/lib/lucia/auth";
 import { createPasswordResetToken } from "@/utils/tokens";
 import { hashUserPassword, verifyPassword } from "@/utils/hash";
-
+import { ResetPasswordSchema, NewPasswordSchema } from "@/schemas/zSchemas";
 import { sendPasswordResetEmail } from "@/utils/mails";
 export async function sendPasswordReset(
   prevState: unknown,
   formData: FormData
 ) {
-  const email = formData.get("email") as string;
-  if (!email || !email.includes("@")) {
-    return { error: "Invalid email" };
+  const validateData = ResetPasswordSchema.safeParse({
+    email: formData.get("email") as string,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
   }
+
+  const { email } = validateData.data;
+
   const existingUser = await getUserByEmail(email);
   if (!existingUser) {
-    return { error: "User not found" };
+    return { errors: ["Email not found"] };
   }
 
   const existingToken = await createPasswordResetToken(email);
@@ -34,40 +40,44 @@ export async function CreateNewPassword(
   formData: FormData,
   token: string
 ) {
+  const validateData = NewPasswordSchema.safeParse({
+    oldPassword: formData.get("oldPassword") as string,
+    password: formData.get("password") as string,
+    confirmPassword: formData.get("confirmPassword") as string,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
+  }
+
+  const { oldPassword, password } = validateData.data;
+
   if (!token) {
-    return { error: "Token is required" };
+    return { errors: ["Token is required"] };
   }
 
   const existingToken = await getPasswordResetTokenByToken(token);
 
   if (!existingToken) {
-    return { error: "Token not exist" };
+    return { errors: ["Token not exist"] };
   }
 
   const isExpire = new Date() > existingToken.expiresAt;
 
   if (isExpire) {
-    return { error: "Token is expired" };
+    return { errors: ["Token is expired"] };
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingUser) {
-    return { error: "User not found" };
+    return { errors: ["User not found"] };
   }
-  const oldPassword = formData.get("oldPassword") as string;
-  const password = formData.get("password") as string;
-  const confirmPassword = formData.get("confirmPassword") as string;
+
   const isOldPasswordValid = verifyPassword(existingUser.password, oldPassword);
 
   if (!isOldPasswordValid) {
-    return { error: "Old password is incorrect" };
-  }
-  if (password.trim().length < 6) {
-    return { error: "Password must be at least 6 characters long" };
-  }
-  if (password !== confirmPassword) {
-    return { error: "Passwords do not match" };
+    return { errors: ["Old password is incorrect"] };
   }
 
   const hashedPassword = hashUserPassword(password);
