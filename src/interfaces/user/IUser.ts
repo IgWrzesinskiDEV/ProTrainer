@@ -3,3 +3,9 @@ export interface unitsInterface {
   height: "cm" | "ft";
   bodyMeasurement: "cm" | "in";
 }
+
+export interface profileDetailsInterface {
+  fullName: string;
+  bio: string;
+  avatarFileName: string;
+}

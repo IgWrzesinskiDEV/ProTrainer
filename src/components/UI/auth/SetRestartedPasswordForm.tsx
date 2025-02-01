@@ -12,7 +12,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { redirect } from "next/navigation";
 import { toastify } from "../Toastify";
 
-const initialState = { error: [] };
+const initialState = { error: [] as string[], success: "" };
 
 export default function SetRestartedPasswordForm() {
   //const [open, setOpen] = useState(false);

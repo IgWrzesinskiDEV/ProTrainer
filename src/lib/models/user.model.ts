@@ -7,14 +7,16 @@ export interface IUser {
   emailVerified?: boolean;
   password?: string;
   role: "user" | "coach" | "admin";
-  fullName?: string;
-  bio?: string;
+  profileDetails: {
+    fullName?: string;
+    bio?: string;
+    avatarFileName?: string;
+  };
   units: {
     weight: "kg" | "lbs";
     height: "cm" | "ft";
     bodyMeasurement: "cm" | "in";
   };
-  avatarFileName?: string;
 }
 
 const userSchema = new Schema<IUser>(
@@ -34,14 +36,16 @@ const userSchema = new Schema<IUser>(
       enum: ["user", "coach", "admin"],
       required: true,
     },
-    fullName: { type: String },
-    bio: { type: String },
+    profileDetails: {
+      fullName: { type: String },
+      bio: { type: String },
+      avatarFileName: { type: String },
+    },
     units: {
       weight: { type: String, default: "kg" },
       height: { type: String, default: "cm" },
       bodyMeasurement: { type: String, default: "cm" },
     },
-    avatarFileName: { type: String },
   } as const,
   { _id: false }
 );

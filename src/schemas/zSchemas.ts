@@ -36,3 +36,17 @@ export const NewPasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+export const ProfileDetailsSchema = z.object({
+  fullName: z.string(),
+  bio: z.string(),
+  avatar: z
+    .any()
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "Only .jpg, .jpeg, .png formats are allowed."
+    ),
+});

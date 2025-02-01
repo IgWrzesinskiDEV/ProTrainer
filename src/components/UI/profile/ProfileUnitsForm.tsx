@@ -1,9 +1,8 @@
 "use client";
 
-import AuthButton from "../auth/AuthButton";
 import saveProfileUnits from "@/actions/profile.actions";
 import { verifyAuth } from "@/lib/lucia/auth";
-
+import ButtonWithLoading from "../Buttons/ButtonWithLoading";
 import { useActionState, useEffect, useState } from "react";
 
 const initialState = {
@@ -37,7 +36,7 @@ export default function ProfileUnitsForm() {
   return (
     <form
       action={formAction}
-      className="flex items-center justify-center flex-col gap-4"
+      className="flex items-center justify-center flex-col gap-4 "
     >
       <div className="flex  w-1/2 justify-center  flex-col gap-2">
         <label className="text-white">Weight Unit</label>
@@ -78,9 +77,9 @@ export default function ProfileUnitsForm() {
           <option value="ft">Feet (ft)</option>
         </select>
       </div>
-      <AuthButton type="submit" className="w-1/5">
+      <ButtonWithLoading type="submit" className="w-1/5" isLoading={isPending}>
         Save
-      </AuthButton>
+      </ButtonWithLoading>
     </form>
   );
 }

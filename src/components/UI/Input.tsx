@@ -16,6 +16,7 @@ export default function Input({ label, name, type, ...props }: InputProps) {
         type={type}
         name={name || label}
         {...props}
+        defaultValue={props.defaultValue}
         className="px-4 py-2 rounded-lg text-lg font-medium focus:outline-none text-background"
       />
     </div>

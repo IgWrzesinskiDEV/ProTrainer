@@ -3,7 +3,7 @@ import { cn } from "@/lib/twMergeUtill";
 import AuthButton from "../UI/auth/AuthButton";
 import DatePickerMeasurements from "./DatePickerMeasurements";
 import { useActionState } from "react";
-import { saveMessurement } from "@/actions/profile.actions";
+import { saveMessurement } from "@/actions/measurements.action";
 const initialState = {
   error: "",
 };

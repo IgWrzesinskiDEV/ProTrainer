@@ -8,9 +8,9 @@ export default function Profile() {
       <div className="w-1/3">
         <ProfileDescriptionForm />
       </div>
-      <div className="w-[1px] opacity-20 h-80 bg-stone-300" />
-      <div className="w-1/3">
-        <h3 className="text-xl font-semibold text-white mb-4 text-center">
+      <div className="w-[1px] opacity-20 h-80 self-center bg-stone-300" />
+      <div className="w-1/3 ">
+        <h3 className="text-xl font-semibold text-white mb-12 text-center">
           Units
         </h3>
         <ProfileUnitsForm />

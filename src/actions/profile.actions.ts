@@ -4,22 +4,35 @@ import { User } from "@/lib/models/user.model";
 import saveAvatarImage from "@/lib/aws/saveAvatarImage";
 import { revalidatePath } from "next/cache";
 import { verifyAuth } from "@/lib/lucia/auth";
+import { ProfileDetailsSchema } from "@/schemas/zSchemas";
 export async function saveProfileData(prevState: unknown, formData: FormData) {
   const { user } = await verifyAuth();
   const id = user?.id;
   if (!id) {
-    return { error: "User not found" };
+    return { errors: ["User not found"] };
   }
-  const fullName = formData.get("fullName") as string;
-  const bio = formData.get("bio") as string;
-  const avatar = formData.get("avatar") as File;
-  if (!avatar) {
-    return { error: "Avatar not found" };
+  const validateData = ProfileDetailsSchema.safeParse({
+    fullName: formData.get("fullName") as string,
+    bio: formData.get("bio") as string,
+    avatar: formData.get("avatar") as File,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
   }
 
-  const avatarFileName = await saveAvatarImage(avatar, id);
-  console.log("avatar", avatarFileName);
-  await User.findByIdAndUpdate(id, { fullName, bio, avatarFileName });
+  const { fullName, bio, avatar } = validateData.data;
+
+  if (avatar) {
+    const avatarFileName = await saveAvatarImage(avatar, id);
+    await User.findByIdAndUpdate(id, {
+      profileDetails: { fullName, bio, avatarFileName },
+    });
+    revalidatePath("/profile");
+    return { success: "Profile with avatar saved" };
+  }
+
+  await User.findByIdAndUpdate(id, { profileDetails: { fullName, bio } });
   revalidatePath("/profile");
   return { success: "Profile saved" };
 }

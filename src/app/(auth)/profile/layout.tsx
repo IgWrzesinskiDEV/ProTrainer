@@ -7,7 +7,7 @@ export default async function profileLayout({
   children: React.ReactNode;
 }) {
   const { user } = await verifyAuth();
-  const { userName, avatarFileName } = user!;
+  const { userName, profileDetails } = user!;
 
   return (
     <>
@@ -15,8 +15,8 @@ export default async function profileLayout({
         <div className="flex items-center gap-2 ">
           <Avatar
             src={
-              avatarFileName
-                ? `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${avatarFileName}`
+              profileDetails.avatarFileName
+                ? `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${profileDetails.avatarFileName}`
                 : undefined
             }
             alt="The image selected by the user."

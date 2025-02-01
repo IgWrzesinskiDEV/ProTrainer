@@ -1,7 +1,10 @@
 import { Lucia, TimeSpan } from "lucia";
 
 import { adapter } from "../mongodb/adapter";
-import { unitsInterface } from "@/interfaces/user/IUser";
+import {
+  unitsInterface,
+  profileDetailsInterface,
+} from "@/interfaces/user/IUser";
 import connectMongoDb from "../mongodb/mogodb";
 await connectMongoDb();
 export const luciaAuth = new Lucia(adapter, {
@@ -20,6 +23,7 @@ export const luciaAuth = new Lucia(adapter, {
       units: attributes.units,
       email_verified: attributes.email_verified,
       avatarFileName: attributes.avatarFileName,
+      profileDetails: attributes.profileDetails,
     };
   },
 });
@@ -35,4 +39,5 @@ export interface DatabaseUserAttributes {
   email: string;
   email_verified: boolean;
   avatarFileName: string;
+  profileDetails: profileDetailsInterface;
 }
