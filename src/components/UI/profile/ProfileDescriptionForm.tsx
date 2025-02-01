@@ -17,25 +17,6 @@ export default function ProfileDescriptionForm() {
   const { userData } = useUserData(formState);
   const profileDetails = userData?.profileDetails;
 
-  // const [profilDeatils, setProfilDeatils] = useState({
-  //   fullName: "",
-  //   bio: "",
-  // });
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const data = await verifyAuth();
-
-  //     if (!data.user) {
-  //       return;
-  //     }
-  //     console.log(data.user);
-  //     setProfilDeatils(data.user.profileDetails);
-  //   };
-
-  //   getData().catch(console.error);
-  // }, [formState]);
-
   return (
     <form
       action={formAction}

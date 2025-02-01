@@ -1,10 +1,20 @@
 "use server";
 import { MeasurementModel } from "@/lib/models/measurement.model";
+import { MeasurementSchema } from "@/schemas/zSchemas";
 export async function saveMessurement(prevState: unknown, formData: FormData) {
-  console.log("formData", formData);
+  const measurementObject = Object.fromEntries(
+    Array.from(formData.entries()).map(([key, value]) => [
+      key,
+      isNaN(Number(value)) ? value : Number(value),
+    ])
+  );
+  console.log(measurementObject);
 
-  if (!formData) {
-    return { error: "No data found" };
+  const validatedData = MeasurementSchema.safeParse(measurementObject);
+
+  if (!validatedData.success) {
+    return { error: "All fields are required" };
   }
+
   return { success: "Measurement saved" };
 }

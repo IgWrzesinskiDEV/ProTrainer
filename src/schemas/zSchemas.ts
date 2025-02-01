@@ -50,3 +50,17 @@ export const ProfileDetailsSchema = z.object({
       "Only .jpg, .jpeg, .png formats are allowed."
     ),
 });
+
+export const MeasurementSchema = z.object({
+  mesurementDate: z.string().date(),
+  weight: z.number().positive(),
+  chest: z.number().positive(),
+  waist: z.number().positive(),
+  leftCalf: z.number().positive(),
+  rightCalf: z.number().positive(),
+  leftThigh: z.number().positive(),
+  rightThigh: z.number().positive(),
+  buttocks: z.number().positive(),
+  leftBiceps: z.number().positive(),
+  rightBiceps: z.number().positive(),
+});

@@ -17,8 +17,8 @@ interface ISingleMeasurement {
   leftThigh: number;
   rightThigh: number;
   buttocks: number;
-  leftBicep: number;
-  rightBicep: number;
+  leftBiceps: number;
+  rightBiceps: number;
 }
 const singleMeasurementSchema = new Schema<ISingleMeasurement>(
   {
@@ -32,8 +32,8 @@ const singleMeasurementSchema = new Schema<ISingleMeasurement>(
     leftThigh: { type: Number, required: true },
     rightThigh: { type: Number, required: true },
     buttocks: { type: Number, required: true },
-    leftBicep: { type: Number, required: true },
-    rightBicep: { type: Number, required: true },
+    leftBiceps: { type: Number, required: true },
+    rightBiceps: { type: Number, required: true },
   } as const,
   { _id: false }
 );

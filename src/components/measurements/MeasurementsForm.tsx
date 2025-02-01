@@ -4,15 +4,18 @@ import AuthButton from "../UI/auth/AuthButton";
 import DatePickerMeasurements from "./DatePickerMeasurements";
 import { useActionState } from "react";
 import { saveMessurement } from "@/actions/measurements.action";
+import camelize from "@/utils/camelizeString";
 const initialState = {
   error: "",
 };
+
 export default function MeasurementsForm({
   TABLE_HEAD,
 }: {
   TABLE_HEAD: string[];
 }) {
   const [formState, formAction] = useActionState(saveMessurement, initialState);
+
   return (
     <div className="p-4 flex flex-col gap-4 bg-backgroundLite rounded-lg shadow-2xl items-center">
       <h1>Add your mesurements</h1>
@@ -51,7 +54,8 @@ export default function MeasurementsForm({
                   <input
                     type={field === "Date" ? "date" : "number"}
                     min={0}
-                    name={field}
+                    step={0.1}
+                    name={camelize(field)}
                     className="w-full bg-transparent  focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                   <div>kg</div>

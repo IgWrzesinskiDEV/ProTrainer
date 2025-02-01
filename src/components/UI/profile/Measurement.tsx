@@ -96,6 +96,19 @@ export default function Measurement() {
     </ProfileWrapper>
   );
 }
+const TABLE_HEAD = [
+  "Date",
+  "Weight",
+  "Chest",
+  "Waist",
+  "Left calf",
+  "Right calf",
+  "Left thigh",
+  "Right thigh",
+  "Buttocks",
+  "Left biceps",
+  "Right biceps",
+];
 
 const TABLE_ROWS = [
   {
@@ -280,18 +293,4 @@ const TABLE_ROWS = [
     leftBicep: "34",
     rightBicep: "35",
   },
-];
-
-const TABLE_HEAD = [
-  "Date",
-  "Weight",
-  "Chest",
-  "Waist",
-  "Left calf",
-  "Right calf",
-  "Left thigh",
-  "Right thigh",
-  "Buttocks",
-  "Left bicep",
-  "Right bicep",
 ];
