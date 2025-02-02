@@ -52,7 +52,7 @@ export const ProfileDetailsSchema = z.object({
 });
 
 export const MeasurementSchema = z.object({
-  mesurementDate: z.string().date(),
+  date: z.string().date(),
   weight: z.number().positive(),
   chest: z.number().positive(),
   waist: z.number().positive(),

@@ -22,7 +22,7 @@ export default function TableRowPopper({
     setAnchorEl(null);
   };
   const open = isPending || Boolean(anchorEl);
-  console.log(isPending, "isPending");
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <tr

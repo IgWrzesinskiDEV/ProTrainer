@@ -36,7 +36,7 @@ export default function DatePickerMeasurements() {
             <input
               type="date"
               className="hidden"
-              name="mesurementDate"
+              name="date"
               defaultValue={
                 renderValue && typeof renderValue === "string"
                   ? `${year}-${month}-${day}`

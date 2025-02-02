@@ -8,7 +8,7 @@ export interface IMeasurement {
 
 export interface ISingleMeasurement {
   _id: string;
-  mesurementDate: string;
+  date: string;
   weight: number;
   chest: number;
   waist: number;
@@ -22,7 +22,7 @@ export interface ISingleMeasurement {
 }
 const singleMeasurementSchema = new Schema<ISingleMeasurement>({
   _id: { type: String, required: true },
-  mesurementDate: { type: String, required: true },
+  date: { type: String, required: true },
   weight: { type: Number, required: true },
   chest: { type: Number, required: true },
   waist: { type: Number, required: true },

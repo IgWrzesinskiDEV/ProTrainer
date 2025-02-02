@@ -1,6 +1,7 @@
 "use client";
 
 import { MdAddCircleOutline } from "react-icons/md";
+import { IoMdArrowDropup } from "react-icons/io";
 
 import { useState, useRef } from "react";
 import ProfileWrapper from "./ProfileWrapper";
@@ -9,6 +10,8 @@ import TablePaginationComponent from "@/components/measurements/TablePagination"
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
 import TableRowPopper from "@/components/measurements/TableRowPopper";
 import { ISingleMeasurement } from "@/lib/models/measurement.model";
+import { cn } from "@/lib/twMergeUtill";
+import camelize from "@/utils/camelizeString";
 export default function Measurement({
   measurementsData,
   units,
@@ -17,14 +20,37 @@ export default function Measurement({
   units: string;
 }) {
   const [page, setPage] = useState(0);
+  const [sort, setSort] = useState({
+    keyToSort: "date",
+    order: "asc",
+  });
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
-
-  const TABLE_ROWS = JSON.parse(measurementsData);
+  const getSortedArray = (array: ISingleMeasurement[]) => {
+    if (sort.order === "asc") {
+      console.log("asc sorting");
+      return array.sort((a: ISingleMeasurement, b: ISingleMeasurement) =>
+        a[sort.keyToSort as keyof ISingleMeasurement] >
+        b[sort.keyToSort as keyof ISingleMeasurement]
+          ? 1
+          : -1
+      );
+    }
+    console.log("desc sorting");
+    return array.sort((a: ISingleMeasurement, b: ISingleMeasurement) =>
+      a[sort.keyToSort as keyof ISingleMeasurement] >
+      b[sort.keyToSort as keyof ISingleMeasurement]
+        ? -1
+        : 1
+    );
+  };
+  const rawTableRows = JSON.parse(measurementsData);
+  const sortedArray = getSortedArray(rawTableRows);
+  console.log(sortedArray);
   const userUnits = JSON.parse(units);
-  console.log(userUnits);
+
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - TABLE_ROWS.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - sortedArray.length) : 0;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -39,29 +65,54 @@ export default function Measurement({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleSortClick = (head: string) => {
+    const camelizedHead = camelize(head);
+    setSort((prevState) => ({
+      keyToSort: camelizedHead,
+      order:
+        prevState.keyToSort === camelizedHead
+          ? prevState.order === "asc"
+            ? "desc"
+            : "asc"
+          : "asc",
+    }));
+  };
+  console.log(sort);
   return (
     <ProfileWrapper title="Measurement">
       <div className="flex flex-col gap-3 w-full items-center justify-center">
-        <table className="w-full  table-auto text-left border-2 border-collapse border-[#aaaabc]/50  ">
+        <table className="w-full  table-fixed text-left border-2 border-collapse border-[#aaaabc]/50  ">
           <thead>
             <tr className="text-background bg-blue-500/70   text-stone-100 text-lg">
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
                   className="border-b border-r  border-[#aaaabc]/50  p-4"
+                  onClick={() => handleSortClick(head)}
                 >
-                  {head}
+                  <div className="flex items-center justify-between w-full ">
+                    {head}
+                    {sort.keyToSort === camelize(head) && (
+                      <IoMdArrowDropup
+                        className={cn(
+                          "text-2xl",
+                          sort.order === "desc" && "rotate-180"
+                        )}
+                      />
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {(rowsPerPage > 0
-              ? TABLE_ROWS.slice(
+              ? sortedArray.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : TABLE_ROWS
+              : sortedArray
             ).map((data: ISingleMeasurement) => (
               <TableRowPopper key={data._id} id={data._id}>
                 {Object.keys(data)
@@ -75,7 +126,7 @@ export default function Measurement({
                       <span className="text-xs  ">
                         {key === "weight" && userUnits.weight}
                         {key !== "weight" &&
-                          key !== "mesurementDate" &&
+                          key !== "date" &&
                           userUnits.bodyMeasurement}
                       </span>
                     </td>
@@ -92,7 +143,7 @@ export default function Measurement({
             <tr>
               <TablePaginationComponent
                 TABLE_HEAD={TABLE_HEAD}
-                TABLE_ROWS={TABLE_ROWS}
+                TABLE_ROWS={sortedArray}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 handleChangePage={handleChangePage}
