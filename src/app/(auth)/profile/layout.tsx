@@ -15,7 +15,7 @@ export default async function profileLayout({
         <div className="flex items-center gap-2 ">
           <Avatar
             src={
-              profileDetails.avatarFileName
+              profileDetails?.avatarFileName
                 ? `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${profileDetails.avatarFileName}`
                 : undefined
             }

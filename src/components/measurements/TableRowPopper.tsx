@@ -1,10 +1,11 @@
 "use client";
 
 import { Popper } from "@mui/base/Popper";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-
+import { deleteMeasurement } from "@/actions/measurements.action";
+import { CircularProgress } from "@mui/material";
 export default function TableRowPopper({
   children,
   id,
@@ -13,21 +14,21 @@ export default function TableRowPopper({
   id: string;
 }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const [isPending, startTransition] = useTransition();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const handleClickAway = () => {
     setAnchorEl(null);
   };
-  const open = Boolean(anchorEl);
-
+  const open = isPending || Boolean(anchorEl);
+  console.log(isPending, "isPending");
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <tr
         key={id}
         //aria-describedby={id2}
-        className="hover:bg-blue-500/20 transition-colors duration-75 cursor-pointer "
+        className="hover:bg-blue-500/20 transition-colors relative duration-75 cursor-pointer "
         onClick={handleClick}
       >
         {children}
@@ -46,10 +47,16 @@ export default function TableRowPopper({
     border-b-[5px] border-b-transparent"
           />
           <button
-            className=" z-50 rounded-lg   p-3 border border-solid border-red-500 bg-background text-stone-100"
-            onClick={() => console.log("delete")}
+            className=" z-50 rounded-lg w-12 h-12  p-3 border border-solid flex items-center justify-center border-red-500 bg-background text-stone-100"
+            onClick={() => startTransition(() => deleteMeasurement(id))}
+            type="button"
+            disabled={isPending}
           >
-            <MdOutlineDelete className="text-2xl text-red-500" />
+            {isPending ? (
+              <CircularProgress size={20} className="text-red-500" />
+            ) : (
+              <MdOutlineDelete className="text-2xl text-center text-red-500" />
+            )}
           </button>
         </Popper>
       </tr>

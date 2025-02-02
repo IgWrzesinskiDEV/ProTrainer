@@ -8,11 +8,21 @@ import ModalUnstyled from "../Modal";
 import TablePaginationComponent from "@/components/measurements/TablePagination";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
 import TableRowPopper from "@/components/measurements/TableRowPopper";
-export default function Measurement() {
+import { ISingleMeasurement } from "@/lib/models/measurement.model";
+export default function Measurement({
+  measurementsData,
+  units,
+}: {
+  measurementsData: string;
+  units: string;
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
-  // Avoid a layout jump when reaching the last page with empty rows.
+
+  const TABLE_ROWS = JSON.parse(measurementsData);
+  const userUnits = JSON.parse(units);
+  console.log(userUnits);
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - TABLE_ROWS.length) : 0;
 
@@ -52,16 +62,22 @@ export default function Measurement() {
                   page * rowsPerPage + rowsPerPage
                 )
               : TABLE_ROWS
-            ).map((data) => (
-              <TableRowPopper key={data.id} id={data.id}>
+            ).map((data: ISingleMeasurement) => (
+              <TableRowPopper key={data._id} id={data._id}>
                 {Object.keys(data)
-                  .filter((measurementData) => measurementData !== "id")
+                  .filter((measurementData) => measurementData !== "_id")
                   .map((key) => (
                     <td
-                      className="p-4 border-b border-r border-[#aaaabc]/50 "
+                      className="p-4 border-b border-r text-lg border-[#aaaabc]/50 "
                       key={key}
                     >
-                      {data[key as keyof typeof data]}
+                      {data[key as keyof typeof data]}{" "}
+                      <span className="text-xs  ">
+                        {key === "weight" && userUnits.weight}
+                        {key !== "weight" &&
+                          key !== "mesurementDate" &&
+                          userUnits.bodyMeasurement}
+                      </span>
                     </td>
                   ))}
               </TableRowPopper>
@@ -90,7 +106,7 @@ export default function Measurement() {
           <MdAddCircleOutline className="text-4xl text-blue-500" />
         </button>
         <ModalUnstyled ref={modalRef}>
-          <MeasurementsForm TABLE_HEAD={TABLE_HEAD} />
+          <MeasurementsForm TABLE_HEAD={TABLE_HEAD} units={userUnits} />
         </ModalUnstyled>
       </div>
     </ProfileWrapper>
@@ -108,189 +124,4 @@ const TABLE_HEAD = [
   "Buttocks",
   "Left biceps",
   "Right biceps",
-];
-
-const TABLE_ROWS = [
-  {
-    id: "1",
-    date: "23/04/18",
-    weight: "6438",
-    chest: "70",
-    waist: "70",
-    leftCalf: "35",
-    rightCalf: "36",
-    leftThigh: "50",
-    rightThigh: "51",
-    buttocks: "95",
-    leftBicep: "32",
-    rightBicep: "33",
-  },
-  {
-    id: "2",
-    date: "23/04/18",
-    weight: "78",
-    chest: "72",
-    waist: "69",
-    leftCalf: "35.5",
-    rightCalf: "36.5",
-    leftThigh: "50.5",
-    rightThigh: "51.5",
-    buttocks: "96",
-    leftBicep: "32.5",
-    rightBicep: "33.5",
-  },
-  {
-    id: "3",
-    date: "23/04/18",
-    weight: "65",
-    chest: "74",
-    waist: "68",
-    leftCalf: "36",
-    rightCalf: "37",
-    leftThigh: "51",
-    rightThigh: "52",
-    buttocks: "97",
-    leftBicep: "33",
-    rightBicep: "34",
-  },
-  {
-    id: "4",
-    date: "23/04/18",
-    weight: "76",
-    chest: "75",
-    waist: "67",
-    leftCalf: "36.5",
-    rightCalf: "37.5",
-    leftThigh: "51.5",
-    rightThigh: "52.5",
-    buttocks: "98",
-    leftBicep: "33.5",
-    rightBicep: "34.5",
-  },
-  {
-    id: "6",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "7",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "8",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "9",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "10",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "11",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "12",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "13",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
-  {
-    id: "14",
-    date: "23/04/18",
-    weight: "76",
-    chest: "76",
-    waist: "66",
-    leftCalf: "37",
-    rightCalf: "38",
-    leftThigh: "52",
-    rightThigh: "53",
-    buttocks: "99",
-    leftBicep: "34",
-    rightBicep: "35",
-  },
 ];
