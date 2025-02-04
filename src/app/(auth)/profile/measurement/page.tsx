@@ -1,4 +1,4 @@
-import Measurement from "@/components/UI/profile/Measurement";
+import Measurement from "@/components/measurements/Measurement";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { MeasurementModel } from "@/lib/models/measurement.model";
 export default async function MeasurementPage() {

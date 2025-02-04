@@ -41,7 +41,7 @@ export default async function AuthLayout({
           </li>
         </ul>
       </nav>
-      <main className="bg-zinc-900 h-full  px-32 py-20">{children}</main>
+      <main className=" h-full  px-32 py-20">{children}</main>
     </>
   );
 }

@@ -8,9 +8,10 @@ import FirstPageRoundedIcon from "@mui/icons-material/FirstPageRounded";
 import LastPageRoundedIcon from "@mui/icons-material/LastPageRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import { ISingleMeasurement } from "@/lib/models/measurement.model";
 interface TablePaginationComponentProps {
   TABLE_HEAD: string[];
-  TABLE_ROWS: { [key: string]: string }[];
+  TABLE_ROWS: ISingleMeasurement[];
   rowsPerPage: number;
   page: number;
   handleChangePage: (
@@ -19,6 +20,7 @@ interface TablePaginationComponentProps {
   ) => void;
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
 export default function TablePaginationComponent({
   TABLE_HEAD,
   TABLE_ROWS,

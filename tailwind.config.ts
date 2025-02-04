@@ -19,6 +19,9 @@ export default {
         sans: ["var(--font-inter)"],
         mono: ["var(--font-roboto-mono)"],
       },
+      backgroundImage: {
+        foo: "repeating-linear-gradient(to top left, #78716ccc 0px, #78716ccc 10px, #78716c80 10px, #78716c80 20px) ",
+      },
     },
   },
   plugins: [],

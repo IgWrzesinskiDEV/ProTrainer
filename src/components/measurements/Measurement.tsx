@@ -4,8 +4,8 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
 
 import { useState, useRef } from "react";
-import ProfileWrapper from "./ProfileWrapper";
-import ModalUnstyled from "../Modal";
+import ProfileWrapper from "../UI/profile/ProfileWrapper";
+import ModalUnstyled from "../UI/Modal";
 import TablePaginationComponent from "@/components/measurements/TablePagination";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
 import TableRowPopper from "@/components/measurements/TableRowPopper";
@@ -88,7 +88,7 @@ export default function Measurement({
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-b border-r  border-[#aaaabc]/50  p-4"
+                  className="border-b border-r  border-[#aaaabc]/50 cursor-pointer select-none  p-4"
                   onClick={() => handleSortClick(head)}
                 >
                   <div className="flex items-center justify-between w-full ">
