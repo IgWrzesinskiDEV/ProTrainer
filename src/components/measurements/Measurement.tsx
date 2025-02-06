@@ -8,7 +8,8 @@ import ProfileWrapper from "../UI/profile/ProfileWrapper";
 import ModalUnstyled from "../UI/Modal";
 import TablePaginationComponent from "@/components/measurements/TablePagination";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
-import TableRowPopper from "@/components/measurements/TableRowPopper";
+import CustomPopper from "../UI/Popper";
+import { deleteMeasurement } from "@/actions/measurements.action";
 import { ISingleMeasurement } from "@/lib/models/measurement.model";
 import { cn } from "@/lib/twMergeUtill";
 import camelize from "@/utils/camelizeString";
@@ -114,7 +115,13 @@ export default function Measurement({
                 )
               : sortedArray
             ).map((data: ISingleMeasurement) => (
-              <TableRowPopper key={data._id} id={data._id}>
+              <CustomPopper
+                isDelete
+                onPopperClickHandler={deleteMeasurement}
+                trClassName="hover:bg-blue-500/20 transition-colors relative duration-75 cursor-pointer "
+                key={data._id}
+                id={data._id}
+              >
                 {Object.keys(data)
                   .filter((measurementData) => measurementData !== "_id")
                   .map((key) => (
@@ -131,7 +138,7 @@ export default function Measurement({
                       </span>
                     </td>
                   ))}
-              </TableRowPopper>
+              </CustomPopper>
             ))}
             {emptyRows > 0 && (
               <tr style={{ height: 41 * emptyRows }}>
