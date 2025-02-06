@@ -80,7 +80,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "font-sans py-[2px] pl-[4px] pr-[2px]  border border-solid border-zinc-200 dark:border-[#303740] rounded-[6px] bg-transparent hover:bg-zinc-20 hover:dark:bg-backgroundLite focus:outline-0 [&>button:focus]:ring-[3px] focus:border-blue-500 focus:dark:border-blue-500 focus:hover:border-blue-500 focus:hover:dark:border-blue-500 transition",
+              "font-sans py-[2px] pl-[4px] pr-[2px]  border border-solid border-[#303740] rounded-[6px] bg-backgroundLite  hover:bg-backgroundLite focus:outline-0 [&>button:focus]:ring-[3px]  focus:border-blue-500  focus:hover:border-blue-500 transition",
               resolvedSlotProps?.className
             ),
           };
@@ -93,7 +93,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "flex gap-[6px] text-center [&>button]:my-0 [&>button]:p-0 [&>button]:flex [&>button]:items-center [&>button]:rounded-full [&>button]:bg-transparent [&>button]:border [&>button]:border-solid [&>button]:border-zinc-300 [&>button]:dark:border-[#303740] [&>button:hover]:dark:border-zinc-700 [&>button:hover]:bg-zinc-100 [&>button:hover]:border-zinc-400 [&>button:hover]:dark:bg-zinc-800 [&>button:focus]:outline-0 [&>button:focus]:ring-[2px] [&>button:focus]:border-blue-500 [&>button:focus]:dark:border-blue-500 [&>button:focus:hover]:border-blue-500 [&>button:focus:hover]:dark:border-blue-500 [&>button>svg]:text-[22px] [&>button:disabled]:opacity-[0.3] [&>button:disabled:hover]:bg-transparent [&>button:disabled:hover]:border-zinc-300 [&>button:disabled:hover]:dark:border-zinc-700",
+              "flex gap-[6px] text-center [&>button]:my-0 [&>button]:p-0 [&>button]:flex [&>button]:items-center [&>button]:rounded-full [&>button]:bg-transparent [&>button]:border [&>button]:border-solid  [&>button]:border-[#303740] [&>button:hover]:border-zinc-700   [&>button:hover]:bg-zinc-800 [&>button:focus]:outline-0 [&>button:focus]:ring-[2px]  [&>button:focus]:border-blue-500 [&>button:focus:hover]:border-blue-500  [&>button>svg]:text-[22px] [&>button:disabled]:opacity-[0.3] [&>button:disabled:hover]:bg-transparent  [&>button:disabled:hover]:border-zinc-700",
               resolvedSlotProps?.className
             ),
           };

@@ -1,3 +1,5 @@
+import { number } from "zod";
+
 export default function WorkoutPlan() {
   return (
     <div className="flex flex-col items-center justify-center w-3/4 rounded-lg  overflow-hidden shadow-lg">
@@ -7,7 +9,7 @@ export default function WorkoutPlan() {
             {workoutPlan.map((dayPlan, index) => (
               <th
                 key={dayPlan.id}
-                className={`bg-black/40 text-white border-r border-stone-300/20  p-2 ${
+                className={`bg-neutral-900 text-white border-r border-stone-300/20  p-2 ${
                   index === workoutPlan.length - 1 && "border-none"
                 } `}
               >
@@ -218,3 +220,64 @@ const workoutPlan = [
     ],
   },
 ];
+
+const ex = {
+  planName: "Reapir",
+  days: [
+    {
+      id: 7,
+      day: "Sunday",
+      workoutTitle: "Upper",
+      exercises: [
+        {
+          number: 1,
+          name: "push up plus",
+          tempo: "2-0-2",
+          weekData: [
+            {
+              week: 1,
+              coachData: "3x10 10kg",
+              userData: "rir0",
+            },
+          ],
+        },
+        {
+          number: 1,
+          name: "push up plus",
+          tempo: "2-0-2",
+          weekData: [
+            {
+              week: 1,
+              coachData: "3x10 10kg",
+              userData: "rir0",
+            },
+          ],
+        },
+        {
+          number: 1,
+          name: "push up plus",
+          tempo: "2-0-2",
+          weekData: [
+            {
+              week: 1,
+              coachData: "3x10 10kg",
+              userData: "rir0",
+            },
+          ],
+        },
+        {
+          number: 1,
+          name: "push up plus",
+          tempo: "2-0-2",
+          weekData: [
+            {
+              week: 1,
+              coachData: "3x10 10kg",
+              userData: "rir0",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
