@@ -35,7 +35,7 @@ export default function EmailVerificationForm() {
 
   if (success) {
     setTimeout(() => {
-      redirect("/profile");
+      redirect("/dashboard/profile");
     }, 3000);
   }
 

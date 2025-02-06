@@ -28,12 +28,12 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
     await User.findByIdAndUpdate(id, {
       profileDetails: { fullName, bio, avatarFileName },
     });
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/profile");
     return { success: "Profile with avatar saved" };
   }
 
   await User.findByIdAndUpdate(id, { profileDetails: { fullName, bio } });
-  revalidatePath("/profile");
+  revalidatePath("/dashboard/profile");
   return { success: "Profile saved" };
 }
 
@@ -54,6 +54,6 @@ export default async function saveProfileUnits(
   await User.findByIdAndUpdate(id, {
     units: { weight, height, bodyMeasurement },
   });
-  revalidatePath("/profile");
+  revalidatePath("/dashboard/profile");
   return { succes: "Units saved" };
 }

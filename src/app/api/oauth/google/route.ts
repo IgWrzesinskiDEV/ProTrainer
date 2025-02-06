@@ -170,7 +170,7 @@ export const GET = async (req: NextRequest) => {
       });
 
       return NextResponse.redirect(
-        new URL("/profile", process.env.NEXT_BASE_URL),
+        new URL("/dashboard/profile", process.env.NEXT_BASE_URL),
         {
           status: 302,
         }

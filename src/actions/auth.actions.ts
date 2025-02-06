@@ -75,7 +75,7 @@ export async function login(prevState: unknown, formData: FormData) {
     return { errors: ["Invalid password"] };
   }
   await createAuthSession(existingUser._id);
-  redirect("/profile");
+  redirect("/dashboard/profile");
 }
 
 export async function logout() {

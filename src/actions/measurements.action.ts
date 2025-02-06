@@ -36,13 +36,13 @@ export async function saveMessurement(prevState: unknown, formData: FormData) {
       userId: userId,
       measurements: [currentMeasurements],
     });
-    revalidatePath("/profile/measurement");
+    revalidatePath("/dashboard/measurement");
     return { success: "Measurements created and saved" };
   }
 
   exisitingMeasurements.measurements.push(currentMeasurements);
   await exisitingMeasurements.save();
-  revalidatePath("/profile/measurement");
+  revalidatePath("/dashboard/measurement");
   return { success: "Measurement saved" };
 }
 
@@ -59,7 +59,7 @@ export async function deleteMeasurement(id: string) {
         (measurement: ISingleMeasurement) => measurement._id !== id
       );
     exisitingMeasurements.save();
-    revalidatePath("/profile/measurement");
+    revalidatePath("/dashboard/measurement");
   } catch {
     throw new Error("Something went wrong");
   }

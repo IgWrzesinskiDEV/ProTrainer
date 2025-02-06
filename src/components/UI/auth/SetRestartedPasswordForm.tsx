@@ -42,7 +42,7 @@ export default function SetRestartedPasswordForm() {
         3000
       );
       setTimeout(() => {
-        redirect("/profile");
+        redirect("/dashboard/profile");
       }, 3000);
     }
   }, [formState?.success]);

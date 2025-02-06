@@ -1,4 +1,4 @@
-import { number } from "zod";
+import Link from "next/link";
 
 export default function WorkoutPlan() {
   return (
@@ -38,18 +38,24 @@ export default function WorkoutPlan() {
               return (
                 <td
                   key={dayPlan.id}
-                  className={`p-4 bg-blue-500 hover:bg-blue-700 transition-colors duration-150 cursor-pointer ${
+                  className={` bg-blue-500 hover:bg-blue-700 transition-colors duration-150 cursor-pointer ${
                     index === workoutPlan.length - 1 && "border-none"
                   } border-r border-stone-300`}
                 >
-                  <span className="text-center w-full block text-xl">
-                    {dayPlan.workoutTitle}
-                  </span>
-                  <ol className="list-decimal list-inside">
-                    {dayPlan.exercises.map((exercise) => (
-                      <li key={exercise.name}>{exercise.name}</li>
-                    ))}
-                  </ol>
+                  <Link
+                    href={`plans/${ex.planId}/${dayPlan.day}`}
+                    passHref
+                    className="block p-4"
+                  >
+                    <span className="text-center w-full block text-xl">
+                      {dayPlan.workoutTitle}
+                    </span>
+                    <ol className="list-decimal list-inside">
+                      {dayPlan.exercises.map((exercise) => (
+                        <li key={exercise.name}>{exercise.name}</li>
+                      ))}
+                    </ol>
+                  </Link>
                 </td>
               );
             })}
@@ -62,127 +68,139 @@ export default function WorkoutPlan() {
 
 const workoutPlan = [
   {
-    id: 1,
-    day: "Monday",
-    workoutTitle: "Upper",
-    exercises: [
-      {
-        name: "push up plus",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciskanie hantlami",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "przyciąganie z rotacja w odc piersiowym",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciąg dolny do mocnego rozciągniecia",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-    ],
-  },
-  {
-    id: 2,
-    day: "Tuesday",
-    workoutTitle: "Upper",
-    exercises: [
-      {
-        name: "push up plus",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciskanie hantlami",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "przyciąganie z rotacja w odc piersiowym",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciąg dolny do mocnego rozciągniecia",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-    ],
-  },
-  {
-    id: 3,
-    day: "Wednesday",
-    workoutTitle: "Rest Day",
-    exercises: [],
-  },
-  {
-    id: 4,
-    day: "Thursday",
-    workoutTitle: "Upper",
-    exercises: [
-      {
-        name: "push up plus",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciskanie hantlami",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "przyciąganie z rotacja w odc piersiowym",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-      {
-        name: "wyciąg dolny do mocnego rozciągniecia",
-        tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
-      },
-    ],
-  },
-  {
-    id: 5,
-    day: "Friday",
-    workoutTitle: "Rest Day",
-    exercises: [],
-  },
-  {
     id: 6,
     day: "Saturday",
-    workoutTitle: "Rest Day",
-    exercises: [],
+    workoutTitle: "Lower",
+    exercises: [
+      {
+        number: 1,
+        name: "Squats",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 2,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 3,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 4,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 5,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 6,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 7,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 8,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 10,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 11,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 12,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 13,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 14,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 15,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 16,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 17,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+          {
+            week: 18,
+            coachData: "3x10 20kg",
+            userData: "rir1",
+          },
+        ],
+      },
+      {
+        number: 2,
+        name: "Lunges",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x12 15kg",
+            userData: "rir2",
+          },
+        ],
+      },
+      {
+        number: 3,
+        name: "Leg Press",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x15 50kg",
+            userData: "rir1",
+          },
+        ],
+      },
+      {
+        number: 4,
+        name: "Calf Raises",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x20 10kg",
+            userData: "rir0",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 7,
@@ -190,94 +208,217 @@ const workoutPlan = [
     workoutTitle: "Upper",
     exercises: [
       {
-        name: "push up plus",
+        number: 1,
+        name: "Push Up Plus",
         tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x10 10kg",
+            userData: "rir0",
+          },
+        ],
       },
       {
-        name: "wyciskanie hantlami",
+        number: 2,
+        name: "Pull Ups",
         tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x8 Bodyweight",
+            userData: "rir1",
+          },
+        ],
       },
       {
-        name: "przyciąganie z rotacja w odc piersiowym",
+        number: 3,
+        name: "Shoulder Press",
         tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x12 15kg",
+            userData: "rir2",
+          },
+        ],
       },
       {
-        name: "wyciąg dolny do mocnego rozciągniecia",
+        number: 4,
+        name: "Bicep Curls",
         tempo: "2-0-2",
-        sets: 3,
-        weight: "-",
-        rir: "-",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x15 10kg",
+            userData: "rir1",
+          },
+        ],
       },
     ],
   },
 ];
-
-const ex = {
-  planName: "Reapir",
-  days: [
-    {
-      id: 7,
-      day: "Sunday",
-      workoutTitle: "Upper",
-      exercises: [
-        {
-          number: 1,
-          name: "push up plus",
-          tempo: "2-0-2",
-          weekData: [
-            {
-              week: 1,
-              coachData: "3x10 10kg",
-              userData: "rir0",
-            },
-          ],
-        },
-        {
-          number: 1,
-          name: "push up plus",
-          tempo: "2-0-2",
-          weekData: [
-            {
-              week: 1,
-              coachData: "3x10 10kg",
-              userData: "rir0",
-            },
-          ],
-        },
-        {
-          number: 1,
-          name: "push up plus",
-          tempo: "2-0-2",
-          weekData: [
-            {
-              week: 1,
-              coachData: "3x10 10kg",
-              userData: "rir0",
-            },
-          ],
-        },
-        {
-          number: 1,
-          name: "push up plus",
-          tempo: "2-0-2",
-          weekData: [
-            {
-              week: 1,
-              coachData: "3x10 10kg",
-              userData: "rir0",
-            },
-          ],
-        },
-      ],
-    },
-  ],
+//   {
+//     id: 1,
+//     day: "Monday",
+//     workoutTitle: "Upper",
+//     exercises: [
+//       {
+//         name: "push up plus",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciskanie hantlami",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "przyciąganie z rotacja w odc piersiowym",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciąg dolny do mocnego rozciągniecia",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     day: "Tuesday",
+//     workoutTitle: "Upper",
+//     exercises: [
+//       {
+//         name: "push up plus",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciskanie hantlami",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "przyciąganie z rotacja w odc piersiowym",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciąg dolny do mocnego rozciągniecia",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     day: "Wednesday",
+//     workoutTitle: "Rest Day",
+//     exercises: [],
+//   },
+//   {
+//     id: 4,
+//     day: "Thursday",
+//     workoutTitle: "Upper",
+//     exercises: [
+//       {
+//         name: "push up plus",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciskanie hantlami",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "przyciąganie z rotacja w odc piersiowym",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciąg dolny do mocnego rozciągniecia",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//     ],
+//   },
+//   {
+//     id: 5,
+//     day: "Friday",
+//     workoutTitle: "Rest Day",
+//     exercises: [],
+//   },
+//   {
+//     id: 6,
+//     day: "Saturday",
+//     workoutTitle: "Rest Day",
+//     exercises: [],
+//   },
+//   {
+//     id: 7,
+//     day: "Sunday",
+//     workoutTitle: "Upper",
+//     exercises: [
+//       {
+//         name: "push up plus",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciskanie hantlami",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "przyciąganie z rotacja w odc piersiowym",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//       {
+//         name: "wyciąg dolny do mocnego rozciągniecia",
+//         tempo: "2-0-2",
+//         sets: 3,
+//         weight: "-",
+//         rir: "-",
+//       },
+//     ],
+//   },
+// ];
+export const ex = {
+  planId: 1,
+  planName: "bench",
+  days: [...workoutPlan],
 };

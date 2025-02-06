@@ -27,16 +27,16 @@ export default async function profileLayout({
         <nav className="">
           <ul className="flex  gap-1">
             <li>
-              <ProfileLink href="/profile" text="Profile" />
+              <ProfileLink href="/dashboard/profile" text="Profile" />
             </li>
             <li>
-              <ProfileLink href="/profile/account" text="Account" />
+              <ProfileLink href="/dashboard/account" text="Account" />
             </li>
             <li>
-              <ProfileLink href="/profile/plans" text=" Plans" />
+              <ProfileLink href="/dashboard/plans" text=" Plans" />
             </li>
             <li>
-              <ProfileLink href="/profile/measurement" text="Measurement" />
+              <ProfileLink href="/dashboard/measurement" text="Measurement" />
             </li>
           </ul>
         </nav>
