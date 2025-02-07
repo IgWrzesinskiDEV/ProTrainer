@@ -23,7 +23,7 @@ export default async function AuthLayout({
         <ul className="flex gap-3 w-full  justify-center items-center">
           <li>
             <Link
-              href="/profile"
+              href="/dashboard/profile"
               className="hover:text-blue-500 transition-colors duration-300"
             >
               Profile

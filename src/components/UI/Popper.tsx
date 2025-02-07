@@ -58,11 +58,11 @@ export default function CustomPopper({
           <div
             className={`w-0 h-0 
     border-t-[5px] border-t-transparent
-    border-r-[7.5px] border-r-${color}
+    border-r-[7.5px] border-r-red-500
     border-b-[5px] border-b-transparent`}
           />
           <button
-            className={` z-50 rounded-lg w-12 h-12  p-3 border border-solid flex items-center justify-center border-${color} bg-background text-stone-100`}
+            className={` z-50 rounded-lg w-12 h-12  p-3 border border-solid flex items-center justify-center border-red-500 bg-background text-stone-100`}
             onClick={() => startTransition(() => onPopperClickHandler(id))}
             type="button"
             disabled={isPending}
