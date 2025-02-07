@@ -1,19 +1,33 @@
 "use client";
 
 import { ex as plan } from "@/components/plans/WorkoutPlan";
-
+import { useRef, useActionState } from "react";
+import saveExercisesUserData from "@/actions/workoutPlans.action";
 import PlansTablePopper from "./PlansTablePopper";
 import { generateIdFromEntropySize } from "lucia";
+const initialState = {
+  error: "",
+};
 
 export default function SingleDayWorkout() {
+  const [formState, formAction] = useActionState(
+    saveExercisesUserData,
+    initialState
+  );
+  const formRef = useRef<HTMLFormElement>(null);
   const plandata = plan.days[0];
+  //const formRef = useRef<HTMLFormElement>(null);
   const borderColor = "border-[#aaaabc]/50";
+  function submitFormHandler() {
+    formRef.current?.requestSubmit();
+  }
   return (
     <div className="p-4 max-w-full">
       <h2 className="text-2xl font-bold mb-4">{plan.planName} Workout Plan</h2>
 
-      <div
-        key={plandata.id}
+      <form
+        action={formAction}
+        ref={formRef}
         className="rounded-lg shadow-lg mb-6 p-10 bg-neutral-900 flex items-start flex-col overflow-x-auto planScrollbar"
       >
         <h3 className="text-xl font-semibold mb-2">{plandata.day}</h3>
@@ -47,50 +61,16 @@ export default function SingleDayWorkout() {
                     exercise={exercise}
                     index={index}
                     id={exercise.name}
-                    onPopperClickHandler={() => {}}
+                    onPopperClickHandler={submitFormHandler}
                   />
                 );
               })}
-              {/* <td
-                    className={`border ${borderColor} px-2 py-1 text-center font-bold`}
-                  >
-                    {index + 1}
-                  </td>
-                  <td className={`border ${borderColor} px-2 py-1`}>
-                    {exercise.name}
-                  </td>
-                  <td className={`border ${borderColor} px-2 py-1`}>
-                    {exercise.tempo}
-                  </td>
-                  {exercise.weekData.map((week, weekIndex) => (
-                    <>
-                      <td
-                        key={weekIndex}
-                        className={`border ${borderColor} px-2 py-1 text-center`}
-                      >
-                        {week.coachData}
-                      </td>
-                      <td
-                        className={`border ${borderColor} px-2 py-1 text-center `}
-                      >
-                        {activeExerciseEdit === exercise.number ? (
-                          <input
-                            type="text"
-                            defaultValue={week?.userData || ""}
-                            className=" bg-transparent block animate-pulse text-amber-500  font-bold w-12 text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                          />
-                        ) : (
-                          week.userData || ""
-                        )}
-                      </td>
-                    </>
-                  ))} */}
             </tbody>
           </table>
         ) : (
           <p className="text-gray-600">No exercises available.</p>
         )}
-      </div>
+      </form>
     </div>
   );
 }

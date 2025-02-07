@@ -32,7 +32,7 @@ export default function PlansTablePopper({
 
   borderColor: string;
 
-  onPopperClickHandler: (id: string) => void;
+  onPopperClickHandler: (id?: string) => void;
 }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isPending, startTransition] = useTransition();
@@ -73,6 +73,7 @@ export default function PlansTablePopper({
             <td className={`border ${borderColor}  text-center max-w-16 w-16`}>
               {anchorEl ? (
                 <input
+                  name={week.week.toString()}
                   type="text"
                   defaultValue={week?.userData || ""}
                   className=" bg-transparent  animate-pulse text-amber-500  w-16 font-bold  text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -99,7 +100,7 @@ export default function PlansTablePopper({
           />
           <button
             className={` z-50 rounded-lg w-12 h-12  p-3 border border-solid flex items-center justify-center border-green-500 bg-background text-stone-100`}
-            onClick={() => startTransition(() => onPopperClickHandler(id))}
+            onClick={() => startTransition(() => onPopperClickHandler())}
             type="button"
             disabled={isPending}
           >

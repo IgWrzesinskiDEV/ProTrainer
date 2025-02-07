@@ -7,7 +7,7 @@ export default async function Plans({
   params: Promise<{ planSlug: string }>;
 }) {
   const { planSlug } = await params;
-  console.log(planSlug);
+  //console.log(planSlug);
   return (
     <ProfileWrapper title="Plan">
       <div className="flex items-center justify-center flex-col gap-5 w-full">
