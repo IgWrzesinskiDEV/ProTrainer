@@ -21,6 +21,7 @@ export const luciaAuth = new Lucia(adapter, {
       id: attributes.id,
       userName: attributes.userName,
       email: attributes.email,
+      role: attributes.role,
       units: attributes.units,
       email_verified: attributes.email_verified,
       avatarFileName: attributes.avatarFileName,
@@ -39,6 +40,7 @@ export interface DatabaseUserAttributes {
   userName: string;
   units: unitsInterface;
   email: string;
+  role: string;
   email_verified: boolean;
   avatarFileName: string;
   profileDetails: profileDetailsInterface;

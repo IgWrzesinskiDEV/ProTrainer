@@ -5,14 +5,14 @@ export async function createUser(user: {
   email: string;
   userName: string;
   password: string;
-  role: string;
+  role?: string;
 }) {
   const newUser = await User.create({
     _id: user._id,
     email: user.email,
     userName: user.userName,
     password: user.password,
-    role: user.role,
+    role: user.role || "USER",
   });
   return newUser;
 }

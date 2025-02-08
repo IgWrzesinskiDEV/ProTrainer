@@ -6,7 +6,7 @@ export interface IUser {
   email: string;
   emailVerified?: boolean;
   password?: string;
-  role: "user" | "coach" | "admin";
+  role: "USER" | "TRAINER" | "ADMIN";
   profileDetails: {
     fullName?: string;
     bio?: string;
@@ -32,8 +32,8 @@ const userSchema = new Schema<IUser>(
     password: { type: String, minlength: 6 },
     role: {
       type: String,
-      default: "user",
-      enum: ["user", "coach", "admin"],
+      default: "USER",
+      enum: ["USER", "TRAINER", "ADMIN"],
       required: true,
     },
     profileDetails: {

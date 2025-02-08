@@ -30,7 +30,7 @@ export async function signup(prevState: unknown, formData: FormData) {
       email,
       password: hashedPassword,
       userName,
-      role: "user",
+      role: "USER",
     });
 
     const verificationToken = await createEmailVerificationToken(email);

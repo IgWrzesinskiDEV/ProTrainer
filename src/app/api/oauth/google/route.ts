@@ -88,8 +88,8 @@ export const GET = async (req: NextRequest) => {
               _id: generateIdFromEntropySize(24),
               email: googleData.email,
               userName: googleData.name,
-              emailVerified: true,
-              role: "user",
+              emailVerified: true
+
             },
           ],
 
