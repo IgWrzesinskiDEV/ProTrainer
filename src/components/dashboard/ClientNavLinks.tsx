@@ -1,3 +1,4 @@
+import CurrentTrainerPopUp from "../trainers/CurrentTrainerPopup";
 import ProfileLink from "../UI/profile/ProfileLink";
 export default function ClientNavLinks() {
   return (
@@ -13,6 +14,12 @@ export default function ClientNavLinks() {
       </li>
       <li>
         <ProfileLink href="/dashboard/measurement" text="Measurement" />
+      </li>
+      <li>
+        <ProfileLink href="/dashboard/trainers" text="Trainers" />
+      </li>
+      <li className="ml-auto">
+        <CurrentTrainerPopUp />
       </li>
     </>
   );

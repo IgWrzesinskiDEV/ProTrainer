@@ -26,6 +26,7 @@ export const luciaAuth = new Lucia(adapter, {
       email_verified: attributes.email_verified,
       avatarFileName: attributes.avatarFileName,
       profileDetails: attributes.profileDetails,
+      currentTrainer: attributes.currentTrainer,
     };
   },
 });
@@ -44,4 +45,5 @@ export interface DatabaseUserAttributes {
   email_verified: boolean;
   avatarFileName: string;
   profileDetails: profileDetailsInterface;
+  currentTrainer: string;
 }

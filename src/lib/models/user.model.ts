@@ -7,6 +7,7 @@ export interface IUser {
   emailVerified?: boolean;
   password?: string;
   role: "USER" | "TRAINER" | "ADMIN";
+  currentTrainer?: string;
   profileDetails: {
     fullName?: string;
     bio?: string;
@@ -36,6 +37,7 @@ const userSchema = new Schema<IUser>(
       enum: ["USER", "TRAINER", "ADMIN"],
       required: true,
     },
+    currentTrainer: { type: String },
     profileDetails: {
       fullName: { type: String },
       bio: { type: String },

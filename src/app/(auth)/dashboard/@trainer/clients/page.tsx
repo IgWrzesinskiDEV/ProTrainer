@@ -1,5 +1,5 @@
-import Clients from "@/components/clients/Clients";
+import ClientsList from "@/components/clients/Clients";
 
 export default async function ClientsPage() {
-  return <Clients />;
+  return <ClientsList />;
 }

@@ -11,7 +11,7 @@ export default function ProfileWrapper({
   return (
     <div
       className={cn(
-        "z-10 bg-stone-800 p-8 rounded-b-lg  rounded-tr-lg shadow-lg mx-auto ",
+        " bg-stone-800 p-8 rounded-b-lg   shadow-lg mx-auto rounded-tr-none relative z-10",
         className
       )}
     >
