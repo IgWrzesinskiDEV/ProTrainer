@@ -7,3 +7,16 @@ export interface ITrainer {
         fullName?: string;
     }
 }
+
+export interface ITrainerDetails extends ITrainer {
+
+    email: string;
+    trainerDetails?: {
+        clients?: string[];
+        specialization?: string;
+        experience?: string;
+        education?: string;
+        languages?: string[];
+        services?: string[];
+    }
+}

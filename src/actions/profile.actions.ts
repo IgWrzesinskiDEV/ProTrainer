@@ -28,7 +28,7 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
     await User.findByIdAndUpdate(id, {
       profileDetails: { fullName, bio, avatarFileName },
     });
-    revalidatePath("/dashboard/profile");
+    revalidatePath("/dashboard");
     return { success: "Profile with avatar saved" };
   }
 

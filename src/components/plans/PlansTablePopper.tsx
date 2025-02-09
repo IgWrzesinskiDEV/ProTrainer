@@ -89,7 +89,7 @@ export default function PlansTablePopper({
           id={id}
           open={open}
           anchorEl={anchorEl}
-          className="flex justify-center items-center"
+          className="flex justify-center items-center z-20"
           placement="right"
         >
           <div
