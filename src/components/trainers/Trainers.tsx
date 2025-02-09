@@ -33,7 +33,11 @@ export default function TrainersList({ trainerList }: { trainerList: string }) {
             >
               <div className="flex items-center gap-5">
                 <Avatar
-                  src={`https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${trainer.profileDetails.avatarFileName}`}
+                  src={
+                    trainer.profileDetails?.avatarFileName
+                      ? `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${trainer.profileDetails.avatarFileName}`
+                      : undefined
+                  }
                   alt="The image selected by the user."
                   className="w-14 h-14 p-1"
                 />
@@ -44,7 +48,7 @@ export default function TrainersList({ trainerList }: { trainerList: string }) {
                 </div>
               </div>
               <p className="text-slate-400 font-normal text-sm mx-5 italic">
-                {trainer.profileDetails.bio}
+                {trainer.profileDetails?.bio}
               </p>
             </Link>
           ))}{" "}

@@ -1,6 +1,14 @@
 import ProfileWrapper from "../UI/profile/ProfileWrapper";
 import { Avatar } from "@mui/material";
-export default function SingleTrainer() {
+import { addTrainer } from "@/actions/trainers.actions";
+import TrainerButton from "../UI/trainers/TrainerButton";
+export default async function SingleTrainer({
+  params,
+}: {
+  params: Promise<{ trainerSlug: string }>;
+}) {
+  const trainerId = (await params).trainerSlug;
+  console.log(trainerId);
   return (
     <ProfileWrapper title="Trainer">
       <div className="flex flex-col items-center gap-10">
@@ -20,6 +28,7 @@ export default function SingleTrainer() {
           helped many clients achieve their goals. He is a very experienced
           coach and has a lot of knowledge to share.
         </p>
+        <TrainerButton addTrainerHandler={addTrainer} trainerId={trainerId} />
       </div>
     </ProfileWrapper>
   );

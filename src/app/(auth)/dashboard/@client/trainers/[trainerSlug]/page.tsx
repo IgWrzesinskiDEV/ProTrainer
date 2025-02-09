@@ -1,4 +1,8 @@
 import SingleTrainer from "@/components/trainers/SingleTrainer";
-export default function TrainerPage({ trainerSlug }: { trainerSlug: string }) {
-  return <SingleTrainer />;
+export default async function TrainerPage({
+  params,
+}: {
+  params: Promise<{ trainerSlug: string }>;
+}) {
+  return <SingleTrainer params={params} />;
 }

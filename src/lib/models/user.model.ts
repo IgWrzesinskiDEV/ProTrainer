@@ -13,12 +13,38 @@ export interface IUser {
     bio?: string;
     avatarFileName?: string;
   };
+  trainerDetails?: {
+    clients?: string[] | undefined;
+    specialization?: string;
+    experience?: string;
+    education?: string;
+    languages?: string[] | undefined;
+    services?: string[] | undefined;
+
+  };
   units: {
     weight: "kg" | "lbs";
     height: "cm" | "ft";
     bodyMeasurement: "cm" | "in";
   };
 }
+const trainerDetailsSchema = new Schema({
+  clients: {
+    type: [String],
+    default: undefined
+  },
+  specialization: { type: String },
+  experience: { type: String },
+  education: { type: String },
+  languages: {
+    type: [String],
+    default: undefined
+  },
+  services: {
+    type: [String],
+    default: undefined
+  }
+})
 
 const userSchema = new Schema<IUser>(
   {
@@ -43,6 +69,7 @@ const userSchema = new Schema<IUser>(
       bio: { type: String },
       avatarFileName: { type: String },
     },
+    trainerDetails: trainerDetailsSchema,
     units: {
       weight: { type: String, default: "kg" },
       height: { type: String, default: "cm" },
