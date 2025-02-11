@@ -36,3 +36,14 @@ export async function getUserById(id: string) {
     return null;
   }
 }
+
+export async function getUserAvatarById(id: string) {
+  try {
+    const avatarFileName = User.findById(id, "profileDetails.avatarFileName");
+    return avatarFileName;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+
+}
