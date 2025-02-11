@@ -1,4 +1,4 @@
-import ProfileLink from "../UI/profile/ProfileLink";
+import ProfileLink from "../profile/ProfileLink";
 export default function TrainerNavLinks() {
   return (
     <>
@@ -10,6 +10,9 @@ export default function TrainerNavLinks() {
       </li>
       <li>
         <ProfileLink href="/dashboard/clients" text="Clients" />
+      </li>
+      <li>
+        <ProfileLink href="/dashboard/trainer-profile" text="Trainer profile" />
       </li>
     </>
   );

@@ -4,7 +4,7 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
 
 import { useState, useRef } from "react";
-import ProfileWrapper from "../UI/profile/ProfileWrapper";
+import ProfileWrapper from "../profile/ProfileWrapper";
 import ModalUnstyled from "../UI/Modal";
 import TablePaginationComponent from "@/components/measurements/TablePagination";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";

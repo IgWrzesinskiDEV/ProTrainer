@@ -16,11 +16,11 @@ export interface IUser {
   trainerDetails?: {
     clients?: string[] | undefined;
     specialization?: string;
-    experience?: string;
-    education?: string;
+    experienceDescription?: string;
+    education?: string[] | undefined;
+    courses?: string[] | undefined;
     languages?: string[] | undefined;
     services?: string[] | undefined;
-
   };
   units: {
     weight: "kg" | "lbs";
@@ -28,23 +28,26 @@ export interface IUser {
     bodyMeasurement: "cm" | "in";
   };
 }
-const trainerDetailsSchema = new Schema({
-  clients: {
-    type: [String],
-    default: undefined
-  },
-  specialization: { type: String },
-  experience: { type: String },
-  education: { type: String },
-  languages: {
-    type: [String],
-    default: undefined
-  },
-  services: {
-    type: [String],
-    default: undefined
-  }
-})
+const trainerDetailsSchema = new Schema(
+  {
+    clients: {
+      type: [String],
+      default: undefined,
+    },
+    specialization: { type: String },
+    experienceDescription: { type: String },
+    education: { type: String },
+    languages: {
+      type: [String],
+      default: undefined,
+    },
+    services: {
+      type: [String],
+      default: undefined,
+    },
+  } as const,
+  { _id: false }
+);
 
 const userSchema = new Schema<IUser>(
   {

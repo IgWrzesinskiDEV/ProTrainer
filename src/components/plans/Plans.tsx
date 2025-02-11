@@ -1,4 +1,4 @@
-import ProfileWrapper from "../UI/profile/ProfileWrapper";
+import ProfileWrapper from "../profile/ProfileWrapper";
 import PlanSelecter from "./PlanSelecter";
 
 import WorkoutPlan from "./WorkoutPlan";

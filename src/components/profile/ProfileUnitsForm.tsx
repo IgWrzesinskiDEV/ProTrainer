@@ -2,7 +2,7 @@
 
 import saveProfileUnits from "@/actions/profile.actions";
 import { verifyAuth } from "@/lib/lucia/auth";
-import ButtonWithLoading from "../Buttons/ButtonWithLoading";
+import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 import { useActionState, useEffect, useState } from "react";
 
 const initialState = {

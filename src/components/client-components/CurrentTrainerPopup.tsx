@@ -2,7 +2,6 @@
 
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
-import { Avatar } from "@mui/material";
 import { useState } from "react";
 import Link from "next/link";
 import ProfileAvatar from "../UI/ProfileAvatar";
@@ -23,9 +22,7 @@ export default function CurrentTrainerPopUp({
   currentTrainer: string;
 }) {
   const [isVisible, setIsVisible] = useState(false);
-  const { userName, profileDetails, _id } = JSON.parse(
-    currentTrainer
-  ) as TrainerData;
+  const trainerData = JSON.parse(currentTrainer) as TrainerData;
 
   return (
     <AnimatePresence initial={false}>
@@ -48,14 +45,22 @@ export default function CurrentTrainerPopUp({
 
         <div className="absolute right-0 h-[250%] -z-20 bg-orange-500 w-[170%]  shadow-xl  ">
           <div className="flex flex-wrap justify-center items-center gap-2 pt-5">
-            <ProfileAvatar
-              fileName={profileDetails?.avatarFileName}
-              className="w-8 h-8 "
-            />
-            <p className="w-1/2 text-center font-thin  ">
-              {profileDetails?.fullName || userName}
-            </p>
-            <Link href={`/dashboard/trainers/${_id}`}>Details</Link>
+            {trainerData ? (
+              <>
+                <ProfileAvatar
+                  fileName={trainerData.profileDetails?.avatarFileName}
+                  className="w-8 h-8 "
+                />
+                <p className="w-1/2 text-center font-thin  ">
+                  {trainerData.profileDetails?.fullName || trainerData.userName}
+                </p>
+                <Link href={`/dashboard/trainers/${trainerData._id}`}>
+                  Details
+                </Link>
+              </>
+            ) : (
+              <p>Not available</p>
+            )}
           </div>
         </div>
       </motion.div>

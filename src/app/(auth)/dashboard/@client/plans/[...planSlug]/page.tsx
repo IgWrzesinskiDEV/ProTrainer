@@ -1,4 +1,4 @@
-import ProfileWrapper from "@/components/UI/profile/ProfileWrapper";
+import ProfileWrapper from "@/components/profile/ProfileWrapper";
 import SingleDayWorkout from "@/components/plans/SingleDayWorkout";
 
 export default async function Plans({

@@ -1,9 +1,9 @@
 "use client";
 import { useActionState } from "react";
 import { saveProfileData } from "@/actions/profile.actions";
-import Input from "../Input";
+import Input from "../UI/Input";
 import ImagePicker from "./ImagePicker";
-import ButtonWithLoading from "../Buttons/ButtonWithLoading";
+import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 
 import useUserData from "@/hooks/useUserData";
 const initialState = {

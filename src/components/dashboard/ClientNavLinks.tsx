@@ -1,6 +1,5 @@
-import { verifyAuth } from "@/lib/lucia/auth";
-import CurrentTrainerPopUp from "../trainers/CurrentTrainerPopup";
-import ProfileLink from "../UI/profile/ProfileLink";
+import CurrentTrainerPopUp from "../client-components/CurrentTrainerPopup";
+import ProfileLink from "../profile/ProfileLink";
 import getCurrentTrainer from "@/utils/data/getCurrentTrainer";
 export default async function ClientNavLinks() {
   const trainer = await getCurrentTrainer();

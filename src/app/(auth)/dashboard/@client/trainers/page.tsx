@@ -1,4 +1,4 @@
-import TrainersList from "@/components/trainers/Trainers";
+import TrainersList from "@/components/client-components/Trainers";
 import { getAvaliableTrainers } from "@/utils/data/getTrainers";
 export default async function TrainersPage() {
   const trainers = await getAvaliableTrainers();
