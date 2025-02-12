@@ -1,7 +1,51 @@
+import { PiCertificate } from "react-icons/pi";
+import { PiGraduationCap } from "react-icons/pi";
+import { IoLanguageOutline } from "react-icons/io5";
+import { CiDumbbell } from "react-icons/ci";
+
+import TrainerAdditionalDataSquare from "./TrainerAdditionalDataSquare";
+
 export default function TrainerProfileAdditionalForm() {
   return (
-    <form>
-      <div>
+    <form className="flex items-center justify-center flex-col gap-6">
+      <div className="flex flex-wrap items-center justify-center w-3/4 gap-4">
+        <TrainerAdditionalDataSquare
+          heading="Certifications"
+          HeadingIcon={PiCertificate}
+          content={trainerDetails.courses}
+        />
+        <TrainerAdditionalDataSquare
+          heading="Services"
+          HeadingIcon={CiDumbbell}
+          content={trainerDetails.services}
+        />
+        <TrainerAdditionalDataSquare
+          heading="Education"
+          HeadingIcon={PiGraduationCap}
+          content={trainerDetails.education}
+        />
+        <TrainerAdditionalDataSquare
+          heading="Languages"
+          HeadingIcon={IoLanguageOutline}
+          content={trainerDetails.languages}
+        />
+      </div>
+    </form>
+  );
+}
+
+const trainerDetails = {
+  education: ["szkoła podstawowa", "szkoła średnia", "studia"],
+  courses: [
+    "szkolenie z pierwszej pomocy dasdsadsadasdad ada dsad sadas dasdasdsa",
+    "szkolenie z pierwszej pomocy",
+    "szkolenie z pierwszej pomocy",
+  ],
+  languages: ["polski", "angielski", "niemiecki"],
+  services: ["trening personalny", "prowadzanie", "plany treingowe"],
+};
+
+/* <div>
         <label htmlFor="certifications">Certifications</label>
         <input type="text" id="certifications" name="certifications" />
       </div>
@@ -63,7 +107,4 @@ export default function TrainerProfileAdditionalForm() {
       </div>
       <div>
         <button type="submit">Save</button>
-      </div>
-    </form>
-  );
-}
+      </div> */

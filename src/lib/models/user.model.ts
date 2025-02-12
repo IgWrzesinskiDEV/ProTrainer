@@ -36,7 +36,14 @@ const trainerDetailsSchema = new Schema(
     },
     specialization: { type: String },
     experienceDescription: { type: String },
-    education: { type: String },
+    education: {
+      type: [String],
+      default: undefined,
+    },
+    courses: {
+      type: [String],
+      default: undefined,
+    },
     languages: {
       type: [String],
       default: undefined,

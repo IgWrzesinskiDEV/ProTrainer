@@ -6,6 +6,9 @@
   .planScrollbar::-webkit-scrollbar {
     height: 10px;
   }
+  .trainerDataSquareScrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
 
   .planScrollbar::-webkit-scrollbar-track {
     background: #1a1a1d; /* Background color of the scrollbar track */
