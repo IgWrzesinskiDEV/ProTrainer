@@ -1,49 +1,80 @@
+"use client";
 import { PiCertificate } from "react-icons/pi";
 import { PiGraduationCap } from "react-icons/pi";
 import { IoLanguageOutline } from "react-icons/io5";
 import { CiDumbbell } from "react-icons/ci";
 
+import ModalUnstyled from "../UI/Modal";
 import TrainerAdditionalDataSquare from "./TrainerAdditionalDataSquare";
+import { useRef, useState } from "react";
+import TrainerProfileModal from "./TrainerProfileModal";
+import {
+  ITrainerAddSchema,
+  ITrainerOnlyDetails,
+} from "@/interfaces/trainers/ITrainer";
 
-export default function TrainerProfileAdditionalForm() {
+export default function TrainerProfileAdditionalForm({
+  trainerDetails,
+}: {
+  trainerDetails: string;
+}) {
+  const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
+  const trainerDetailsData: ITrainerOnlyDetails = JSON.parse(trainerDetails);
+  const [currentModalContent, setCurrentModalContent] =
+    useState<ITrainerAddSchema | null>(null);
+  function openModal(contentData: ITrainerAddSchema) {
+    modalRef.current?.open();
+    setCurrentModalContent(contentData);
+  }
   return (
-    <form className="flex items-center justify-center flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-center w-3/4 gap-4">
+    <>
+      <div className="flex flex-wrap items-center justify-center w-3/4 mx-auto gap-4">
         <TrainerAdditionalDataSquare
           heading="Certifications"
+          openModalHandler={openModal}
           HeadingIcon={PiCertificate}
-          content={trainerDetails.courses}
+          content={trainerDetailsData.trainerDetails?.courses}
         />
         <TrainerAdditionalDataSquare
           heading="Services"
           HeadingIcon={CiDumbbell}
-          content={trainerDetails.services}
+          openModalHandler={openModal}
+          content={trainerDetailsData.trainerDetails?.services}
         />
         <TrainerAdditionalDataSquare
           heading="Education"
           HeadingIcon={PiGraduationCap}
-          content={trainerDetails.education}
+          openModalHandler={openModal}
+          content={trainerDetailsData.trainerDetails?.education}
         />
         <TrainerAdditionalDataSquare
           heading="Languages"
           HeadingIcon={IoLanguageOutline}
-          content={trainerDetails.languages}
+          openModalHandler={openModal}
+          content={trainerDetailsData.trainerDetails?.languages}
         />
       </div>
-    </form>
+      <ModalUnstyled ref={modalRef}>
+        <TrainerProfileModal
+          heading={currentModalContent?.heading || ""}
+          HeadingIcon={currentModalContent?.HeadingIcon || PiCertificate}
+          trainerData={currentModalContent?.content || []}
+        />
+      </ModalUnstyled>
+    </>
   );
 }
 
-const trainerDetails = {
-  education: ["szkoła podstawowa", "szkoła średnia", "studia"],
-  courses: [
-    "szkolenie z pierwszej pomocy dasdsadsadasdad ada dsad sadas dasdasdsa",
-    "szkolenie z pierwszej pomocy",
-    "szkolenie z pierwszej pomocy",
-  ],
-  languages: ["polski", "angielski", "niemiecki"],
-  services: ["trening personalny", "prowadzanie", "plany treingowe"],
-};
+// const trainerDetails = {
+//   education: ["szkoła podstawowa", "szkoła średnia", "studia"],
+//   courses: [
+//     "szkolenie z pierwszej pomocy dasdsadsadasdad ada dsad sadas dasdasdsa",
+//     "szkolenie z pierwszej pomocy",
+//     "szkolenie z pierwszej pomocy",
+//   ],
+//   languages: ["polski", "angielski", "niemiecki"],
+//   services: ["trening personalny", "prowadzanie", "plany treingowe"],
+// };
 
 /* <div>
         <label htmlFor="certifications">Certifications</label>

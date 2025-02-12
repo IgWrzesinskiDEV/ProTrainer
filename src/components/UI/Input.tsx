@@ -8,7 +8,7 @@ interface InputProps extends ComponentProps<"input"> {
 
 export default function Input({ label, name, type, ...props }: InputProps) {
   return (
-    <div className="flex flex-col gap-2 w-3/4 ">
+    <div className="flex flex-col gap-2 ">
       <label htmlFor={label} className="text-xl capitalize">
         {label}
       </label>
