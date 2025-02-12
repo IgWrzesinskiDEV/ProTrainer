@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 export interface IUser {
   _id: string;
   userName: string;
@@ -17,10 +17,10 @@ export interface IUser {
     clients?: string[] | undefined;
     specialization?: string;
     experienceDescription?: string;
-    education?: string[] | undefined;
-    courses?: string[] | undefined;
-    languages?: string[] | undefined;
-    services?: string[] | undefined;
+    [TrainerAdditionalDataHeadingType.Certifications]?: string[] | undefined;
+    [TrainerAdditionalDataHeadingType.Services]?: string[] | undefined;
+    [TrainerAdditionalDataHeadingType.Education]?: string[] | undefined;
+    [TrainerAdditionalDataHeadingType.Languages]?: string[] | undefined;
   };
   units: {
     weight: "kg" | "lbs";
@@ -36,19 +36,19 @@ const trainerDetailsSchema = new Schema(
     },
     specialization: { type: String },
     experienceDescription: { type: String },
-    education: {
+    [TrainerAdditionalDataHeadingType.Certifications]: {
       type: [String],
       default: undefined,
     },
-    courses: {
+    [TrainerAdditionalDataHeadingType.Services]: {
       type: [String],
       default: undefined,
     },
-    languages: {
+    [TrainerAdditionalDataHeadingType.Education]: {
       type: [String],
       default: undefined,
     },
-    services: {
+    [TrainerAdditionalDataHeadingType.Languages]: {
       type: [String],
       default: undefined,
     },

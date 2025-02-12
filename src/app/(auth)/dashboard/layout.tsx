@@ -1,4 +1,3 @@
-import ProfileLink from "@/components/UI/profile/ProfileLink";
 import AsideNav from "@/components/dashboard/AsideNav";
 import TrainerNavLinks from "@/components/dashboard/TrainerNavLinks";
 import ClientNavLinks from "@/components/dashboard/ClientNavLinks";

@@ -15,7 +15,7 @@ export interface ITrainerDetails extends ITrainer {
     specialization?: string;
     experienceDescription?: string;
     education?: string[] | undefined;
-    courses?: string[] | undefined;
+    certifications?: string[] | undefined;
     languages?: string[] | undefined;
     services?: string[] | undefined;
   };
@@ -28,14 +28,21 @@ export interface ITrainerOnlyDetails {
     specialization?: string;
     experienceDescription?: string;
     education?: string[] | undefined;
-    courses?: string[] | undefined;
+    certifications?: string[] | undefined;
     languages?: string[] | undefined;
     services?: string[] | undefined;
   };
 }
 
 export interface ITrainerAddSchema {
-  heading: string;
+  heading: TrainerAdditionalDataHeadingType;
   content: string[] | undefined;
   HeadingIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+}
+
+export enum TrainerAdditionalDataHeadingType {
+  Education = "education",
+  Certifications = "certifications",
+  Languages = "languages",
+  Services = "services",
 }

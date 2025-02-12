@@ -1,37 +1,8 @@
-// auth/lucia.ts
 "use server";
-// import { Lucia, TimeSpan } from "lucia";
 
-// import { adapter } from "../mongodb/adapter";
 import { cookies } from "next/headers";
-//import connectMongoDb from "../mongodb/mogodb";
 import { luciaAuth } from "./lucia";
 import { cache } from "react";
-//await connectMongoDb();
-
-// export const luciaAuth = new Lucia(adapter, {
-//   sessionExpiresIn: new TimeSpan(5, "d"),
-//   sessionCookie: {
-//     expires: false,
-
-//     attributes: {
-//       secure: process.env.NODE_ENV === "production",
-//     },
-//   },
-//   getUserAttributes: (attributes) => {
-//     return {
-//       userName: attributes.userName,
-//       email: attributes.email,
-//       email_verified: attributes.email_verified,
-//     };
-//   },
-// });
-// declare module "lucia" {
-//   interface Register {
-//     Lucia: typeof luciaAuth;
-//     DatabaseUserAttributes: DatabaseUserAttributes;
-//   }
-// }
 
 export interface verifiedUserData {
   user: {

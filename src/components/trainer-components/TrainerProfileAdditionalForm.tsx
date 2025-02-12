@@ -11,6 +11,7 @@ import TrainerProfileModal from "./TrainerProfileModal";
 import {
   ITrainerAddSchema,
   ITrainerOnlyDetails,
+  TrainerAdditionalDataHeadingType,
 } from "@/interfaces/trainers/ITrainer";
 
 export default function TrainerProfileAdditionalForm({
@@ -21,7 +22,7 @@ export default function TrainerProfileAdditionalForm({
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
   const trainerDetailsData: ITrainerOnlyDetails = JSON.parse(trainerDetails);
   const [currentModalContent, setCurrentModalContent] =
-    useState<ITrainerAddSchema | null>(null);
+    useState<ITrainerAddSchema>();
   function openModal(contentData: ITrainerAddSchema) {
     modalRef.current?.open();
     setCurrentModalContent(contentData);
@@ -30,25 +31,25 @@ export default function TrainerProfileAdditionalForm({
     <>
       <div className="flex flex-wrap items-center justify-center w-3/4 mx-auto gap-4">
         <TrainerAdditionalDataSquare
-          heading="Certifications"
+          heading={TrainerAdditionalDataHeadingType.Certifications}
           openModalHandler={openModal}
           HeadingIcon={PiCertificate}
-          content={trainerDetailsData.trainerDetails?.courses}
+          content={trainerDetailsData.trainerDetails?.certifications}
         />
         <TrainerAdditionalDataSquare
-          heading="Services"
+          heading={TrainerAdditionalDataHeadingType.Services}
           HeadingIcon={CiDumbbell}
           openModalHandler={openModal}
           content={trainerDetailsData.trainerDetails?.services}
         />
         <TrainerAdditionalDataSquare
-          heading="Education"
+          heading={TrainerAdditionalDataHeadingType.Education}
           HeadingIcon={PiGraduationCap}
           openModalHandler={openModal}
           content={trainerDetailsData.trainerDetails?.education}
         />
         <TrainerAdditionalDataSquare
-          heading="Languages"
+          heading={TrainerAdditionalDataHeadingType.Languages}
           HeadingIcon={IoLanguageOutline}
           openModalHandler={openModal}
           content={trainerDetailsData.trainerDetails?.languages}
@@ -56,7 +57,10 @@ export default function TrainerProfileAdditionalForm({
       </div>
       <ModalUnstyled ref={modalRef}>
         <TrainerProfileModal
-          heading={currentModalContent?.heading || ""}
+          heading={
+            currentModalContent?.heading ||
+            TrainerAdditionalDataHeadingType.Certifications
+          }
           HeadingIcon={currentModalContent?.HeadingIcon || PiCertificate}
           trainerData={currentModalContent?.content || []}
         />

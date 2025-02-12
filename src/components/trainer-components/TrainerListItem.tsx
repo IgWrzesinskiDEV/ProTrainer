@@ -38,6 +38,7 @@ export default function TrainerListItem({
         </button>
       )}
       <input
+        name="trainerDetails"
         className="px-4 py-2 rounded-lg w-full text-lg font-medium focus:outline-none text-background "
         type="text"
         defaultValue={item}

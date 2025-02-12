@@ -1,7 +1,10 @@
 import React from "react";
 import { TbLayoutGridAdd } from "react-icons/tb";
 import { VscDebugBreakpointFunction } from "react-icons/vsc";
-import { ITrainerAddSchema } from "@/interfaces/trainers/ITrainer";
+import {
+  ITrainerAddSchema,
+  TrainerAdditionalDataHeadingType,
+} from "@/interfaces/trainers/ITrainer";
 export default function TrainerAdditionalDataSquare({
   HeadingIcon,
   content,
@@ -10,13 +13,13 @@ export default function TrainerAdditionalDataSquare({
 }: {
   HeadingIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   content: string[] | undefined;
-  heading: string;
+  heading: TrainerAdditionalDataHeadingType;
   openModalHandler: (contentData: ITrainerAddSchema) => void;
 }) {
   const contentData = { heading, content, HeadingIcon };
   return (
     <div className=" p-2 rounded-lg w-[45%] h-[20vh] bg-background flex flex-col gap-4 overflow-auto planScrollbar trainerDataSquareScrollbar shadow-xl">
-      <strong className="text-xl flex items-center justify-center gap-1">
+      <strong className="text-xl flex items-center justify-center gap-1 capitalize">
         <HeadingIcon className="text-2xl text-yellow-300" />
         {heading}
       </strong>

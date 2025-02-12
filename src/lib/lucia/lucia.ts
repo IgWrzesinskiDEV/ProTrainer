@@ -5,8 +5,8 @@ import {
   unitsInterface,
   profileDetailsInterface,
 } from "@/interfaces/user/IUser";
-import connectMongoDb from "../mongodb/mogodb";
-await connectMongoDb();
+//import connectMongoDb from "../mongodb/mogodb";
+//await connectMongoDb();
 export const luciaAuth = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(5, "d"),
   sessionCookie: {

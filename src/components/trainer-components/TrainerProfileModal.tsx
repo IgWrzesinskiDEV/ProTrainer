@@ -2,24 +2,38 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { useState } from "react";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 import TrainerListItem from "./TrainerListItem";
+import { addAdditionalTrainerData } from "@/actions/trainers.actions";
+import { useActionState } from "react";
+import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 
+const initialState = {
+  success: "",
+};
 export default function TrainerProfileModal({
   heading,
   HeadingIcon,
   trainerData,
 }: {
-  heading: string;
+  heading: TrainerAdditionalDataHeadingType;
   HeadingIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   trainerData: string[];
 }) {
   const [trainerDataState, setTrainerDataState] = useState(trainerData);
-  console.log(trainerDataState);
+  const [formState, formAction, isPending] = useActionState(
+    (prevState: unknown, formData: FormData) =>
+      addAdditionalTrainerData(prevState, formData, heading),
+    initialState
+  );
+
   function handleAddItem() {
     setTrainerDataState([...trainerDataState, ""]);
   }
   return (
-    <form className=" p-10 rounded-lg w-2/5  bg-background flex flex-col gap-4 overflow-auto planScrollbar trainerDataSquareScrollbar shadow-xl">
-      <strong className="text-xl flex items-center justify-center gap-1">
+    <form
+      action={formAction}
+      className=" p-10 rounded-lg w-2/5  bg-background flex flex-col gap-4 overflow-auto planScrollbar trainerDataSquareScrollbar shadow-xl"
+    >
+      <strong className="text-xl flex items-center justify-center gap-1 capitalize">
         <HeadingIcon className="text-2xl text-yellow-300" />
         {heading}
       </strong>
