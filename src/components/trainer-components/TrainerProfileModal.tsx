@@ -1,5 +1,5 @@
 import { MdAddCircleOutline } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 import TrainerListItem from "./TrainerListItem";
 import { addAdditionalTrainerData } from "@/actions/trainers.actions";
@@ -7,16 +7,18 @@ import { useActionState } from "react";
 import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 
 const initialState = {
-  success: "",
+  errors: [],
 };
 export default function TrainerProfileModal({
   heading,
   HeadingIcon,
   trainerData,
+  closeModalHandler,
 }: {
   heading: TrainerAdditionalDataHeadingType;
   HeadingIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   trainerData: string[];
+  closeModalHandler: () => void;
 }) {
   const [trainerDataState, setTrainerDataState] = useState(trainerData);
   const [formState, formAction, isPending] = useActionState(
@@ -24,9 +26,17 @@ export default function TrainerProfileModal({
       addAdditionalTrainerData(prevState, formData, heading),
     initialState
   );
+  useEffect(() => {
+    if (formState.success) {
+      closeModalHandler();
+    }
+  }, [formState.success, closeModalHandler]);
 
   function handleAddItem() {
     setTrainerDataState([...trainerDataState, ""]);
+  }
+  function handleRemoveItem(index: number) {
+    setTrainerDataState((prevState) => prevState.filter((_, i) => i !== index));
   }
   return (
     <form
@@ -42,6 +52,8 @@ export default function TrainerProfileModal({
           trainerDataState.map((item, index) => {
             return (
               <TrainerListItem
+                heading={heading}
+                handleRemoveItem={handleRemoveItem}
                 item={item}
                 index={index}
                 key={`${item}-${index}`}
@@ -61,8 +73,14 @@ export default function TrainerProfileModal({
           onClick={handleAddItem}
         />
       </button>
-      <div className="flex items-center justify-around gap-4">
-        <ButtonWithLoading isLoading={false} className="w-1/4 mt-0 mx-0">
+      <div className="flex items-center flex-col justify-around gap-4">
+        {formState.errors &&
+          formState.errors.map((err) => (
+            <p key={err} className="text-red-500 font-thin">
+              {err}
+            </p>
+          ))}
+        <ButtonWithLoading isLoading={isPending} className="w-1/4 mt-0 mx-0">
           Save
         </ButtonWithLoading>
       </div>

@@ -6,7 +6,7 @@ import { CiDumbbell } from "react-icons/ci";
 
 import ModalUnstyled from "../UI/Modal";
 import TrainerAdditionalDataSquare from "./TrainerAdditionalDataSquare";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TrainerProfileModal from "./TrainerProfileModal";
 import {
   ITrainerAddSchema,
@@ -27,6 +27,10 @@ export default function TrainerProfileAdditionalForm({
     modalRef.current?.open();
     setCurrentModalContent(contentData);
   }
+  function closeModal() {
+    modalRef.current?.close();
+  }
+  useEffect(() => {}, [trainerDetailsData]);
   return (
     <>
       <div className="flex flex-wrap items-center justify-center w-3/4 mx-auto gap-4">
@@ -63,6 +67,7 @@ export default function TrainerProfileAdditionalForm({
           }
           HeadingIcon={currentModalContent?.HeadingIcon || PiCertificate}
           trainerData={currentModalContent?.content || []}
+          closeModalHandler={closeModal}
         />
       </ModalUnstyled>
     </>

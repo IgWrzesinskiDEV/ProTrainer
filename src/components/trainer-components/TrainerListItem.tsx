@@ -2,12 +2,18 @@ import { VscDebugBreakpointFunction } from "react-icons/vsc";
 import { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { removeAdditionalTrainerData } from "@/actions/trainers.actions";
+import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 export default function TrainerListItem({
+  heading,
   item,
   index,
+  handleRemoveItem,
 }: {
+  heading: TrainerAdditionalDataHeadingType;
   item: string;
   index: number;
+  handleRemoveItem: (index: number) => void;
 }) {
   const [popupState, setPopupState] = useState(false);
   function arrowClickHandler() {
@@ -15,6 +21,10 @@ export default function TrainerListItem({
   }
   function clickAwayHandler() {
     setPopupState(false);
+  }
+  function removeLiAndRerenderModal() {
+    handleRemoveItem(index);
+    removeAdditionalTrainerData(heading, index);
   }
   return (
     <li
@@ -33,6 +43,7 @@ export default function TrainerListItem({
         <button
           className="absolute left-0 -bottom-3   rounded-lg w-6"
           type="button"
+          onClick={removeLiAndRerenderModal}
         >
           <MdDeleteOutline className="text-red-500   text-center text-3xl" />
         </button>

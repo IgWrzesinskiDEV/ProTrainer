@@ -64,3 +64,9 @@ export const MeasurementSchema = z.object({
   leftBiceps: z.number().positive(),
   rightBiceps: z.number().positive(),
 });
+
+export const TrainerAdditionalDataSchema = z.object({
+  trainerDetails: z
+    .array(z.string().min(1, { message: "Delete empty fields" }))
+    .min(1, { message: "At least one element required" }),
+});
