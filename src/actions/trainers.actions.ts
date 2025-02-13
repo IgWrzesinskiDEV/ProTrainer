@@ -27,7 +27,6 @@ export async function addAdditionalTrainerData(
 
   if (!validateData.success) {
     const errors = validateData.error.errors.map((error) => error.message);
-    console.log(errors);
     return { errors: errors };
   }
 
