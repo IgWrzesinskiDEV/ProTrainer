@@ -77,21 +77,21 @@ export type TrainerSocialMediaSchemaType = z.infer<
 
 export const TrainerSocialMediaSchema = z
   .object({
-    experience: z.string(),
+    experience: z.string().max(300, { message: "Max 300 characters" }),
     specialization: z.string(),
-    instagram: z.string(),
-    facebook: z.string(),
-    whatsapp: z.string(),
+    instagram: z.string().url("Invalid instagram URL").or(z.literal("")),
+    facebook: z.string().url("Invalid facebook URL").or(z.literal("")),
+    whatsapp: z.string().url("Invalid whatsapp URL").or(z.literal("")),
     onSite: z.boolean(),
     online: z.boolean(),
   })
   .refine(
     (data) => {
-      // Check if at least one field has a non-empty string value
       return Object.values(data).some((value) => {
         return (
           (typeof value === "string" && value.trim().length > 0) ||
-          value === true
+          value === true ||
+          false
         );
       });
     },

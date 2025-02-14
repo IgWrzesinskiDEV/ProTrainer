@@ -1,13 +1,30 @@
 import * as React from "react";
 import { Checkbox } from "@base-ui-components/react/checkbox";
 import { CheckboxGroup } from "@base-ui-components/react/checkbox-group";
-
-export default function LocationsCheckBoxes() {
+import { useState } from "react";
+interface IWorkingModes {
+  onSite: boolean;
+  online: boolean;
+}
+export default function LocationsCheckBoxes({
+  workingModes,
+}: {
+  workingModes: IWorkingModes;
+}) {
+  const [values, setValues] = useState(workingModes);
   const checkBoxClassName =
     "flex size-5 items-center justify-center rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 data-[checked]:bg-blue-500 data-[unchecked]:border data-[unchecked]:border-gray-300";
+
+  function handleChange(name: keyof IWorkingModes, checked: boolean) {
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: checked,
+    }));
+  }
   return (
     <CheckboxGroup
       aria-labelledby="workingmodes-caption"
+      // defaultValue={result}
       className="flex flex-col items-start gap-1 text-slate-200"
     >
       <p className="text-xl " id="workingmodes-caption">
@@ -15,7 +32,12 @@ export default function LocationsCheckBoxes() {
       </p>
 
       <label className="flex items-center gap-2">
-        <Checkbox.Root name="onSite" className={checkBoxClassName}>
+        <Checkbox.Root
+          name="onSite"
+          className={checkBoxClassName}
+          checked={values?.onSite || false}
+          onCheckedChange={(checked) => handleChange("onSite", checked)}
+        >
           <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
             <CheckIcon className="size-3" />
           </Checkbox.Indicator>
@@ -24,7 +46,12 @@ export default function LocationsCheckBoxes() {
       </label>
 
       <label className="flex items-center gap-2">
-        <Checkbox.Root name="online" className={checkBoxClassName}>
+        <Checkbox.Root
+          name="online"
+          className={checkBoxClassName}
+          checked={values?.online || false}
+          onCheckedChange={(checked) => handleChange("online", checked)}
+        >
           <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
             <CheckIcon className="size-3" />
           </Checkbox.Indicator>

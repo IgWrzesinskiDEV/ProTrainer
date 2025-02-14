@@ -94,11 +94,9 @@ export async function addSocialMediaTrainerData(
     online: formData.get("online") === "on" ? true : false,
   });
   if (!validateData.success) {
-    const errors = validateData.error.errors.map((error) => error.message);
-    console.log(errors);
-    return { errors: errors };
+    return { errors: validateData.error.errors };
   }
-  console.log(validateData.data);
+
   try {
     const { user } = await verifyAuth();
     const userId = user?.id;
@@ -122,21 +120,4 @@ export async function addSocialMediaTrainerData(
   } catch {
     return { errors: ["Data not removed"] };
   }
-
-  // try {
-  //   const { user } = await verifyAuth();
-  //   const userId = user?.id;
-  //   const trainer = await User.findById(userId);
-  //   if (!trainer) {
-  //     return { error: "Trainer not found" };
-  //   }
-
-  //   trainer.trainerDetails.socialMedia = formData.get("socialMedia");
-  //   await trainer.save();
-
-  //   revalidatePath("/dashboard/trainer-profile");
-  //   return { success: "Data saved" };
-  // } catch {
-  //   return { error: "Data not saved" };
-  // }
 }
