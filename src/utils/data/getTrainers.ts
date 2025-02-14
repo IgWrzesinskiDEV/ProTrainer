@@ -1,6 +1,6 @@
 import { User } from "@/lib/models/user.model";
 import { verifyAuth } from "@/lib/lucia/auth";
-
+import { ITrainer } from "@/interfaces/trainers/ITrainer";
 export async function getAvaliableTrainers() {
   const trainers = await User.find(
     { role: "TRAINER" },
@@ -15,7 +15,7 @@ export async function getTrainerById(trainerId: string) {
       trainerId,
       "userName email trainerDetails profileDetails"
     );
-    return trainer;
+    return trainer as ITrainer;
   } catch {
     return null;
   }

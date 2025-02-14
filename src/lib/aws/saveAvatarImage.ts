@@ -14,7 +14,7 @@ export default async function saveAvatarImage(image: File, id: string) {
 
   const bufferedImage = await image.arrayBuffer();
   const { user } = await verifyAuth();
-  if (user?.profileDetails.avatarFileName) {
+  if (user?.profileDetails?.avatarFileName) {
     await s3.deleteObject({
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: user.profileDetails.avatarFileName,
