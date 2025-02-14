@@ -4,7 +4,12 @@ import { verifyAuth } from "@/lib/lucia/auth";
 import { User } from "@/lib/models/user.model";
 import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 import { revalidatePath } from "next/cache";
-import { TrainerAdditionalDataSchema } from "@/schemas/zSchemas";
+import {
+  TrainerAdditionalDataSchema,
+  TrainerSocialMediaSchema,
+} from "@/schemas/zSchemas";
+import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
+
 export async function addTrainer(trainerId: string) {
   console.log(trainerId);
   const { user } = await verifyAuth();
@@ -38,6 +43,9 @@ export async function addAdditionalTrainerData(
     if (!trainer) {
       return { errors: ["Trainer not found"] };
     }
+    if (!trainer.trainerDetails) {
+      trainer.trainerDetails = {};
+    }
 
     trainer.trainerDetails[heading] = validateData.data.trainerDetails;
     await trainer.save();
@@ -70,4 +78,65 @@ export async function removeAdditionalTrainerData(
   } catch {
     return { error: "Data not removed" };
   }
+}
+
+export async function addSocialMediaTrainerData(
+  prevState: unknown,
+  formData: FormData
+) {
+  const validateData = TrainerSocialMediaSchema.safeParse({
+    instagram: formData.get("instagram"),
+    facebook: formData.get("facebook"),
+    whatsapp: formData.get("whatsapp"),
+    experience: formData.get("experience"),
+    specialization: formData.get("specialization"),
+    onSite: formData.get("onSite") === "on" ? true : false,
+    online: formData.get("online") === "on" ? true : false,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    console.log(errors);
+    return { errors: errors };
+  }
+  console.log(validateData.data);
+  try {
+    const { user } = await verifyAuth();
+    const userId = user?.id;
+
+    const trainer = await User.findById(userId);
+    if (!trainer) {
+      return { errors: ["Trainer not found"] };
+    }
+    if (!trainer.trainerDetails) {
+      trainer.trainerDetails = {};
+    }
+
+    trainer.trainerDetails.socialAndExpiriance = convertSocialMediaDatatoDB(
+      validateData.data
+    );
+
+    await trainer.save();
+
+    revalidatePath("/dashboard/trainer-profile");
+    return { success: "Data saved" };
+  } catch {
+    return { errors: ["Data not removed"] };
+  }
+
+  // try {
+  //   const { user } = await verifyAuth();
+  //   const userId = user?.id;
+  //   const trainer = await User.findById(userId);
+  //   if (!trainer) {
+  //     return { error: "Trainer not found" };
+  //   }
+
+  //   trainer.trainerDetails.socialMedia = formData.get("socialMedia");
+  //   await trainer.save();
+
+  //   revalidatePath("/dashboard/trainer-profile");
+  //   return { success: "Data saved" };
+  // } catch {
+  //   return { error: "Data not saved" };
+  // }
 }

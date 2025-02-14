@@ -7,15 +7,15 @@ export default function LocationsCheckBoxes() {
     "flex size-5 items-center justify-center rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 data-[checked]:bg-blue-500 data-[unchecked]:border data-[unchecked]:border-gray-300";
   return (
     <CheckboxGroup
-      aria-labelledby="apples-caption"
+      aria-labelledby="workingmodes-caption"
       className="flex flex-col items-start gap-1 text-slate-200"
     >
-      <p className="text-xl " id="apples-caption">
-        Working locations
+      <p className="text-xl " id="workingmodes-caption">
+        Working modes
       </p>
 
       <label className="flex items-center gap-2">
-        <Checkbox.Root name="fuji-apple" className={checkBoxClassName}>
+        <Checkbox.Root name="onSite" className={checkBoxClassName}>
           <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
             <CheckIcon className="size-3" />
           </Checkbox.Indicator>
@@ -24,12 +24,12 @@ export default function LocationsCheckBoxes() {
       </label>
 
       <label className="flex items-center gap-2">
-        <Checkbox.Root name="gala-apple" className={checkBoxClassName}>
+        <Checkbox.Root name="online" className={checkBoxClassName}>
           <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
             <CheckIcon className="size-3" />
           </Checkbox.Indicator>
         </Checkbox.Root>
-        Remote
+        Online
       </label>
     </CheckboxGroup>
   );

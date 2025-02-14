@@ -17,6 +17,19 @@ export interface IUser {
     clients?: string[] | undefined;
     specialization?: string;
     experienceDescription?: string;
+    socialAndExpiriance?: {
+      experience?: string;
+      specialization?: string;
+      workingModes: {
+        onSite: { type: boolean; default: false };
+        online: { type: boolean; default: false };
+      };
+      socialMedia: {
+        instagram?: string;
+        facebook?: string;
+        whatsapp?: string;
+      };
+    };
     [TrainerAdditionalDataHeadingType.Certifications]?: string[] | undefined;
     [TrainerAdditionalDataHeadingType.Services]?: string[] | undefined;
     [TrainerAdditionalDataHeadingType.Education]?: string[] | undefined;
@@ -34,8 +47,20 @@ const trainerDetailsSchema = new Schema(
       type: [String],
       default: undefined,
     },
-    specialization: { type: String },
-    experienceDescription: { type: String },
+    socialAndExpiriance: {
+      specialization: { type: String },
+      experience: { type: String },
+      workingModes: {
+        onSite: { type: Boolean, default: false },
+        online: { type: Boolean, default: false },
+      },
+      socialMedia: {
+        instagram: { type: String },
+        facebook: { type: String },
+        whatsapp: { type: String },
+      },
+    },
+
     [TrainerAdditionalDataHeadingType.Certifications]: {
       type: [String],
       default: undefined,

@@ -37,7 +37,7 @@ export const NewPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
 export const ProfileDetailsSchema = z.object({
   fullName: z.string(),
@@ -70,3 +70,33 @@ export const TrainerAdditionalDataSchema = z.object({
     .array(z.string().min(1, { message: "Delete empty fields" }))
     .min(1, { message: "At least one element required" }),
 });
+
+export type TrainerSocialMediaSchemaType = z.infer<
+  typeof TrainerSocialMediaSchema
+>;
+
+export const TrainerSocialMediaSchema = z
+  .object({
+    experience: z.string(),
+    specialization: z.string(),
+    instagram: z.string(),
+    facebook: z.string(),
+    whatsapp: z.string(),
+    onSite: z.boolean(),
+    online: z.boolean(),
+  })
+  .refine(
+    (data) => {
+      // Check if at least one field has a non-empty string value
+      return Object.values(data).some((value) => {
+        return (
+          (typeof value === "string" && value.trim().length > 0) ||
+          value === true
+        );
+      });
+    },
+    {
+      message: "At least one field must be filled.",
+      path: [], // This will apply to the entire object, not just a specific field
+    }
+  );
