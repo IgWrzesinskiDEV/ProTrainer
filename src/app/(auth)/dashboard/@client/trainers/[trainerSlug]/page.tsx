@@ -1,4 +1,4 @@
-import SingleTrainer from "@/components/client-components/SingleTrainer";
+import SingleTrainer from "@/components/client-components/trainersView/SingleTrainer";
 export default async function TrainerPage({
   params,
 }: {

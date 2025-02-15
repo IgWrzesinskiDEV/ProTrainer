@@ -20,8 +20,7 @@ export interface ITrainerOnlyDetails {
 
 export interface ITrainerDetails {
   clients?: string[] | undefined;
-  specialization?: string;
-  experienceDescription?: string;
+
   socialAndExpiriance?: ITrainerSocials;
   [TrainerAdditionalDataHeadingType.Certifications]?: string[] | undefined;
   [TrainerAdditionalDataHeadingType.Services]?: string[] | undefined;

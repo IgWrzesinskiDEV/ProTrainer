@@ -11,14 +11,18 @@ import {
 import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
 
 export async function addTrainer(trainerId: string) {
-  console.log(trainerId);
-  const { user } = await verifyAuth();
-  const userId = user?.id;
-  await User.findByIdAndUpdate(userId, { currentTrainer: trainerId });
+  try {
+    const { user } = await verifyAuth();
+    const userId = user?.id;
+    await User.findByIdAndUpdate(userId, { currentTrainer: trainerId });
 
-  await User.findByIdAndUpdate(trainerId, {
-    $push: { "trainerDetails.clients": userId },
-  });
+    await User.findByIdAndUpdate(trainerId, {
+      $push: { "trainerDetails.clients": userId },
+    });
+    revalidatePath("/dashboard/trainers");
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function addAdditionalTrainerData(

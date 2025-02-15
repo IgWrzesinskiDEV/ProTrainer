@@ -4,7 +4,7 @@ import { ITrainer } from "@/interfaces/trainers/ITrainer";
 export async function getAvaliableTrainers() {
   const trainers = await User.find(
     { role: "TRAINER" },
-    "userName profileDetails"
+    "userName profileDetails trainerDetails"
   );
   return trainers;
 }
