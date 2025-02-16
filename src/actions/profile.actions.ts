@@ -24,7 +24,6 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
   const { fullName, bio, avatar } = validateData.data;
 
   if (avatar) {
-
     const avatarFileName = await saveAvatarImage(avatar, id);
 
     await User.findByIdAndUpdate(id, {
@@ -57,5 +56,5 @@ export default async function saveProfileUnits(
     units: { weight, height, bodyMeasurement },
   });
   revalidatePath("/dashboard/profile");
-  return { succes: "Units saved" };
+  return { success: "Units saved" };
 }

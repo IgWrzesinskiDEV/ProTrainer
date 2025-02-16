@@ -1,14 +1,5 @@
-export interface ITrainerBasicDetails {
-  userName: string;
-  _id: string;
-  profileDetails: {
-    avatarFileName?: string;
-    bio?: string;
-    fullName?: string;
-  };
-}
-
-export interface ITrainer extends ITrainerBasicDetails {
+import { IUserBacisDetails } from "../user/IUser";
+export interface ITrainer extends IUserBacisDetails {
   email: string;
   trainerDetails?: ITrainerDetails;
 }

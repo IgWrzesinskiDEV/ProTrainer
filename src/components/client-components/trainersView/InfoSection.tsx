@@ -1,12 +1,14 @@
+import { ReactNode } from "react";
+
 export function InfoSection({
   icon,
   title,
   content,
   large = false,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
-  content: string;
+  content: string | React.ReactNode;
   large?: boolean;
 }) {
   return (
@@ -15,9 +17,9 @@ export function InfoSection({
         {icon}
         <span className="ml-2">{title}</span>
       </h3>
-      <p className={`text-gray-300 font-thin ${large ? "text-lg" : ""}`}>
+      <div className={`text-gray-300 font-thin ${large ? "text-lg" : ""}`}>
         {content}
-      </p>
+      </div>
     </div>
   );
 }

@@ -9,3 +9,13 @@ export interface profileDetailsInterface {
   bio: string;
   avatarFileName: string;
 }
+
+export interface IUserBacisDetails {
+  userName: string;
+  _id: string;
+  profileDetails: {
+    avatarFileName?: string;
+    bio?: string;
+    fullName?: string;
+  };
+}

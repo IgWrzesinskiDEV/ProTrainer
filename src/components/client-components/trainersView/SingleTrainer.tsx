@@ -9,11 +9,16 @@ import {
   LuGlobe,
   LuInstagram,
   LuFacebook,
+  LuGraduationCap,
+  LuLanguages,
+  LuStar,
 } from "react-icons/lu";
+import { PiCertificate } from "react-icons/pi";
 import { FaWhatsapp } from "react-icons/fa";
 import { InfoSection } from "./InfoSection";
 import SocialLink from "./SocialLink";
 import AddTrainerButton from "./AddTrainerButton";
+import TrainerInfoColumn from "./TrainerInfoColumn";
 export default async function SingleTrainer({
   params,
 }: {
@@ -21,6 +26,7 @@ export default async function SingleTrainer({
 }) {
   const trainerId = (await params).trainerSlug;
   const trainer = await getTrainerById(trainerId);
+
   if (!trainer) {
     return (
       <ProfileWrapper title="">
@@ -36,11 +42,28 @@ export default async function SingleTrainer({
   const socialAndExpirianceArray = Object.entries(
     trainerDetails?.socialAndExpiriance?.socialMedia || {}
   ).map(([key, value]) => ({ key, value }));
-  console.log(socialAndExpirianceArray);
-  const workingModes = Object.entries(socialAndExpiriance?.workingModes || {})
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .filter(([_, value]) => value)
-    .map(([key]) => key);
+
+  const certifications = trainerDetails?.certifications || [];
+  const education = trainerDetails?.education || [];
+
+  const services = {
+    data: trainerDetails?.services || [],
+    icon: LuBriefcase,
+    title: "Services",
+  };
+  const languages = {
+    data: trainerDetails?.languages || [],
+    icon: LuLanguages,
+    title: "Languages",
+  };
+  const workingModes = {
+    data: Object.entries(socialAndExpiriance?.workingModes || {})
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([_, value]) => value)
+      .map(([key]) => key),
+    icon: LuGlobe,
+    title: "Working Modes",
+  };
 
   return (
     <ProfileWrapper title="">
@@ -69,7 +92,7 @@ export default async function SingleTrainer({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-8">
               <InfoSection
-                icon={<LuBriefcase className="text-[#3b82f6]" size={24} />}
+                icon={<LuStar className="text-[#3b82f6]" size={24} />}
                 title="Specialization"
                 content={
                   socialAndExpiriance?.specialization ||
@@ -85,30 +108,46 @@ export default async function SingleTrainer({
                 }
                 large
               />
+              <InfoSection
+                icon={<PiCertificate className="text-[#3b82f6]" size={24} />}
+                title="Certifications"
+                content={
+                  certifications.length > 0 ? (
+                    <ul className="list-disc pl-5">
+                      {certifications.map((cert, index) => (
+                        <li key={index} className="text-gray-300">
+                          {cert}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "No certifications added yet"
+                  )
+                }
+              />
+              <InfoSection
+                icon={<LuGraduationCap className="text-[#3b82f6]" size={24} />}
+                title="Education"
+                content={
+                  education.length > 0 ? (
+                    <ul className="list-disc pl-5">
+                      {education.map((edu, index) => (
+                        <li key={index} className="text-gray-300">
+                          {edu}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "No education history added yet"
+                  )
+                }
+              />
             </div>
             <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-3 flex items-center text-gray-200">
-                  <LuGlobe className="mr-2 text-[#3b82f6]" size={24} />
-                  Working Modes
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {workingModes.length > 0 ? (
-                    workingModes.map((mode, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-500 bg-opacity-20 text-blue-300 px-3 py-1 rounded-full text-sm transition-all duration-300 hover:bg-opacity-30 select-none"
-                      >
-                        {mode}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="text-gray-300 font-thin">
-                      No working modes added yet
-                    </p>
-                  )}
-                </div>
-              </div>
+              <TrainerInfoColumn
+                InfoSections={[workingModes, services, languages]}
+              />
+
               <div>
                 <h3 className="text-xl font-semibold mb-3 text-gray-200">
                   Social Media

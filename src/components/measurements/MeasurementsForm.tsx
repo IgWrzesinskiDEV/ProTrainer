@@ -1,11 +1,12 @@
 "use client";
-import { cn } from "@/lib/twMergeUtill";
-import DatePickerMeasurements from "./DatePickerMeasurements";
+
 import { useActionState } from "react";
 import { saveMessurement } from "@/actions/measurements.action";
+import DatePickerMeasurements from "./DatePickerMeasurements";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 import camelize from "@/utils/camelizeString";
-import { unitsInterface } from "@/interfaces/user/IUser";
+import type { unitsInterface } from "@/interfaces/user/IUser";
+
 const initialState = {
   error: "",
 };
@@ -21,50 +22,37 @@ export default function MeasurementsForm({
     saveMessurement,
     initialState
   );
-  console.log(formState);
+
   return (
-    <div className="p-4 flex flex-col gap-4 bg-backgroundLite rounded-lg shadow-2xl items-center">
-      <h1>Add your mesurements</h1>
-      <form
-        action={formAction}
-        className="w-2/3  flex flex-col gap-4 items-center "
-      >
-        <div className="w-full rounded-lg border-2 border-blue-500 ">
+    <div className="max-w-3xl mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-2xl text-gray-100">
+      <h1 className="text-3xl font-bold text-center text-blue-400 mb-8">
+        Add Your Measurements
+      </h1>
+      <form action={formAction} className="space-y-6">
+        <div className="bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-700">
           <DatePickerMeasurements />
-          {TABLE_HEAD.map((field, index) => {
-            const className = ` border-[#aaaabc]/50 border-2 bg-[#1C2025] border-b-0    w-2/3 p-2 ${
-              index === 0 ? "border-t-0" : ""
-            }`;
+          {TABLE_HEAD.map((field) => {
             if (field === "Date") return null;
             return (
-              <div key={field} className="flex items-center justify-center ">
+              <div
+                key={field}
+                className="flex items-center border-b border-gray-700 last:border-b-0"
+              >
                 <label
                   htmlFor={field}
-                  className={cn(
-                    className,
-                    "border-r-0 border-l-0 text-center ",
-                    index === 0 ? "rounded-tl-lg" : "",
-                    index === TABLE_HEAD.length - 1 ? "rounded-bl-lg" : ""
-                  )}
+                  className="w-1/3 bg-gray-700 text-blue-300 font-medium py-3 px-4"
                 >
                   {field}
                 </label>
-                <div
-                  className={cn(
-                    className,
-                    "flex items-center space-x-4 border-r-0 ",
-                    index === 0 ? "rounded-tr-lg" : "",
-                    index === TABLE_HEAD.length - 1 ? "rounded-br-lg" : ""
-                  )}
-                >
+                <div className="w-2/3 flex items-center space-x-4 py-3 px-4">
                   <input
                     type={field === "Date" ? "date" : "number"}
                     min={0}
                     step={0.1}
                     name={camelize(field)}
-                    className="w-full bg-transparent  focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-transparent border-b-2 border-gray-600 focus:border-blue-500 focus:outline-none transition-colors py-1 px-2 text-gray-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
-                  <div>
+                  <div className="text-sm text-blue-400 font-medium">
                     {field === "Weight" ? units.weight : units.bodyMeasurement}
                   </div>
                 </div>
@@ -72,16 +60,18 @@ export default function MeasurementsForm({
             );
           })}
         </div>
-        <div className="h-1">
-          {formState.error && <p className="text-red-500">{formState.error}</p>}
+        {formState.error && (
+          <p className="text-red-400 text-center">{formState.error}</p>
+        )}
+        <div className="flex justify-center">
+          <ButtonWithLoading
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            type="submit"
+            isLoading={isPending}
+          >
+            Save Measurements
+          </ButtonWithLoading>
         </div>
-        <ButtonWithLoading
-          className="w-1/3"
-          type="submit"
-          isLoading={isPending}
-        >
-          Save
-        </ButtonWithLoading>
       </form>
     </div>
   );

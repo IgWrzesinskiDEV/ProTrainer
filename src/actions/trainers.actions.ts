@@ -15,10 +15,15 @@ export async function addTrainer(trainerId: string) {
     const { user } = await verifyAuth();
     const userId = user?.id;
     await User.findByIdAndUpdate(userId, { currentTrainer: trainerId });
-
-    await User.findByIdAndUpdate(trainerId, {
-      $push: { "trainerDetails.clients": userId },
-    });
+    const trainer = await User.findById(trainerId);
+    if (!trainer) {
+      throw new Error("Trainer not found");
+    }
+    if (trainer.trainerDetails?.clients.includes(userId)) {
+      throw new Error("Client already added");
+    }
+    trainer.trainerDetails?.clients.push(userId);
+    await trainer.save();
     revalidatePath("/dashboard/trainers");
   } catch (e) {
     console.log(e);

@@ -5,7 +5,7 @@ export default function ProfileWrapper({
   className,
 }: {
   children: React.ReactNode;
-  title: string;
+  title?: string;
   className?: string;
 }) {
   return (
@@ -15,10 +15,16 @@ export default function ProfileWrapper({
         className
       )}
     >
-      <h2 className="text-2xl font-bold text-white mb-6 text-center">
-        {title}
-      </h2>
-      <div className="flex relative  w-full items-end justify-around h-full">
+      {title && (
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          {title}
+        </h2>
+      )}
+      <div
+        className={`flex relative  w-full items-end justify-around h-full ${
+          !title && "pt-5"
+        }`}
+      >
         {children}
       </div>
     </div>

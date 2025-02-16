@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import ProfileWrapper from "../profile/ProfileWrapper";
-import type { ITrainer } from "@/interfaces/trainers/ITrainer";
-import TrainerPreview from "./trainersView/TrainerPreview";
 import { LuSearch } from "react-icons/lu";
-
-export default function TrainersList({ trainerList }: { trainerList: string }) {
+import ProfileWrapper from "../../profile/ProfileWrapper";
+import ClientPreview from "./ClientPreview";
+import { IClientPreview } from "@/interfaces/clients/IClient";
+export default function ClientsList({ clients }: { clients: string }) {
   const [searchValue, setSearchValue] = useState("");
-  const availableTrainers = JSON.parse(trainerList) as ITrainer[];
-  const searchedTrainers = availableTrainers.filter((trainer: ITrainer) =>
-    trainer.userName.toLowerCase().includes(searchValue.toLowerCase())
+  const clientsList: IClientPreview[] = JSON.parse(clients);
+  const searchedClients = clientsList.filter((client) =>
+    client.userName.toLocaleLowerCase().includes(searchValue.toLowerCase())
   );
-
+  console.log(searchedClients);
   return (
     <ProfileWrapper title="Trainers" className="rounded-tr-none relative z-10">
       <div className="flex flex-col items-center gap-10 w-full">
@@ -27,8 +26,8 @@ export default function TrainersList({ trainerList }: { trainerList: string }) {
           <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
         </div>
         <div className="flex flex-wrap gap-5 flex-1 justify-center w-full">
-          {searchedTrainers.map((trainer) => (
-            <TrainerPreview trainer={trainer} key={trainer._id} />
+          {searchedClients.map((client) => (
+            <ClientPreview client={client} key={client._id} />
           ))}
         </div>
       </div>
