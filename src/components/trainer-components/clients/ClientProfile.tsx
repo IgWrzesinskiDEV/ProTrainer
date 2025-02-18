@@ -1,8 +1,32 @@
 "use client";
 
 import { useState } from "react";
-
 import { LuUser, LuRuler, LuDumbbell } from "react-icons/lu";
+
+import WorkoutTab from "./WorkoutTab";
+interface WorkoutDay {
+  id: number;
+  day: string;
+
+  exercises: Exercise[];
+}
+interface Exercise {
+  number: number;
+  name: string;
+  tempo: string;
+  weekData: WeekData[];
+}
+interface WeekData {
+  week: number;
+  coachData: string;
+  userData?: string;
+}
+interface WorkoutPlan {
+  planId: number;
+  planName: string;
+  days: WorkoutDay[];
+  weekCount: number;
+}
 
 interface ClientInfo {
   username: string;
@@ -13,7 +37,7 @@ interface ClientInfo {
     weight: string;
     bodyFat: string;
   };
-  workoutPlans: string[];
+  workoutPlans: WorkoutPlan[];
   fitnessStats: {
     avgHeartRate: number;
     caloriesBurned: number;
@@ -31,10 +55,25 @@ const clientData: ClientInfo = {
     bodyFat: "22%",
   },
   workoutPlans: [
-    "Monday: Upper Body Strength",
-    "Wednesday: Lower Body Power",
-    "Friday: Full Body HIIT",
-    "Saturday: Yoga and Flexibility",
+    {
+      planId: 1,
+      planName: "Summer Shred",
+      days: [
+        {
+          id: 1,
+          day: "Monday",
+          exercises: [
+            {
+              number: 1,
+              name: "Bench Press",
+              tempo: "2-1-2",
+              weekData: [{ week: 1, coachData: "3x10 20kg" }],
+            },
+          ],
+        },
+      ],
+      weekCount: 1,
+    },
   ],
   fitnessStats: {
     avgHeartRate: 140,
@@ -44,9 +83,7 @@ const clientData: ClientInfo = {
 };
 
 export default function ClientProfile() {
-  const [activeTab, setActiveTab] = useState<
-    "info" | "measurements" | "workouts"
-  >("info");
+  const [activeTab, setActiveTab] = useState("info");
 
   return (
     <div className="w-3/4 mx-auto p-6 bg-gray-800 rounded-xl shadow-lg text-white">
@@ -62,40 +99,10 @@ export default function ClientProfile() {
         </div>
       </div>
 
-      {/* <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-gray-700 p-4 rounded-lg flex items-center">
-          <LuHeart className="w-8 h-8 mr-3 text-red-400" />
-          <div>
-            <p className="text-sm text-gray-300">Avg Heart Rate</p>
-            <p className="text-xl font-semibold">
-              {clientData.fitnessStats.avgHeartRate} bpm
-            </p>
-          </div>
-        </div>
-        <div className="bg-gray-700 p-4 rounded-lg flex items-center">
-          <LuFlame className="w-8 h-8 mr-3 text-orange-400" />
-          <div>
-            <p className="text-sm text-gray-300">Calories Burned</p>
-            <p className="text-xl font-semibold">
-              {clientData.fitnessStats.caloriesBurned} kcal
-            </p>
-          </div>
-        </div>
-        <div className="bg-gray-700 p-4 rounded-lg flex items-center">
-          <LuTrophy className="w-8 h-8 mr-3 text-yellow-400" />
-          <div>
-            <p className="text-sm text-gray-300">Achievements</p>
-            <p className="text-xl font-semibold">
-              {clientData.fitnessStats.achievements}
-            </p>
-          </div>
-        </div>
-      </div> */}
-
       <nav className="flex mb-8">
         <button
           onClick={() => setActiveTab("info")}
-          className={`flex items-center px-4 py-2 rounded-tl-lg  ${
+          className={`flex items-center px-4 py-2 rounded-tl-lg ${
             activeTab === "info"
               ? "bg-blue-500 text-white"
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
@@ -117,7 +124,7 @@ export default function ClientProfile() {
         </button>
         <button
           onClick={() => setActiveTab("workouts")}
-          className={`flex items-center px-4 py-2 rounded-tr-lg  ${
+          className={`flex items-center px-4 py-2 rounded-tr-lg ${
             activeTab === "workouts"
               ? "bg-blue-500 text-white"
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
@@ -164,22 +171,7 @@ export default function ClientProfile() {
           </div>
         )}
 
-        {activeTab === "workouts" && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Workout Plans</h2>
-            <ul className="space-y-2">
-              {clientData.workoutPlans.map((plan, index) => (
-                <li
-                  key={index}
-                  className="bg-gray-600 p-4 rounded-lg flex items-center"
-                >
-                  <LuDumbbell className="w-5 h-5 mr-3 text-blue-400" />
-                  <span className="text-gray-200">{plan}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {activeTab === "workouts" && <WorkoutTab clientData={clientData} />}
       </div>
     </div>
   );

@@ -162,61 +162,61 @@ const workoutPlan = [
       },
     ],
   },
-  // {
-  //   id: 7,
-  //   day: "Sunday",
-  //   workoutTitle: "Upper",
-  //   exercises: [
-  //     {
-  //       number: 1,
-  //       name: "Push Up Plus",
-  //       tempo: "2-0-2",
-  //       weekData: [
-  //         {
-  //           week: 1,
-  //           coachData: "3x10 10kg",
-  //           userData: "rir0",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       number: 2,
-  //       name: "Pull Ups",
-  //       tempo: "2-0-2",
-  //       weekData: [
-  //         {
-  //           week: 1,
-  //           coachData: "3x8 Bodyweight",
-  //           userData: "rir1",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       number: 3,
-  //       name: "Shoulder Press",
-  //       tempo: "2-0-2",
-  //       weekData: [
-  //         {
-  //           week: 1,
-  //           coachData: "3x12 15kg",
-  //           userData: "rir2",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       number: 4,
-  //       name: "Bicep Curls",
-  //       tempo: "2-0-2",
-  //       weekData: [
-  //         {
-  //           week: 1,
-  //           coachData: "3x15 10kg",
-  //           userData: "rir1",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    id: 7,
+    day: "Sunday",
+    workoutTitle: "Upper",
+    exercises: [
+      {
+        number: 1,
+        name: "Push Up Plus",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x10 10kg",
+            userData: "rir0",
+          },
+        ],
+      },
+      {
+        number: 2,
+        name: "Pull Ups",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x8 Bodyweight",
+            userData: "rir1",
+          },
+        ],
+      },
+      {
+        number: 3,
+        name: "Shoulder Press",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x12 15kg",
+            userData: "rir2",
+          },
+        ],
+      },
+      {
+        number: 4,
+        name: "Bicep Curls",
+        tempo: "2-0-2",
+        weekData: [
+          {
+            week: 1,
+            coachData: "3x15 10kg",
+            userData: "rir1",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const ex = {
