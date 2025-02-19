@@ -100,3 +100,7 @@ export const TrainerSocialMediaSchema = z
       path: [], // This will apply to the entire object, not just a specific field
     }
   );
+
+export const NewEmptyPlanSchema = z.object({
+  planName: z.string().min(1, { message: "Plan name is required" }),
+});

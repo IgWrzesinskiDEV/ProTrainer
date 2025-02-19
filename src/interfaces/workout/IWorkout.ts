@@ -4,7 +4,7 @@ export interface Exercise {
   tempo: string;
   weekData: WeekData[];
 }
-export enum weekDays {
+export enum WeekDays {
   Monday = "Monday",
   Tuesday = "Tuesday",
   Wednesday = "Wednesday",
@@ -15,9 +15,7 @@ export enum weekDays {
 }
 
 export interface WorkoutDay {
-  id: number;
-  day: weekDays;
-
+  day: WeekDays;
   exercises: Exercise[];
 }
 
@@ -28,7 +26,7 @@ export interface WeekData {
 }
 
 export interface WorkoutPlan {
-  planId: number;
+  _id: string;
   planName: string;
   days: WorkoutDay[];
   weekCount: number;

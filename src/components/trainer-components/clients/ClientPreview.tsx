@@ -14,7 +14,7 @@ export default function ClientPreview({ client }: { client: IClientPreview }) {
 
   return (
     <Link
-      href={`/dashboard/clients/${client._id}`}
+      href={`/dashboard/clients/${client._id}/info`}
       key={client._id}
       className="bg-gray-800 rounded-lg overflow-hidden shadow-lg w-[24%] hover:shadow-blue-500/20 transition-all duration-300 flex flex-col"
     >

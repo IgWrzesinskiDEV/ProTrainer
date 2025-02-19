@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { LuUser, LuRuler, LuDumbbell } from "react-icons/lu";
 
-import WorkoutTab from "./WorkoutTab";
+import WorkoutTab from "./plans/ClientPlans";
 interface WorkoutDay {
   id: number;
   day: string;

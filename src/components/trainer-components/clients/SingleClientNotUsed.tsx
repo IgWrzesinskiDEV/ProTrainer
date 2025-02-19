@@ -1,6 +1,6 @@
 import ProfileWrapper from "@/components/profile/ProfileWrapper";
 import { getClientById } from "@/utils/data/getClients";
-import ClientProfile from "./ClientProfile";
+import ClientProfile from "./ClientProfileNotUsed";
 
 export default async function SingleClient({
   params,

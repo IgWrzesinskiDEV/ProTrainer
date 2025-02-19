@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { LuPlus } from "react-icons/lu";
+import { LuMinus, LuPlus } from "react-icons/lu";
 
 import {
   weekDays,
@@ -11,7 +11,11 @@ import {
 } from "@/interfaces/workout/IWorkout";
 import SingleDay from "./SingleDay";
 
-export default function WorkoutTab({ clientData }: { clientData: ClientInfo }) {
+export default function ClientPlans({
+  clientData,
+}: {
+  clientData: ClientInfo;
+}) {
   const [selectedPlan, setSelectedPlan] = useState<WorkoutPlan | null>(
     clientData.workoutPlans[0]
   );
@@ -214,20 +218,23 @@ export default function WorkoutTab({ clientData }: { clientData: ClientInfo }) {
             </option>
           ))}
         </select>
-        <input
-          type="text"
-          value={newPlanName}
-          onChange={(e) => setNewPlanName(e.target.value)}
-          placeholder="New plan name"
-          className="bg-gray-600 text-white px-4 py-2 rounded"
-        />
-        <button
-          onClick={addNewPlan}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          <LuPlus className="w-5 h-5" />
-          Add New Plan
-        </button>
+        <form action="">
+          <input
+            type="text"
+            name="planName"
+            value={newPlanName}
+            onChange={(e) => setNewPlanName(e.target.value)}
+            placeholder="New plan name"
+            className="bg-gray-600 text-white px-4 py-2 rounded"
+          />
+          <button
+            type="submit"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            <LuPlus className="w-5 h-5" />
+            Add New Plan
+          </button>
+        </form>
         {/* <button
           onClick={addWorkoutDay}
           className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -235,13 +242,21 @@ export default function WorkoutTab({ clientData }: { clientData: ClientInfo }) {
           <LuPlus className="w-5 h-5" />
           Add Workout Day
         </button> */}
-        <button
-          onClick={addWeek}
-          className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          <LuPlus className="w-5 h-5" />
-          Add Week
-        </button>
+        {selectedPlan && (
+          <>
+            <button
+              onClick={addWeek}
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            >
+              <LuPlus className="w-5 h-5" />
+              Add Week
+            </button>
+            <button className="flex items-center ml-auto gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+              <LuMinus className="w-5 h-5" />
+              Remove workout plan
+            </button>
+          </>
+        )}
       </div>
 
       {selectedPlan &&
