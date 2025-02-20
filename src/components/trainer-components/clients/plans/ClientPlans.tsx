@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
-import { LuMinus, LuPlus, LuChevronDown } from "react-icons/lu";
-import { IoAlertCircleOutline } from "react-icons/io5";
+import { LuMinus, LuPlus } from "react-icons/lu";
 
 import { WorkoutPlan, WeekDays } from "@/interfaces/workout/IWorkout";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { addEmptyWorkoutPlan } from "@/actions/trainerClients.actions";
 import SingleDay from "./SingleDay";
 import InputWithErrorHandler from "@/components/UI/input/InputWithErrorHandler";
 import PlanSearchSelect from "@/components/UI/Select/PlanSearchSelect";
 import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
+
+import ModalUnstyled from "@/components/UI/Modal";
+import ConfirmDeletePlan from "./ConfirmDeletePlan";
 const initialState = {
   errors: [],
 };
@@ -27,7 +29,7 @@ export default function ClientPlans({
   );
   const hasError = (formState?.errors?.length ?? 0) > 0;
   const workoutPlans: WorkoutPlan[] = JSON.parse(clientPlans);
-
+  const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<WorkoutPlan | null>(
     workoutPlans[0] || null
   );
@@ -84,57 +86,75 @@ export default function ClientPlans({
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-semibold text-white mb-4">Workout Plans</h2>
-      <div className="flex items-center gap-4 mb-4">
-        <PlanSearchSelect
-          workoutPlans={workoutPlans}
-          setSelectedPlan={setSelectedPlan}
-          selectedPlan={selectedPlan}
-        />
-        <form action={addEmptyPlanAction} className="flex items-center gap-4">
-          <InputWithErrorHandler
-            hasError={hasError}
-            errorMessage={formState.errors?.[0]}
-          />
-
-          <ButtonWithLoading
-            isLoading={isPending}
-            type="submit"
-            className="flex items-center w-fit gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            <LuPlus className="w-5 h-5" />
-            Add New Plan
-          </ButtonWithLoading>
-        </form>
-
-        {selectedPlan && (
-          <>
-            <button
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              onClick={addWeek}
-            >
-              <LuPlus className="w-5 h-5" />
-              Add Week
-            </button>
-            <button className="flex items-center ml-auto gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-              <LuMinus className="w-5 h-5" />
-              Remove workout plan
-            </button>
-          </>
-        )}
-      </div>
-
-      {selectedPlan &&
-        selectedPlan.days.map((day) => (
-          <SingleDay
-            day={day}
-            key={day.weekDay}
-            updateWeekData={updateWeekData}
+    <>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold text-white mb-4">
+          Workout Plans
+        </h2>
+        <div className="flex items-center gap-4 mb-4">
+          <PlanSearchSelect
+            workoutPlans={workoutPlans}
+            setSelectedPlan={setSelectedPlan}
             selectedPlan={selectedPlan}
           />
-        ))}
-    </div>
+          <form
+            action={addEmptyPlanAction}
+            className="flex items-center justify-center gap-4"
+          >
+            <InputWithErrorHandler
+              hasError={hasError}
+              errorMessage={formState.errors?.[0]}
+            />
+
+            <ButtonWithLoading
+              isLoading={isPending}
+              type="submit"
+              className="flex items-center justify-center w-fit text-base mt-0 gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              <LuPlus className="w-5 h-5" />
+              Add New Plan
+            </ButtonWithLoading>
+          </form>
+
+          {selectedPlan && (
+            <>
+              <button
+                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                onClick={addWeek}
+              >
+                <LuPlus className="w-5 h-5" />
+                Add Week
+              </button>
+              <button
+                onClick={modalRef.current?.open}
+                className="flex items-center ml-auto gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                <LuMinus className="w-5 h-5" />
+                Remove workout plan
+              </button>
+            </>
+          )}
+        </div>
+
+        {selectedPlan &&
+          selectedPlan.days.map((day) => (
+            <SingleDay
+              day={day}
+              key={day.weekDay}
+              updateWeekData={updateWeekData}
+              selectedPlan={selectedPlan}
+            />
+          ))}
+      </div>
+      <ModalUnstyled ref={modalRef} isBackDropClickClose={false}>
+        <ConfirmDeletePlan
+          clientId={clientId}
+          planId={selectedPlan?._id}
+          closeModal={modalRef.current?.close}
+          planName={selectedPlan?.planName}
+        />
+      </ModalUnstyled>
+    </>
   );
 }
 

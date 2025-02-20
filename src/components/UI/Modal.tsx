@@ -8,9 +8,11 @@ import { BackdropProps } from "@mui/material";
 export default function ModalUnstyled({
   children,
   ref,
+  isBackDropClickClose = true,
 }: {
   children: React.ReactElement;
   ref: React.Ref<{ open: () => void; close: () => void }>;
+  isBackDropClickClose?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -23,7 +25,9 @@ export default function ModalUnstyled({
   return (
     <Modal
       open={open}
-      slotProps={{}}
+      slotProps={{
+        backdrop: { onClick: isBackDropClickClose ? handleClose : undefined },
+      }}
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
@@ -57,6 +61,7 @@ const StyledBackdrop = styled(Backdrop)`
   z-index: -1;
   position: fixed;
   inset: 0;
+
   background-color: rgb(0 0 0 / 0.5);
   -webkit-tap-highlight-color: transparent;
 `;

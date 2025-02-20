@@ -95,3 +95,19 @@ export async function saveSingleDayRestDay(weekDay: WeekDays, planId: string) {
     revalidatePath(`/dashboard/clients`);
   } catch {}
 }
+
+export async function deletePlan(planId: string, clientId: string) {
+  try {
+    const client = await User.findById(clientId);
+    if (!client) {
+      throw new Error("Client not found");
+    }
+    client.plansIds = client.plansIds.filter((id: string) => id !== planId);
+    await client.save();
+    await Plan.findByIdAndDelete(planId);
+    revalidatePath(`/dashboard/clients/${clientId}/plans`);
+    return { success: "Plan deleted" };
+  } catch {
+    throw new Error("Plan not deleted");
+  }
+}

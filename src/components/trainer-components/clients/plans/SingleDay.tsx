@@ -5,7 +5,13 @@ import {
   WeekDays,
   WorkoutPlan,
 } from "@/interfaces/workout/IWorkout";
-import { Fragment, useState, useActionState, useTransition } from "react";
+import {
+  Fragment,
+  useState,
+  useActionState,
+  useTransition,
+  useEffect,
+} from "react";
 import RestDayCheckBox from "@/components/UI/workoutPlans/RestDayCheckBox";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveSingleDayExercises } from "@/actions/trainerClients.actions";
@@ -18,7 +24,6 @@ const initialState = {
 export default function SingleDay({
   day,
   updateWeekData,
-
   selectedPlan,
 }: {
   day: WorkoutDay;
@@ -31,6 +36,10 @@ export default function SingleDay({
 
   selectedPlan: WorkoutPlan;
 }) {
+  useEffect(() => {
+    setSingleDay(day);
+    setRestDay(day.isRestDay);
+  }, [selectedPlan, day]);
   const [expandedDay, setExpandedDay] = useState<WeekDays | null>(null);
 
   const [singleDay, setSingleDay] = useState<WorkoutDay>(day);

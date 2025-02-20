@@ -1,5 +1,4 @@
 import { WorkoutPlan } from "@/interfaces/workout/IWorkout";
-import { LuChevronDown } from "react-icons/lu";
 import { Dispatch, SetStateAction } from "react";
 import * as React from "react";
 import {
@@ -32,9 +31,11 @@ export default function PlanSearchSelect({
     <div className="dark ">
       <Select
         value={selectedPlan?._id || ""}
-        onChange={(e, newValue) =>
-          setSelectedPlan(workoutPlans.find((p) => p._id === newValue) || null)
-        }
+        onChange={(e, newValue) => {
+          console.log(newValue);
+          console.log(workoutPlans);
+          setSelectedPlan(workoutPlans.find((p) => p._id === newValue) || null);
+        }}
       >
         <Option value="" className="text-gray-400 font-normal">
           Select a plan
