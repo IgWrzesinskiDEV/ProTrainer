@@ -8,6 +8,7 @@ export interface IUser {
   password?: string;
   role: "USER" | "TRAINER" | "ADMIN";
   currentTrainer?: string;
+  plansIds?: string[];
   profileDetails: {
     fullName?: string;
     bio?: string;
@@ -99,6 +100,7 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     currentTrainer: { type: String },
+    plansIds: { type: [String], default: undefined },
     profileDetails: {
       fullName: { type: String },
       bio: { type: String },

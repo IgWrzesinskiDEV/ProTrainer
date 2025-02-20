@@ -104,3 +104,12 @@ export const TrainerSocialMediaSchema = z
 export const NewEmptyPlanSchema = z.object({
   planName: z.string().min(1, { message: "Plan name is required" }),
 });
+
+export const AddExercisesSchema = z.object({
+  exercises: z.array(
+    z.object({
+      exerciseName: z.string().min(1, { message: "Exercise name is required" }),
+      tempo: z.string().min(1, { message: "Tempo is required" }),
+    })
+  ),
+});

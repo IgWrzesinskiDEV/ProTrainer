@@ -15,7 +15,8 @@ export enum WeekDays {
 }
 
 export interface WorkoutDay {
-  day: WeekDays;
+  weekDay: WeekDays;
+  isRestDay: boolean;
   exercises: Exercise[];
 }
 

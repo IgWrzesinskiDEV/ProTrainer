@@ -26,21 +26,23 @@ const ExerciseSchema = new Schema<Exercise>(
   { _id: false }
 );
 
-const WorkoutDaySchema = new Schema<WorkoutDay>(
+export const WorkoutDaySchema = new Schema<WorkoutDay>(
   {
-    day: { type: String, enum: Object.values(WeekDays), required: true },
+    weekDay: { type: String, enum: Object.values(WeekDays), required: true },
+    isRestDay: { type: Boolean, required: true },
     exercises: { type: [ExerciseSchema], required: true },
   },
   { _id: false }
 );
 
-const PlanSchema = new Schema<IPlan>(
+const PlanModel = new Schema<IPlan>(
   {
     _id: { type: String, required: true },
     planName: { type: String, required: true },
     days: { type: [WorkoutDaySchema], required: true },
+    weekCount: { type: Number, required: true },
   },
   { _id: false }
 );
 
-export const Plan = models?.PlanSchema || model("PlanSchema", PlanSchema);
+export const Plan = models?.Plan || model("Plan", PlanModel);

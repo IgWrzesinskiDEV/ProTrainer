@@ -1,39 +1,93 @@
+"use client";
 import {
   Exercise,
   WorkoutDay,
+  WeekDays,
   WorkoutPlan,
 } from "@/interfaces/workout/IWorkout";
-import { Fragment, useState } from "react";
-import RestDayCheckBox from "@/components/UI/workoutPlans/CheckBox";
+import { Fragment, useState, useActionState, useTransition } from "react";
+import RestDayCheckBox from "@/components/UI/workoutPlans/RestDayCheckBox";
 import { motion, AnimatePresence } from "framer-motion";
+import { saveSingleDayExercises } from "@/actions/trainerClients.actions";
 import { LuPlus, LuTrash, LuChevronDown, LuChevronUp } from "react-icons/lu";
+import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
+
+const initialState = {
+  errors: [],
+};
 export default function SingleDay({
   day,
   updateWeekData,
-  updateExercise,
-  addExercise,
-  deleteExercise,
+
   selectedPlan,
 }: {
   day: WorkoutDay;
   updateWeekData: (
-    dayId: number,
+    weekDay: WeekDays,
     exerciseIndex: number,
     weekIndex: number,
     value: string
   ) => void;
-  updateExercise: (
-    dayId: number,
+
+  selectedPlan: WorkoutPlan;
+}) {
+  const [expandedDay, setExpandedDay] = useState<WeekDays | null>(null);
+
+  const [singleDay, setSingleDay] = useState<WorkoutDay>(day);
+  const [restDay, setRestDay] = useState<boolean>(singleDay.isRestDay);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, startTransition] = useTransition();
+
+  const [saveSingleDayState, saveSingleDayAction, pending] = useActionState(
+    () => saveSingleDayExercises(singleDay, selectedPlan._id),
+    initialState
+  );
+
+  function addExercise() {
+    const newExercise: Exercise = {
+      number: (singleDay.exercises.length || 0) + 1,
+      name: "",
+      tempo: "",
+      weekData: Array.from({ length: selectedPlan.weekCount }, (_, i) => ({
+        week: i + 1,
+        coachData: "",
+      })),
+    };
+    const updatedDay = {
+      ...singleDay,
+      exercises: [...singleDay.exercises, newExercise],
+    };
+
+    setSingleDay(updatedDay);
+  }
+
+  function updateExercise(
     exerciseIndex: number,
     field: keyof Exercise,
     value: string
-  ) => void;
-  addExercise: (dayId: number) => void;
-  deleteExercise: (index: number, day: WorkoutDay) => void;
-  selectedPlan: WorkoutPlan;
-}) {
-  const [expandedDay, setExpandedDay] = useState<number | null>(null);
-  const [restDay, setRestDay] = useState<boolean>(false);
+  ) {
+    const updatedDay = {
+      ...singleDay,
+      exercises: singleDay.exercises.map((ex, i) => {
+        if (i === exerciseIndex) {
+          return { ...ex, [field]: value };
+        }
+        return ex;
+      }),
+    };
+    setSingleDay(updatedDay);
+  }
+
+  function deleteExercise(exerciseNumber: number) {
+    if (!selectedPlan) return;
+    const updatedDay = {
+      ...singleDay,
+      exercises: singleDay.exercises
+        .filter((ex) => ex.number !== exerciseNumber)
+        .map((ex, index) => ({ ...ex, number: index + 1 })),
+    };
+    setSingleDay(updatedDay);
+  }
 
   function expandDayHandler(event: React.MouseEvent) {
     if (
@@ -45,7 +99,7 @@ export default function SingleDay({
       return;
     if (restDay) return;
 
-    setExpandedDay(expandedDay === day.id ? null : day.id);
+    setExpandedDay(expandedDay === day.weekDay ? null : day.weekDay);
   }
 
   function checkRestDayHandler(checked: boolean) {
@@ -64,32 +118,18 @@ export default function SingleDay({
       >
         <div className="flex items-center gap-4">
           <p className={`text-lg font-semibold ${restDay && "opacity-30"}`}>
-            {day.day}
+            {singleDay.weekDay}
           </p>
-          {/* <input
-              value={day.day}
-              onChange={(e) => {
-                const updatedPlan = {
-                  ...selectedPlan,
-                  days: selectedPlan.days.map((d) =>
-                    d.id === day.id ? { ...d, day: e.target.value } : d
-                  ),
-                };
-                setSelectedPlan(updatedPlan);
-                clientData.workoutPlans = clientData.workoutPlans.map((p) =>
-                  p.planId === selectedPlan.planId ? updatedPlan : p
-                );
-              }}
-              className="bg-gray-700 text-white px-2 py-1 rounded w-32"
-              onClick={(e) => e.stopPropagation()}
-            /> */}
+
           <RestDayCheckBox
+            planId={selectedPlan._id}
+            weekDay={singleDay.weekDay}
             checkRestDayHandler={checkRestDayHandler}
             isRestDay={restDay}
           />
         </div>
         <div className={restDay ? "opacity-30 pointer-events-none" : undefined}>
-          {expandedDay === day.id ? (
+          {expandedDay === singleDay.weekDay ? (
             <LuChevronUp className="w-5 h-5" />
           ) : (
             <LuChevronDown className="w-5 h-5" />
@@ -97,7 +137,7 @@ export default function SingleDay({
         </div>
       </div>
       <AnimatePresence>
-        {expandedDay === day.id && (
+        {expandedDay === singleDay.weekDay && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -136,22 +176,24 @@ export default function SingleDay({
                     </tr>
                   </thead>
                   <tbody>
-                    {day.exercises.map((exercise, index) => (
+                    {singleDay.exercises.map((exercise, index) => (
                       <tr key={index} className="bg-gray-800">
                         <td className="border border-gray-600 px-4 py-2">
-                          {index + 1}
+                          <input
+                            type="text"
+                            //name="exerciseNumber"
+                            className="hidden"
+                            defaultValue={index + 1}
+                          />
+                          {exercise.number}
                         </td>
                         <td className="border border-gray-600 px-4 py-2">
                           <input
                             type="text"
+                            //name={`exerciseName-${exercise.number}`}
                             value={exercise.name}
                             onChange={(e) =>
-                              updateExercise(
-                                day.id,
-                                index,
-                                "name",
-                                e.target.value
-                              )
+                              updateExercise(index, "name", e.target.value)
                             }
                             className="w-full bg-gray-700 text-white px-2 py-1 rounded"
                           />
@@ -159,14 +201,10 @@ export default function SingleDay({
                         <td className="border border-gray-600 px-4 py-2">
                           <input
                             type="text"
+                            //name={`exerciseTempo-${exercise.number}`}
                             value={exercise.tempo}
                             onChange={(e) =>
-                              updateExercise(
-                                day.id,
-                                index,
-                                "tempo",
-                                e.target.value
-                              )
+                              updateExercise(index, "tempo", e.target.value)
                             }
                             className="w-full bg-gray-700 text-white px-2 py-1 rounded"
                           />
@@ -203,7 +241,7 @@ export default function SingleDay({
                         ))}
                         <td className="border border-gray-600 px-4 py-2">
                           <button
-                            onClick={() => deleteExercise(index, day)}
+                            onClick={() => deleteExercise(exercise.number)}
                             className="text-red-500 hover:text-red-700"
                           >
                             <LuTrash className="w-5 h-5" />
@@ -213,21 +251,30 @@ export default function SingleDay({
                     ))}
                   </tbody>
                 </table>
+                <div className="flex gap-2 mt-4 text-red-500">
+                  {saveSingleDayState?.errors &&
+                    saveSingleDayState.errors.map((error) => (
+                      <p key={error}>{error}</p>
+                    ))}
+                </div>
               </div>
               <button
-                onClick={() => addExercise(day.id)}
+                onClick={addExercise}
                 type="button"
                 className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
               >
                 <LuPlus className="w-5 h-5" />
                 Add Exercise
               </button>
-              <button
-                type="button"
-                className="flex items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
+              <ButtonWithLoading
+                isLoading={pending}
+                type="submit"
+                onClick={() => startTransition(() => saveSingleDayAction())}
+                //onClick={async () => saveSingleDayAction()}
+                className="flex w-fit items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
               >
                 Save Changes
-              </button>
+              </ButtonWithLoading>
             </div>
           </motion.div>
         )}
