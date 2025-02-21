@@ -92,6 +92,61 @@ const workoutPlan = [
             coachData: "3x10 20kg",
             userData: "",
           },
+          {
+            week: 4,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 5,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 6,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 7,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 8,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 9,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 10,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 11,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 12,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 13,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
+          {
+            week: 14,
+            coachData: "3x10 20kg",
+            userData: "",
+          },
         ],
       },
       {

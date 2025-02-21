@@ -28,7 +28,7 @@ export default function InputWithErrorHandler({
                       ? "border-red-500/50 focus:border-red-500 hover:border-red-500/80"
                       : "border-gray-500/30 focus:border-blue-500 hover:border-blue-500/30"
                   }
-                  ${hasError ? "pr-10" : ""}
+                  
                 `}
       />
 

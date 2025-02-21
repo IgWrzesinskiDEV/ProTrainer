@@ -1,6 +1,10 @@
 "use server";
 
-import { AddExercisesSchema, NewEmptyPlanSchema } from "@/schemas/zSchemas";
+import {
+  AddExercisesSchema,
+  AddWeekDataSchema,
+  NewEmptyPlanSchema,
+} from "@/schemas/zSchemas";
 import { createEmptyPlan } from "@/utils/data/createEmptyPlan";
 import { revalidatePath } from "next/cache";
 import { User } from "@/lib/models/user.model";
@@ -46,19 +50,62 @@ export async function saveSingleDayExercises(
   singleDay: WorkoutDay,
   planId: string
 ) {
-  const validateData = AddExercisesSchema.safeParse({
+  const validateExerciseData = AddExercisesSchema.safeParse({
     exercises: singleDay.exercises.map((exercise) => ({
       exerciseName: exercise.name,
       tempo: exercise.tempo,
     })),
   });
-  if (!validateData.success) {
+  if (!validateExerciseData.success) {
     const errors = [
-      ...new Set(validateData.error.errors.map((error) => error.message)),
+      ...new Set(
+        validateExerciseData.error.errors.map((error) => error.message)
+      ),
     ];
 
     return { errors: errors };
   }
+  const validateWeekData = AddWeekDataSchema.safeParse({
+    weekData: singleDay.exercises.flatMap((exercise) =>
+      exercise.weekData.map((weekData) => ({
+        weekNumber: weekData.weekNumber,
+        trainerData: weekData.trainerData,
+      }))
+    ),
+  });
+
+  if (!validateWeekData.success) {
+    console.log(validateWeekData.error.errors);
+    const errors = [
+      ...new Set(validateWeekData.error.errors.map((error) => error.message)),
+    ];
+    console.log(errors);
+    return { errors: errors };
+  }
+
+  const hasEmptyTrainerData = singleDay.exercises.some((exercise) =>
+    exercise.weekData.some((weekData) => !weekData.trainerData)
+  );
+
+  if (hasEmptyTrainerData) {
+    return { errors: ["Trainer data required"] };
+  }
+  // const validateWeekData = AddWeekDataSchema.safeParse({
+  //   weekData: singleDay.exercises[0].weekData.map((weekData) => ({
+  //     weekNumber: weekData.weekNumber,
+  //     trainerData: weekData.trainerData,
+  //     userData: weekData.userData,
+  //   })),
+  // });
+
+  // if (!validateWeekData.success) {
+  //   const errors = [
+  //     ...new Set(validateWeekData.error.errors.map((error) => error.message)),
+  //   ];
+
+  //   return { errors: errors };
+  // }
+  console.log(singleDay.exercises[0].weekData);
   try {
     const plan = await Plan.findById(planId);
     if (!plan) {
@@ -73,7 +120,8 @@ export async function saveSingleDayExercises(
     await plan.save();
     revalidatePath(`/dashboard/clients`);
     return { success: "Exercises saved" };
-  } catch {
+  } catch (e) {
+    console.log(e);
     return { errors: ["Exercises not saved"] };
   }
 }
@@ -109,5 +157,43 @@ export async function deletePlan(planId: string, clientId: string) {
     return { success: "Plan deleted" };
   } catch {
     throw new Error("Plan not deleted");
+  }
+}
+
+export async function addEmptyWeek(planId: string, clientId: string) {
+  try {
+    const plan = await Plan.findById(planId);
+    if (!plan) {
+      throw new Error("Plan not found");
+    }
+    plan.weekCount += 1;
+    plan.days.forEach((day: WorkoutDay) => {
+      day.exercises.forEach((exercise) => {
+        exercise.weekData.push({ weekNumber: plan.weekCount });
+      });
+    });
+    await plan.save();
+    revalidatePath(`/dashboard/clients/${clientId}/plans`);
+  } catch {
+    throw new Error("Week not added");
+  }
+}
+
+export async function deleteLatestWeek(planId: string, clientId: string) {
+  try {
+    const plan = await Plan.findById(planId);
+    if (!plan) {
+      throw new Error("Plan not found");
+    }
+    plan.weekCount -= 1;
+    plan.days.forEach((day: WorkoutDay) => {
+      day.exercises.forEach((exercise) => {
+        exercise.weekData.pop();
+      });
+    });
+    await plan.save();
+    revalidatePath(`/dashboard/clients/${clientId}/plans`);
+  } catch {
+    throw new Error("Week not deleted");
   }
 }

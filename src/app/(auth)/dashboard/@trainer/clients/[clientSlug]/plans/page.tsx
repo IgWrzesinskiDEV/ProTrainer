@@ -7,7 +7,7 @@ export default async function ClientPlansPage({
 }) {
   const clientId = (await params).clientSlug;
   const plans = await getClientPlans(clientId);
-  console.log(plans);
+
   return (
     <ClientPlans clientId={clientId} clientPlans={JSON.stringify(plans)} />
   );

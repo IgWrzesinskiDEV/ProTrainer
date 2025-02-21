@@ -1,10 +1,14 @@
 "use client";
-import { useState } from "react";
-import { LuMinus, LuPlus } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { LuMinus, LuPlus, LuCalendarX, LuCalendarPlus } from "react-icons/lu";
 
 import { WorkoutPlan, WeekDays } from "@/interfaces/workout/IWorkout";
-import { useActionState, useRef } from "react";
-import { addEmptyWorkoutPlan } from "@/actions/trainerClients.actions";
+import { useActionState, useRef, useTransition } from "react";
+import {
+  addEmptyWorkoutPlan,
+  addEmptyWeek,
+  deleteLatestWeek,
+} from "@/actions/trainerClients.actions";
 import SingleDay from "./SingleDay";
 import InputWithErrorHandler from "@/components/UI/input/InputWithErrorHandler";
 import PlanSearchSelect from "@/components/UI/Select/PlanSearchSelect";
@@ -34,56 +38,50 @@ export default function ClientPlans({
     workoutPlans[0] || null
   );
 
-  function updateWeekData(
-    weekDay: WeekDays,
-    exerciseIndex: number,
-    weekIndex: number,
-    value: string
-  ) {
-    if (!selectedPlan) return;
-    const updatedPlan = {
-      ...selectedPlan,
-      days: selectedPlan.days.map((day) => {
-        if (day.weekDay === weekDay) {
-          return {
-            ...day,
-            exercises: day.exercises.map((ex, i) => {
-              if (i === exerciseIndex) {
-                const updatedWeekData = [...ex.weekData];
-                updatedWeekData[weekIndex] = {
-                  ...updatedWeekData[weekIndex],
-                  coachData: value,
-                };
-                return { ...ex, weekData: updatedWeekData };
-              }
-              return ex;
-            }),
-          };
-        }
-        return day;
-      }),
-    };
-    setSelectedPlan(updatedPlan);
-  }
+  useEffect(() => {
+    if (clientPlans) {
+      const plans: WorkoutPlan[] = JSON.parse(clientPlans);
+      setSelectedPlan(
+        plans.find((plan) => plan._id === selectedPlan?._id) || null
+      );
+    }
+  }, [clientPlans, selectedPlan?._id]);
 
-  function addWeek() {
-    if (!selectedPlan) return;
-    const updatedPlan = {
-      ...selectedPlan,
-      weekCount: selectedPlan.weekCount + 1,
-      days: selectedPlan.days.map((day) => ({
-        ...day,
-        exercises: day.exercises.map((ex) => ({
-          ...ex,
-          weekData: [
-            ...ex.weekData,
-            { week: selectedPlan.weekCount + 1, coachData: "" },
-          ],
-        })),
-      })),
-    };
-    setSelectedPlan(updatedPlan);
-  }
+  const [isPendingAddWeek, startTransitionAddWeek] = useTransition();
+  const [isPendingRemoveLatestWeek, startTransitionRemoveLatestWeek] =
+    useTransition();
+
+  // function updateWeekData(
+  //   weekDay: WeekDays,
+  //   exerciseIndex: number,
+  //   weekIndex: number,
+  //   value: string
+  // ) {
+  //   if (!selectedPlan) return;
+  //   const updatedPlan = {
+  //     ...selectedPlan,
+  //     days: selectedPlan.days.map((day) => {
+  //       if (day.weekDay === weekDay) {
+  //         return {
+  //           ...day,
+  //           exercises: day.exercises.map((ex, i) => {
+  //             if (i === exerciseIndex) {
+  //               const updatedWeekData = [...ex.weekData];
+  //               updatedWeekData[weekIndex] = {
+  //                 ...updatedWeekData[weekIndex],
+  //                 coachData: value,
+  //               };
+  //               return { ...ex, weekData: updatedWeekData };
+  //             }
+  //             return ex;
+  //           }),
+  //         };
+  //       }
+  //       return day;
+  //     }),
+  //   };
+  //   setSelectedPlan(updatedPlan);
+  // }
 
   return (
     <>
@@ -118,13 +116,32 @@ export default function ClientPlans({
 
           {selectedPlan && (
             <>
-              <button
-                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                onClick={addWeek}
+              <ButtonWithLoading
+                isLoading={isPendingAddWeek}
+                className="flex items-center w-15 gap-2 mt-0 px-4 text-base mx-0 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                onClick={() =>
+                  startTransitionAddWeek(async () => {
+                    await addEmptyWeek(selectedPlan._id, clientId);
+                  })
+                }
               >
-                <LuPlus className="w-5 h-5" />
+                <LuCalendarPlus className="w-5 h-5" />
                 Add Week
-              </button>
+              </ButtonWithLoading>
+              <ButtonWithLoading
+                isLoading={isPendingRemoveLatestWeek}
+                isDisabled={selectedPlan.weekCount === 0}
+                loadingClass="bg-opacity-50 hover:bg-red-500 pointer-events-none"
+                className="flex items-center gap-2 mt-0 px-4  py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-30 disabled:hover:bg-red-500"
+                onClick={() =>
+                  startTransitionRemoveLatestWeek(async () => {
+                    await deleteLatestWeek(selectedPlan._id, clientId);
+                  })
+                }
+              >
+                <LuCalendarX className="w-5 h-5" />
+                Remove latest week
+              </ButtonWithLoading>
               <button
                 onClick={modalRef.current?.open}
                 className="flex items-center ml-auto gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -141,7 +158,6 @@ export default function ClientPlans({
             <SingleDay
               day={day}
               key={day.weekDay}
-              updateWeekData={updateWeekData}
               selectedPlan={selectedPlan}
             />
           ))}
@@ -157,21 +173,3 @@ export default function ClientPlans({
     </>
   );
 }
-
-// {
-//   <div className="flex flex-col gap-2 relative">
-//             <input
-//               type="text"
-//               name="planName"
-//               placeholder="New plan name"
-//               className={`bg-gray-600 text-white px-4 py-2 rounded ${
-//                 formState?.errors?.length ? "border-red-500" : ""
-//               }`}
-//             />
-//             {formState?.errors?.length ? (
-//               <span className="text-red-500 absolute bottom-0 font-thin text-sm">
-//                 {formState.errors[0]}
-//               </span>
-//             ) : null}
-//           </div>
-// }

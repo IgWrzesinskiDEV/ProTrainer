@@ -9,9 +9,9 @@ import {
 
 const WeekDataSchema = new Schema<WeekData>(
   {
-    week: { type: Number, required: true },
-    coachData: { type: String, required: true },
-    userData: { type: String },
+    weekNumber: { type: Number, required: true },
+    trainerData: { type: String },
+    clientData: { type: String },
   },
   { _id: false }
 );

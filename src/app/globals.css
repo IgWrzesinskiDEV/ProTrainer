@@ -12,6 +12,7 @@
 
   .planScrollbar::-webkit-scrollbar-track {
     background: #1a1a1d; /* Background color of the scrollbar track */
+    border-radius: 6px;
   }
 
   .planScrollbar::-webkit-scrollbar-thumb {

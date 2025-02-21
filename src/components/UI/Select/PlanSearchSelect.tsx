@@ -89,10 +89,10 @@ const getOptionColorClasses = ({
     if (selected) {
       classes += " bg-blue-500 text-blue-50";
     } else if (highlighted) {
-      classes += " bg-slate-800 text-slate-300";
+      classes += " bg-slate-200 text-slate-300";
     }
     if (!selected) {
-      classes += " hover:bg-slate-800  hover:text-slate-300 ";
+      classes += " hover:bg-blue-500/30  hover:text-slate-300 ";
     }
 
     classes +=
@@ -197,7 +197,7 @@ const Select = React.forwardRef(function CustomSelect<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              `relative text-sm font-sans box-border w-52 px-3 py-2 rounded-lg text-left bg-neutral-900 border border-solid border-neutral-700 text-neutral-300 transition-all hover:bg-neutral-800 outline-0 shadow-md shadow-slate-900 ${
+              `relative text-sm font-sans box-border w-52 px-3 py-2 rounded-lg text-left bg-gradient-to-b from-gray-600 to-gray-700 border border-solid border-neutral-700 text-neutral-300 transition-all hover:bg-neutral-800 outline-0 shadow-md shadow-slate-900 ${
                 ownerState.focusVisible
                   ? "focus-visible:ring-4 ring-blue-500/30 border-blue-500"
                   : ""
@@ -214,7 +214,7 @@ const Select = React.forwardRef(function CustomSelect<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              `text-sm font-sans p-1.5 my-3 w-80 rounded-xl overflow-auto outline-0 bg-neutral-900 border border-solid border-slate-700 text-slate-300 shadow shadow-slate-900 [.open_&]:opacity-100 [.open_&]:scale-100 transition-[opacity,transform] [.closed_&]:opacity-0 [.closed_&]:scale-90 [.placement-top_&]:origin-bottom [.placement-bottom_&]:origin-top`,
+              `text-sm font-sans p-1.5 my-3 w-80 rounded-xl overflow-auto outline-0 bg-neutral-800 border border-solid border-slate-700 text-slate-300 shadow shadow-slate-900 [.open_&]:opacity-100 [.open_&]:scale-100 transition-[opacity,transform] [.closed_&]:opacity-0 [.closed_&]:scale-90 [.placement-top_&]:origin-bottom [.placement-bottom_&]:origin-top`,
               resolvedSlotProps?.className
             ),
           };

@@ -21,9 +21,9 @@ export interface WorkoutDay {
 }
 
 export interface WeekData {
-  week: number;
-  coachData: string;
-  userData?: string;
+  weekNumber: number;
+  trainerData?: string;
+  clientData?: string;
 }
 
 export interface WorkoutPlan {

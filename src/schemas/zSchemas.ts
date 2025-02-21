@@ -113,3 +113,12 @@ export const AddExercisesSchema = z.object({
     })
   ),
 });
+
+export const AddWeekDataSchema = z.object({
+  weekData: z.array(
+    z.object({
+      weekNumber: z.number().positive(),
+      trainerData: z.string().min(1, { message: "Trainer data is required" }),
+    })
+  ),
+});

@@ -4,6 +4,7 @@ import {
   WorkoutDay,
   WeekDays,
   WorkoutPlan,
+  WeekData,
 } from "@/interfaces/workout/IWorkout";
 import {
   Fragment,
@@ -15,24 +16,20 @@ import {
 import RestDayCheckBox from "@/components/UI/workoutPlans/RestDayCheckBox";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveSingleDayExercises } from "@/actions/trainerClients.actions";
-import { LuPlus, LuTrash, LuChevronDown, LuChevronUp } from "react-icons/lu";
+import { LuPlus, LuChevronDown, LuChevronUp } from "react-icons/lu";
 import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
+import ExerciseActions from "./ExerciseActions";
+import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
 
 const initialState = {
   errors: [],
 };
 export default function SingleDay({
   day,
-  updateWeekData,
+
   selectedPlan,
 }: {
   day: WorkoutDay;
-  updateWeekData: (
-    weekDay: WeekDays,
-    exerciseIndex: number,
-    weekIndex: number,
-    value: string
-  ) => void;
 
   selectedPlan: WorkoutPlan;
 }) {
@@ -58,7 +55,7 @@ export default function SingleDay({
       name: "",
       tempo: "",
       weekData: Array.from({ length: selectedPlan.weekCount }, (_, i) => ({
-        week: i + 1,
+        weekNumber: i + 1,
         coachData: "",
       })),
     };
@@ -71,14 +68,14 @@ export default function SingleDay({
   }
 
   function updateExercise(
-    exerciseIndex: number,
+    exerciseNumber: number,
     field: keyof Exercise,
     value: string
   ) {
     const updatedDay = {
       ...singleDay,
-      exercises: singleDay.exercises.map((ex, i) => {
-        if (i === exerciseIndex) {
+      exercises: singleDay.exercises.map((ex) => {
+        if (ex.number === exerciseNumber) {
           return { ...ex, [field]: value };
         }
         return ex;
@@ -117,6 +114,57 @@ export default function SingleDay({
     }
     setRestDay(checked);
   }
+
+  function updateWeekData(
+    exerciseNumber: number,
+    weekNumber: number,
+    field: keyof WeekData,
+    value: string
+  ) {
+    if (!selectedPlan) return;
+    const updatedDay = {
+      ...singleDay,
+      exercises: singleDay.exercises.map((exercise) => {
+        if (exercise.number === exerciseNumber) {
+          return {
+            ...exercise,
+            weekData: exercise.weekData.map((week) => {
+              if (week.weekNumber === weekNumber) {
+                return { ...week, [field]: value };
+              }
+              return week;
+            }),
+          };
+        }
+        return exercise;
+      }),
+    };
+    setSingleDay(updatedDay);
+  }
+  // const updatedPlan = {
+  //   ...selectedPlan,
+  //   days: selectedPlan.days.map((day) => {
+  //     if (day.weekDay === weekDay) {
+  //       return {
+  //         ...day,
+  //         exercises: day.exercises.map((ex, i) => {
+  //           if (i === exerciseIndex) {
+  //             const updatedWeekData = [...ex.weekData];
+  //             updatedWeekData[weekIndex] = {
+  //               ...updatedWeekData[weekIndex],
+  //               coachData: value,
+  //             };
+  //             return { ...ex, weekData: updatedWeekData };
+  //           }
+  //           return ex;
+  //         }),
+  //       };
+  //     }
+  //     return day;
+  //   }),
+  // };
+  // setSelectedPlan(updatedPlan);
+
   return (
     <div className="bg-gray-600 rounded-lg overflow-hidden mb-4">
       <div
@@ -154,107 +202,141 @@ export default function SingleDay({
             transition={{ duration: 0.3 }}
           >
             <div className="p-4">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
+              <div className="overflow-x-auto w-full planScrollbar">
+                <table className="w-full border-separate border-spacing-0 ">
                   <thead>
                     <tr className="bg-gray-700">
-                      <th className="border border-gray-600 px-4 py-2 text-left">
+                      <th className="sticky left-0 top-0 z-10 bg-gray-700  border-t border-r border-gray-600 px-4 py-2 text-left w-12">
                         #
                       </th>
-                      <th className="border border-gray-600 px-4 py-2 text-left">
-                        Exercise
+                      <th className="sticky left-10 z-10 bg-gray-700 border-t border-r border-gray-600 px-4 py-2 text-left ">
+                        <p className="w-60">Exercise</p>
                       </th>
-                      <th className="border border-gray-600 px-4 py-2 text-left">
-                        Tempo
+                      <th className="sticky left-[312px] z-10 border-t border-r bg-gray-700 border-gray-600 px-4 py-2 ">
+                        <p className="w-32">Tempo</p>
                       </th>
+
                       {Array.from(
                         { length: selectedPlan.weekCount },
                         (_, i) => (
                           <th
                             key={i}
                             colSpan={2}
-                            className="border border-gray-600 px-4 py-2 text-left"
+                            className="border-t border-r border-gray-600 px-4 py-2 text-left w-48 text-nowrap"
                           >
                             Week {i + 1}
                           </th>
                         )
                       )}
-                      <th className="border border-gray-600 px-4 py-2 text-left">
+                      <th className="border-t border-r border-gray-600 px-4 py-2 text-left w-20">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {singleDay.exercises.map((exercise, index) => (
-                      <tr key={index} className="bg-gray-800">
-                        <td className="border border-gray-600 px-4 py-2">
-                          <input
-                            type="text"
-                            //name="exerciseNumber"
-                            className="hidden"
-                            defaultValue={index + 1}
-                          />
+                    {singleDay.exercises.map((exercise) => (
+                      <tr key={exercise.number} className="bg-gray-800">
+                        <td className="sticky left-0 z-10 bg-gray-800 border-b  border-r border-gray-600 px-4 py-2 w-12">
                           {exercise.number}
                         </td>
-                        <td className="border border-gray-600 px-4 py-2">
-                          <input
+                        <td className="sticky left-10 z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
+                          {/* <input
                             type="text"
-                            //name={`exerciseName-${exercise.number}`}
-                            value={exercise.name}
+                            value={exercise.name || ""}
                             onChange={(e) =>
-                              updateExercise(index, "name", e.target.value)
+                              updateExercise(
+                                exercise.number,
+                                "name",
+                                e.target.value
+                              )
                             }
                             className="w-full bg-gray-700 text-white px-2 py-1 rounded"
+                          /> */}
+                          <InputFloatingLabel
+                            forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseName`}
+                            label="Exercise name"
+                            type="text"
+                            value={exercise.name || ""}
+                            onChange={(e) =>
+                              updateExercise(
+                                exercise.number,
+                                "name",
+                                e.target.value
+                              )
+                            }
                           />
                         </td>
-                        <td className="border border-gray-600 px-4 py-2">
-                          <input
+                        <td className="sticky left-[312px] z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-40">
+                          {/* <input
                             type="text"
-                            //name={`exerciseTempo-${exercise.number}`}
-                            value={exercise.tempo}
+                            value={exercise.tempo || ""}
                             onChange={(e) =>
-                              updateExercise(index, "tempo", e.target.value)
+                              updateExercise(
+                                exercise.number,
+                                "tempo",
+                                e.target.value
+                              )
                             }
                             className="w-full bg-gray-700 text-white px-2 py-1 rounded"
+                          /> */}
+                          <InputFloatingLabel
+                            forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseTempo`}
+                            label="Tempo"
+                            type="text"
+                            value={exercise.tempo || ""}
+                            onChange={(e) =>
+                              updateExercise(
+                                exercise.number,
+                                "tempo",
+                                e.target.value
+                              )
+                            }
                           />
                         </td>
-                        {exercise.weekData.map((week, weekIndex) => (
-                          <Fragment key={weekIndex}>
-                            <td
-                              key={weekIndex}
-                              className="border border-gray-600 px-4 py-2"
-                            >
-                              <input
+
+                        {exercise.weekData.map((week, index) => (
+                          <Fragment
+                            key={`${exercise.number}-${week.weekNumber}-${index}`}
+                          >
+                            <td className="border-b border-gray-600 -z-10 px-4 py-2 w-24">
+                              <InputFloatingLabel
+                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-trainerData`}
+                                label="Trainer data"
                                 type="text"
-                                value={week.coachData}
+                                value={week.trainerData || ""}
                                 onChange={(e) =>
                                   updateWeekData(
-                                    day.id,
-                                    index,
-                                    weekIndex,
+                                    exercise.number,
+                                    week.weekNumber,
+                                    "trainerData",
                                     e.target.value
                                   )
                                 }
-                                className="w-full bg-gray-700 text-white px-2 py-1 rounded"
-                                placeholder="e.g., 3x10 20kg"
                               />
                             </td>
-                            <td className="border border-gray-600 px-4 py-2">
-                              <input
+                            <td className="border-b border-r border-gray-600 px-4 -z-10 py-3 w-24">
+                              <InputFloatingLabel
+                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-clientData`}
+                                label="Client data"
                                 type="text"
-                                className="w-full bg-gray-700 text-white px-2 py-1 rounded"
-                                placeholder="30kg"
+                                value={week.clientData || ""}
+                                onChange={(e) =>
+                                  updateWeekData(
+                                    exercise.number,
+                                    week.weekNumber,
+                                    "clientData",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </td>
                           </Fragment>
                         ))}
-                        <td className="border border-gray-600 px-4 py-2">
-                          <button
-                            onClick={() => deleteExercise(exercise.number)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <LuTrash className="w-5 h-5" />
-                          </button>
+                        <td className="border-b border-r   border-gray-600 px-4 py-2 w-20">
+                          <ExerciseActions
+                            deleteExercise={deleteExercise}
+                            exercise={exercise}
+                          />
                         </td>
                       </tr>
                     ))}

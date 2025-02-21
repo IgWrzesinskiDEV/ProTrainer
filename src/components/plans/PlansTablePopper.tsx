@@ -79,7 +79,7 @@ export default function PlansTablePopper({
                   className=" bg-transparent  animate-pulse text-amber-500  w-16 font-bold  text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               ) : (
-                week.userData || ""
+                <p className="w-16">{week.userData || ""}</p>
               )}
             </td>
           </Fragment>
