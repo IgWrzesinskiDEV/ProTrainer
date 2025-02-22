@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { LuMinus, LuPlus, LuCalendarX, LuCalendarPlus } from "react-icons/lu";
 
-import { WorkoutPlan, WeekDays } from "@/interfaces/workout/IWorkout";
+import { WorkoutPlan } from "@/interfaces/workout/IWorkout";
 import { useActionState, useRef, useTransition } from "react";
 import {
   addEmptyWorkoutPlan,
@@ -50,38 +50,6 @@ export default function ClientPlans({
   const [isPendingAddWeek, startTransitionAddWeek] = useTransition();
   const [isPendingRemoveLatestWeek, startTransitionRemoveLatestWeek] =
     useTransition();
-
-  // function updateWeekData(
-  //   weekDay: WeekDays,
-  //   exerciseIndex: number,
-  //   weekIndex: number,
-  //   value: string
-  // ) {
-  //   if (!selectedPlan) return;
-  //   const updatedPlan = {
-  //     ...selectedPlan,
-  //     days: selectedPlan.days.map((day) => {
-  //       if (day.weekDay === weekDay) {
-  //         return {
-  //           ...day,
-  //           exercises: day.exercises.map((ex, i) => {
-  //             if (i === exerciseIndex) {
-  //               const updatedWeekData = [...ex.weekData];
-  //               updatedWeekData[weekIndex] = {
-  //                 ...updatedWeekData[weekIndex],
-  //                 coachData: value,
-  //               };
-  //               return { ...ex, weekData: updatedWeekData };
-  //             }
-  //             return ex;
-  //           }),
-  //         };
-  //       }
-  //       return day;
-  //     }),
-  //   };
-  //   setSelectedPlan(updatedPlan);
-  // }
 
   return (
     <>

@@ -32,8 +32,6 @@ export default function PlanSearchSelect({
       <Select
         value={selectedPlan?._id || ""}
         onChange={(e, newValue) => {
-          console.log(newValue);
-          console.log(workoutPlans);
           setSelectedPlan(workoutPlans.find((p) => p._id === newValue) || null);
         }}
       >

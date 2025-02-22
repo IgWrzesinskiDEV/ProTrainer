@@ -35,7 +35,7 @@ export default function TextArea({
       </label>
       <textarea
         defaultValue={defaultValue || ""}
-        className="px-4 py-2 rounded-lg text-lg font-medium focus:outline-none text-background h-40 resize-none"
+        className="px-4 py-2 rounded-lg planScrollbar trainerDataSquareScrollbar scrollBarRectangle text-lg font-medium focus:outline-none text-background h-40 resize-none"
         name={name}
         maxLength={maxCharacters}
         rows={5}

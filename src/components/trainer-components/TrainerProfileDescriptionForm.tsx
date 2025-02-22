@@ -47,7 +47,7 @@ export default function TrainerProfileDescriptionForm({
       <TextArea
         label="Experience"
         name="experience"
-        className="w-2/3"
+        className="w-2/3 "
         defaultValue={fetchedData?.experience}
         error={err}
         success={formState.success}

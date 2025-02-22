@@ -2,6 +2,7 @@ import { User } from "@/lib/models/user.model";
 import { IMeasurement, MeasurementModel } from "@/lib/models/measurement.model";
 import { IfullClientData } from "@/interfaces/clients/IClient";
 import { verifyAuth } from "@/lib/lucia/auth";
+import { cache } from "react";
 interface trainersClients {
   _id: string;
   trainerDetails?: {
@@ -29,11 +30,13 @@ export async function getClients() {
   }
 }
 
-export async function getClientById(clientId: string) {
+export const getClientById = cache(async function getClientById(
+  clientId: string
+) {
   try {
     const client = await User.findById(
       clientId,
-      "userName email  profileDetails"
+      "userName email  profileDetails units"
     );
     if (!client) return null;
     const clientMeasurements: IMeasurement | null =
@@ -50,4 +53,4 @@ export async function getClientById(clientId: string) {
   } catch {
     return null;
   }
-}
+});

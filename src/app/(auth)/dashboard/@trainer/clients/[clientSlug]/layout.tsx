@@ -1,4 +1,6 @@
 import ClientNav from "@/components/trainer-components/clients/ClientNav";
+import ProfileAvatar from "@/components/UI/ProfileAvatar";
+import { getClientById } from "@/utils/data/getClients";
 import { ReactNode } from "react";
 
 export default async function clientLayout({
@@ -9,22 +11,21 @@ export default async function clientLayout({
   children: ReactNode;
 }) {
   const clientId = (await params).clientSlug;
-
+  const clientInfo = await getClientById(clientId);
+  console.log(clientInfo);
   return (
     <div className=" mx-auto p-6 min-h-[60vh] bg-gray-800 rounded-xl rounded-tl-none shadow-lg text-white">
       <div className="flex items-center mb-8">
-        <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-          {/* {clientData.username.charAt(0)} */}J
-        </div>
+        <ProfileAvatar
+          fileName={clientInfo?.profileDetails?.avatarFileName}
+          className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold"
+        />
+
         <div className="ml-6">
           <h1 className="text-3xl font-bold text-white">
-            {/* {clientData.username} */}
-            John doe
+            {clientInfo?.profileDetails?.fullName || clientInfo?.userName}
           </h1>
-          <p className="text-gray-300">
-            {/* {clientData.email} */}
-            john@doe.pl
-          </p>
+          <p className="text-gray-400 font-thin   ">{clientInfo?.email}</p>
         </div>
       </div>
 

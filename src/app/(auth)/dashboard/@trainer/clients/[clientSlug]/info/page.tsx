@@ -5,5 +5,6 @@ export default async function ClientInfoPage({
 }: {
   params: Promise<{ clientSlug: string }>;
 }) {
-  return <ClientInfo />;
+  const clientId = (await params).clientSlug;
+  return <ClientInfo clientId={clientId} />;
 }

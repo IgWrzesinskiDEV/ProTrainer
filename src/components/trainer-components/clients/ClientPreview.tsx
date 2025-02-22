@@ -41,16 +41,10 @@ export default function ClientPreview({ client }: { client: IClientPreview }) {
             <h2 className="text-xl font-semibold text-white">
               {client?.profileDetails?.fullName || client.userName}
             </h2>
-            {/* <p className="text-blue-300 flex items-center mt-1">
-              <LuBriefcase className="mr-2" />
-              {client?.clientDetails?.socialAndExpiriance?.specialization ||
-                "No specialization"}
-            </p> */}
+            <p className="text-gray-400 font-thin   ">{client?.email}</p>
           </div>
         </div>
-        {/* <p className="text-gray-400 text-sm italic flex-grow">
-          {shortclientBio || "No bio available"}
-        </p> */}
+
         <div className="mt-4 flex items-center justify-end">
           <span className="text-blue-400 text-sm">View Profile</span>
         </div>

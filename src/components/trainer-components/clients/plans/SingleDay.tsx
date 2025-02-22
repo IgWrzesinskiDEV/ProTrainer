@@ -141,29 +141,6 @@ export default function SingleDay({
     };
     setSingleDay(updatedDay);
   }
-  // const updatedPlan = {
-  //   ...selectedPlan,
-  //   days: selectedPlan.days.map((day) => {
-  //     if (day.weekDay === weekDay) {
-  //       return {
-  //         ...day,
-  //         exercises: day.exercises.map((ex, i) => {
-  //           if (i === exerciseIndex) {
-  //             const updatedWeekData = [...ex.weekData];
-  //             updatedWeekData[weekIndex] = {
-  //               ...updatedWeekData[weekIndex],
-  //               coachData: value,
-  //             };
-  //             return { ...ex, weekData: updatedWeekData };
-  //           }
-  //           return ex;
-  //         }),
-  //       };
-  //     }
-  //     return day;
-  //   }),
-  // };
-  // setSelectedPlan(updatedPlan);
 
   return (
     <div className="bg-gray-600 rounded-lg overflow-hidden mb-4">
@@ -240,18 +217,6 @@ export default function SingleDay({
                           {exercise.number}
                         </td>
                         <td className="sticky left-10 z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
-                          {/* <input
-                            type="text"
-                            value={exercise.name || ""}
-                            onChange={(e) =>
-                              updateExercise(
-                                exercise.number,
-                                "name",
-                                e.target.value
-                              )
-                            }
-                            className="w-full bg-gray-700 text-white px-2 py-1 rounded"
-                          /> */}
                           <InputFloatingLabel
                             forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseName`}
                             label="Exercise name"
@@ -267,18 +232,6 @@ export default function SingleDay({
                           />
                         </td>
                         <td className="sticky left-[312px] z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-40">
-                          {/* <input
-                            type="text"
-                            value={exercise.tempo || ""}
-                            onChange={(e) =>
-                              updateExercise(
-                                exercise.number,
-                                "tempo",
-                                e.target.value
-                              )
-                            }
-                            className="w-full bg-gray-700 text-white px-2 py-1 rounded"
-                          /> */}
                           <InputFloatingLabel
                             forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseTempo`}
                             label="Tempo"
@@ -300,7 +253,7 @@ export default function SingleDay({
                           >
                             <td className="border-b border-gray-600 -z-10 px-4 py-2 w-24">
                               <InputFloatingLabel
-                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-trainerData`}
+                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-trainerData`}
                                 label="Trainer data"
                                 type="text"
                                 value={week.trainerData || ""}
@@ -316,7 +269,7 @@ export default function SingleDay({
                             </td>
                             <td className="border-b border-r border-gray-600 px-4 -z-10 py-3 w-24">
                               <InputFloatingLabel
-                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-clientData`}
+                                forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-clientData`}
                                 label="Client data"
                                 type="text"
                                 value={week.clientData || ""}
@@ -361,7 +314,6 @@ export default function SingleDay({
                 isLoading={pending}
                 type="submit"
                 onClick={() => startTransition(() => saveSingleDayAction())}
-                //onClick={async () => saveSingleDayAction()}
                 className="flex w-fit items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
               >
                 Save Changes

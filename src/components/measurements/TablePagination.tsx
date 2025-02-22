@@ -69,9 +69,11 @@ const CustomTablePagination = forwardRef<
     <TablePaginationMui
       ref={ref}
       {...props}
+      slots={{ root: "div" }}
       className={clsx("CustomTablePagination p-4 ", props.className)}
       slotProps={{
         ...props.slotProps,
+
         select: (ownerState) => {
           const resolvedSlotProps = resolveSlotProps(
             props.slotProps?.select,

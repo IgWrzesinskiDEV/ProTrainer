@@ -14,7 +14,10 @@
     background: #1a1a1d; /* Background color of the scrollbar track */
     border-radius: 6px;
   }
-
+  .scrollBarRectangle::-webkit-scrollbar-track {
+    background: #1a1a1d; /* Background color of the scrollbar track */
+    border-radius: 0px;
+  }
   .planScrollbar::-webkit-scrollbar-thumb {
     background: linear-gradient(
       90deg,
@@ -23,6 +26,11 @@
     ); /* Linear gradient for the scrollbar thumb */
     border-radius: 6px;
     transition: 2s; /* Transition to give a smooth effect */
+  }
+  .scrollBarRectangle::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    border-radius: 0px;
+    transition: 2s;
   }
 
   .planScrollbar::-webkit-scrollbar-thumb:hover {

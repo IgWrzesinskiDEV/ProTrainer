@@ -5,5 +5,6 @@ export default async function ClientMeasurementsPage({
 }: {
   params: Promise<{ clientSlug: string }>;
 }) {
-  return <ClientMeasurements />;
+  const clientId = (await params).clientSlug;
+  return <ClientMeasurements clientId={clientId} />;
 }
