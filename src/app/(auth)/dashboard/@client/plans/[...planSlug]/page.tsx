@@ -17,7 +17,10 @@ export default async function Plans({
   return (
     <ProfileWrapper title="Plan">
       <div className="flex items-center justify-center flex-col gap-5 w-full">
-        <SingleDayWorkout singleDay={JSON.stringify(singleDayWorkout)} />
+        <SingleDayWorkout
+          day={JSON.stringify(singleDayWorkout)}
+          planId={planId}
+        />
       </div>
     </ProfileWrapper>
   );

@@ -13,8 +13,6 @@ export default async function Plans() {
     <ProfileWrapper title="Plans">
       <div className="flex items-center justify-center flex-col w-full gap-5 relative">
         <SelectAndPlans workoutPlans={JSON.stringify(plans)} />
-        {/* <PlanSelecter workoutPlans={plans} />
-        <WorkoutPlan /> */}
       </div>
     </ProfileWrapper>
   );

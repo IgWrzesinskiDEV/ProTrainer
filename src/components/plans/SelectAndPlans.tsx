@@ -9,7 +9,9 @@ export default function SelectAndPlans({
   workoutPlans: string;
 }) {
   const plans: WorkoutPlan[] = JSON.parse(workoutPlans);
-  const [selectedPlanId, setSelectedPlan] = useState<string | null>(null);
+  const [selectedPlanId, setSelectedPlan] = useState<string | null>(
+    plans[0]?._id
+  );
   return (
     <>
       <PlanSelecter
