@@ -4,7 +4,7 @@ import { PiGraduationCap } from "react-icons/pi";
 import { IoLanguageOutline } from "react-icons/io5";
 import { CiDumbbell } from "react-icons/ci";
 
-import ModalUnstyled from "../UI/Modal";
+import ModalUnstyled from "../../UI/Modal";
 import TrainerAdditionalDataSquare from "./TrainerAdditionalDataSquare";
 import { useRef, useState } from "react";
 import TrainerProfileModal from "./TrainerProfileModal";

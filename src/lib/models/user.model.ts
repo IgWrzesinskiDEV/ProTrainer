@@ -1,5 +1,8 @@
 import mongoose, { Schema } from "mongoose";
-import { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
+import {
+  ITrainerDetails,
+  TrainerAdditionalDataHeadingType,
+} from "@/interfaces/trainers/ITrainer";
 export interface IUser {
   _id: string;
   userName: string;
@@ -14,38 +17,23 @@ export interface IUser {
     bio?: string;
     avatarFileName?: string;
   };
-  trainerDetails?: {
-    clients?: string[] | undefined;
-    specialization?: string;
-    experienceDescription?: string;
-    socialAndExpiriance?: {
-      experience?: string;
-      specialization?: string;
-      workingModes: {
-        onSite: { type: boolean; default: false };
-        online: { type: boolean; default: false };
-      };
-      socialMedia: {
-        instagram?: string;
-        facebook?: string;
-        whatsapp?: string;
-      };
-    };
-    [TrainerAdditionalDataHeadingType.Certifications]?: string[] | undefined;
-    [TrainerAdditionalDataHeadingType.Services]?: string[] | undefined;
-    [TrainerAdditionalDataHeadingType.Education]?: string[] | undefined;
-    [TrainerAdditionalDataHeadingType.Languages]?: string[] | undefined;
-  };
+  trainerDetails?: ITrainerDetails;
   units: {
     weight: "kg" | "lbs";
     height: "cm" | "ft";
     bodyMeasurement: "cm" | "in";
   };
 }
+
 const trainerDetailsSchema = new Schema(
   {
     clients: {
       type: [String],
+      default: undefined,
+    },
+    clientsInvites: {
+      type: [String],
+
       default: undefined,
     },
     socialAndExpiriance: {

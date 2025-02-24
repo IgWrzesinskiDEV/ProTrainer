@@ -14,6 +14,9 @@ export default function TrainerNavLinks() {
       <li>
         <ProfileLink href="/dashboard/trainer-profile" text="Trainer profile" />
       </li>
+      <li>
+        <ProfileLink href="/dashboard/invites" text="Invites" />
+      </li>
     </>
   );
 }

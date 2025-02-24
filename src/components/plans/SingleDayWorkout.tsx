@@ -6,6 +6,12 @@ import type { WeekData, WorkoutDay } from "@/interfaces/workout/IWorkout";
 import InputFloatingLabel from "../UI/input/InputWithFloatingLabel";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 import { saveSingleDayExercisesClientData } from "@/actions/clientWorkoutPlans.action";
+import { AiOutlineRollback } from "react-icons/ai";
+
+import { toastify } from "../UI/Toastify";
+import SaveChangesToast from "../UI/toastify/SaveChangesToast";
+import Link from "next/link";
+import BackToLink from "../UI/Buttons/BackToLink";
 const initialState = {
   errors: [],
 };
@@ -16,20 +22,37 @@ export default function SingleDayWorkout({
   day: string;
   planId: string;
 }) {
-  const singleDayData = JSON.parse(day);
-
-  const { isRestDay } = singleDayData;
-  const { singleDay: singleDayplan, weekCount } = singleDayData as {
+  const singleDayData = JSON.parse(day) as {
     singleDay: WorkoutDay;
     weekCount: number;
+    isRestDay: boolean;
   };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, startTransition] = useTransition();
-  const [singleDay, setSingleDay] = useState<WorkoutDay>(singleDayplan);
+  const [singleDay, setSingleDay] = useState<WorkoutDay>(
+    singleDayData?.singleDay || null
+  );
   const [saveSingleDayState, saveSingleDayAction, pending] = useActionState(
     () => saveSingleDayExercisesClientData(singleDay, planId),
     initialState
   );
+  if (!singleDay)
+    return (
+      <div className="flex flex-col gap-3">
+        No plan selected
+        <Link
+          href="/dashboard/plans/"
+          className="p-2 hover:bg-blue-600 bg-blue-500 rounded-lg text-center"
+        >
+          Back to plans
+        </Link>
+      </div>
+    );
+  const { singleDay: singleDayplan, weekCount } = singleDayData as {
+    singleDay: WorkoutDay;
+    weekCount: number;
+  };
   function updateWeekData(
     exerciseNumber: number,
     weekNumber: number,
@@ -55,7 +78,7 @@ export default function SingleDayWorkout({
     };
     setSingleDay(updatedDay);
   }
-
+  const { isRestDay } = singleDayData;
   if (isRestDay) {
     return (
       <div className="flex flex-col items-center justify-center p-8 min-h-[300px] bg-[#1E2330] rounded-lg shadow-lg">
@@ -89,6 +112,13 @@ export default function SingleDayWorkout({
         <p className="text-2xl font-bold text-blue-500 tracking-tight">
           {singleDay.weekDay}
         </p>
+
+        <BackToLink
+          href="/dashboard/plans"
+          className="p-2 ml-auto border border-blue-500 rounded-lg text-center hover:shadow-xl hover:scale-105 transition-all duration-150"
+        >
+          Back to plans
+        </BackToLink>
       </div>
 
       <div className="overflow-x-auto planScrollbar scrollBarRectangle w-full rounded-lg">
@@ -200,176 +230,25 @@ export default function SingleDayWorkout({
               <p key={error}>{error}</p>
             ))}
         </div>
+      </div>
+      {singleDay.exercises.length > 0 ? (
         <ButtonWithLoading
           isLoading={pending}
           isDisabled={pending}
           type="submit"
-          onClick={() => startTransition(() => saveSingleDayAction())}
-          className="flex w-fit min-w-40 disabled:bg-transparent disabled:border disabled:border-blue-500 items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
+          onClick={() =>
+            startTransition(() => {
+              saveSingleDayAction();
+              toastify(<SaveChangesToast />, 3000);
+            })
+          }
+          className="flex w-fit h-12 border-2 border-blue-500 disabled:bg-transparent  disabled:border-blue-500 items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
         >
           Save Changes
         </ButtonWithLoading>
-      </div>
+      ) : (
+        <p className="text-blue-500">No exercises added yet</p>
+      )}
     </div>
   );
-}
-
-// <div className="p-4 w-full">
-//       <form
-//         action={formAction}
-//         ref={formRef}
-//         className="rounded-lg shadow-lg bg-[#1E2330] overflow-hidden"
-//       >
-//         <div className="p-6 border-b border-[#2A3142]">
-//           <h3 className="text-2xl font-bold text-white">
-//             {singleDayplan.weekDay}
-//           </h3>
-//         </div>
-
-//         <div className="p-6 overflow-x-auto">
-//           {singleDayplan.exercises.length > 0 ? (
-//             <table className="w-full border-collapse min-w-[800px] table-fixed">
-//               <thead>
-//                 <tr className="border-b border-[#2A3142]">
-//                   <th className="py-4 px-4 w-14 text-left text-sm font-medium text-gray-400">
-//                     #
-//                   </th>
-//                   <th className="py-4 px-4 text-left text-sm font-medium text-gray-400">
-//                     Exercise
-//                   </th>
-//                   <th className="py-4 px-4 text-left text-sm font-medium text-gray-400">
-//                     Tempo
-//                   </th>
-//                   {Array.from({ length: weekCount }, (_, i) => (
-//                     <th
-//                       key={i}
-//                       colSpan={2}
-//                       className="py-4 px-4 text-center text-sm font-medium text-gray-400"
-//                     >
-//                       Week {i + 1}
-//                     </th>
-//                   ))}
-//                 </tr>
-//               </thead>
-//               <tbody className="divide-y divide-[#2A3142]">
-//                 {singleDayplan.exercises.map((exercise, index) => {
-//                   const id = generateIdFromEntropySize(10);
-//                   return (
-//                     <PlansTablePopper
-//                       key={id}
-//                       exercise={exercise}
-//                       index={index}
-//                       id={exercise.name}
-//                       onPopperClickHandler={submitFormHandler}
-//                     />
-//                   );
-//                 })}
-//               </tbody>
-//             </table>
-//           ) : (
-//             <div className="text-center py-8">
-//               <p className="text-gray-400">No exercises scheduled for today</p>
-//             </div>
-//           )}
-//         </div>
-//       </form>
-//     </div>
-
-{
-  /* <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 w-4/5 overflow-hidden mb-4 shadow-lg border border-blue-500/20">
-      <div className="flex items-center gap-4 mb-6">
-        <p className="text-xl font-bold text-blue-500">{singleDayplan.weekDay}</p>
-      </div>
-      
-      <div className="overflow-x-auto w-full scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-700 rounded-lg">
-        <table className="w-full border-separate border-spacing-0">
-          <thead>
-            <tr>
-              <th className="sticky left-0 top-0 z-10 bg-blue-500/10 backdrop-blur-sm border-t border-r border-blue-500/20 px-6 py-4 text-left w-12 text-blue-500 font-semibold">
-                #
-              </th>
-              <th className="sticky left-10 z-10 bg-blue-500/10 backdrop-blur-sm border-t border-r border-blue-500/20 px-6 py-4 text-left text-blue-500 font-semibold">
-                <p className="w-60">Exercise</p>
-              </th>
-              <th className="sticky left-[312px] text-left z-10 border-t border-r bg-blue-500/10 backdrop-blur-sm border-blue-500/20 px-6 py-4 text-blue-500 font-semibold">
-                <p className="w-32">Tempo</p>
-              </th>
-
-              {Array.from({ length: weekCount }, (_, i) => (
-                <th
-                  key={i}
-                  colSpan={2}
-                  className="border-t border-r border-blue-500/20 px-6 py-4 text-left w-48 text-nowrap text-blue-500 font-semibold bg-blue-500/5"
-                >
-                  Week {i + 1}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {singleDayplan.exercises.map((exercise, idx) => (
-              <tr 
-                key={exercise.number} 
-                className={`transition-colors hover:bg-blue-500/5 ${
-                  idx % 2 === 0 ? 'bg-gray-800/50' : 'bg-gray-800/30'
-                }`}
-              >
-                <td className="sticky left-0 z-10 border-b border-r border-blue-500/20 px-6 py-4 w-12 backdrop-blur-sm">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/10 text-blue-500">
-                    {exercise.number}
-                  </span>
-                </td>
-                <td className="sticky left-10 z-10 border-b border-r border-blue-500/20 px-6 py-4 w-60 font-medium backdrop-blur-sm">
-                  {exercise.name || ""}
-                </td>
-                <td className="sticky left-[312px] z-10 border-b border-r border-blue-500/20 px-6 py-4 w-40 backdrop-blur-sm">
-                  {exercise.tempo || ""}
-                </td>
-
-                {exercise.weekData.map((week, index) => (
-                  <Fragment key={`${exercise.number}-${week.weekNumber}-${index}`}>
-                    <td className="border-b border-blue-500/20 px-6 py-4 w-24">
-                      <div className="relative group">
-                      <InputFloatingLabel
-                        forHTMLLabel={`${singleDayplan.weekDay}-${exercise.number}-${week.weekNumber}-trainerData`}
-                        label="Trainer data"
-                        type="text"
-                        value={week.trainerData || ""}
-                        // onChange={(e) =>
-                        //   updateWeekData(
-                        //     exercise.number,
-                        //     week.weekNumber,
-                        //     "trainerData",
-                        //     e.target.value
-                        //   )
-                        // }
-                      />
-                      </div>
-                    </td>
-                    <td className="border-b border-r border-blue-500/20 px-6 py-4 w-24">
-                      <div className="relative group">
-                      <InputFloatingLabel
-                        forHTMLLabel={`${singleDayplan.weekDay}-${exercise.number}-${week.weekNumber}-clientData`}
-                        label="Client data"
-                        type="text"
-                        value={week.clientData || ""}
-                        // onChange={(e) =>
-                        //   updateWeekData(
-                        //     exercise.number,
-                        //     week.weekNumber,
-                        //     "clientData",
-                        //     e.target.value
-                        //   )
-                        // }
-                      />
-                      </div>
-                    </td>
-                  </Fragment>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div> */
 }

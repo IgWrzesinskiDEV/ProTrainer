@@ -20,6 +20,8 @@ import { LuPlus, LuChevronDown, LuChevronUp } from "react-icons/lu";
 import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
 import ExerciseActions from "./ExerciseActions";
 import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
+import SaveChangesToast from "@/components/UI/toastify/SaveChangesToast";
+import { toastify } from "@/components/UI/Toastify";
 
 const initialState = {
   errors: [],
@@ -311,10 +313,16 @@ export default function SingleDay({
                 Add Exercise
               </button>
               <ButtonWithLoading
+                isDisabled={pending}
                 isLoading={pending}
                 type="submit"
-                onClick={() => startTransition(() => saveSingleDayAction())}
-                className="flex w-fit items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
+                onClick={() =>
+                  startTransition(() => {
+                    saveSingleDayAction();
+                    toastify(<SaveChangesToast />, 3000);
+                  })
+                }
+                className="flex w-fit h-12 items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
               >
                 Save Changes
               </ButtonWithLoading>

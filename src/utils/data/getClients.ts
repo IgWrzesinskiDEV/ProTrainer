@@ -7,19 +7,30 @@ interface trainersClients {
   _id: string;
   trainerDetails?: {
     clients?: string[] | undefined;
+    clientsInvites?: string[] | undefined;
   };
 }
 
-export async function getClients() {
+export async function getClients(invitedClients = false) {
   try {
     const { user } = await verifyAuth();
     const trainerId = user?.id;
+    const query = invitedClients
+      ? "trainerDetails.clientsInvites"
+      : "trainerDetails.clients";
     const trainersClients: trainersClients | null = await User.findById(
       trainerId,
-      "trainerDetails.clients"
+      query
     );
-
+    console.log(trainersClients);
     if (!trainersClients) return [];
+    if (invitedClients) {
+      const clients = User.find({
+        _id: { $in: trainersClients.trainerDetails?.clientsInvites },
+      });
+
+      return clients;
+    }
     const clients = User.find({
       _id: { $in: trainersClients.trainerDetails?.clients },
     });

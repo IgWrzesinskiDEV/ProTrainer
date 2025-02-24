@@ -1,9 +1,9 @@
 "use client";
 
 // import Map from "../googleMaps/Map";
-import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
-import Input from "../UI/Input";
-import TextArea from "../UI/TextArea";
+import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
+import Input from "@/components/UI/Input";
+import TextArea from "@/components/UI/TextArea";
 import LocationsCheckBoxes from "./LocationsCheckBoxes";
 import SocialMediaInput from "./SocialMediaInput";
 import { useActionState } from "react";

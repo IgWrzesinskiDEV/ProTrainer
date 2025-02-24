@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
 import { User } from "@/lib/models/user.model";
 import { WeekDays, WorkoutDay } from "@/interfaces/workout/IWorkout";
 import { Plan } from "@/lib/models/plan.model";
+
 export async function addEmptyWorkoutPlan(
   prevState: unknown,
   formData: FormData,

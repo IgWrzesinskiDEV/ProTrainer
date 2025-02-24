@@ -10,23 +10,83 @@ import {
 } from "@/schemas/zSchemas";
 import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
 
-export async function addTrainer(trainerId: string) {
+export async function sendInviteToTrainer(trainerId: string) {
   try {
     const { user } = await verifyAuth();
     const userId = user?.id;
-    await User.findByIdAndUpdate(userId, { currentTrainer: trainerId });
-    const trainer = await User.findById(trainerId);
+    if (!userId) {
+      throw new Error("User not found");
+    }
+
+    const trainer = await User.findById(trainerId, "trainerDetails");
+
     if (!trainer) {
       throw new Error("Trainer not found");
     }
-    if (trainer.trainerDetails?.clients.includes(userId)) {
+    if (!trainer.trainerDetails.clientsInvites) {
+      trainer.trainerDetails.clientsInvites = [];
+    }
+    if (trainer.trainerDetails.clientsInvites.includes(userId)) {
+      throw new Error("Invitation has already been sent");
+    }
+
+    trainer.trainerDetails.clientsInvites.push(userId);
+    await trainer.save();
+    revalidatePath(`/dashboard/trainers/${trainerId}`);
+  } catch (e) {
+    throw new Error(e instanceof Error ? e.message : String(e));
+  }
+}
+
+export async function acceptInvite(clientId: string) {
+  try {
+    const { user } = await verifyAuth();
+    const trainerId = user?.id;
+
+    const trainer = await User.findById(trainerId, "trainerDetails");
+    if (!trainer) {
+      throw new Error("Trainer not found");
+    }
+    if (!trainer.trainerDetails.clients) {
+      trainer.trainerDetails.clients = [];
+    }
+    if (trainer.trainerDetails.clients.includes(clientId)) {
       throw new Error("Client already added");
     }
-    trainer.trainerDetails?.clients.push(userId);
+    trainer.trainerDetails.clients.push(clientId);
+    const index = trainer.trainerDetails.clientsInvites.indexOf(clientId);
+    trainer.trainerDetails.clientsInvites.splice(index, 1);
     await trainer.save();
-    revalidatePath("/dashboard/trainers");
+
+    revalidatePath("/dashboard/invites");
   } catch (e) {
-    console.log(e);
+    throw new Error(e instanceof Error ? e.message : String(e));
+  }
+}
+
+export async function declineInvite(clientId: string) {
+  try {
+    const { user } = await verifyAuth();
+    const trainerId = user?.id;
+
+    const trainer = await User.findById(trainerId, "trainerDetails");
+    if (!trainer) {
+      throw new Error("Trainer not found");
+    }
+    if (!trainer.trainerDetails.clientsInvites) {
+      throw new Error("Invite not found");
+    }
+    const index = trainer.trainerDetails.clientsInvites.indexOf(clientId);
+    if (index === -1) {
+      throw new Error("Invite not found");
+    }
+    trainer.trainerDetails.clientsInvites.splice(index, 1);
+
+    await trainer.save();
+
+    revalidatePath("/dashboard/invites");
+  } catch (e) {
+    throw new Error(e instanceof Error ? e.message : String(e));
   }
 }
 

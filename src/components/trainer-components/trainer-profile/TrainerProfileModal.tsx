@@ -1,6 +1,6 @@
 import { MdAddCircleOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
-import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
+import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
 import TrainerListItem from "./TrainerListItem";
 import { addAdditionalTrainerData } from "@/actions/trainers.actions";
 import { useActionState } from "react";

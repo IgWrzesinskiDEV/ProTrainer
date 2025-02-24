@@ -19,7 +19,7 @@ export default function InputFloatingLabel({
         {...(props.onChange && { onChange: props.onChange })}
         {...(props.value !== undefined && { value: props.value })}
         className={cn(
-          "block p-2 w-full  min-w-24   -z-10 bg-gray-700 text-white   rounded      appearance-none  border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0  peer",
+          "block p-2 w-full  min-w-24   -z-10 bg-gray-700 text-white outline-none   rounded      appearance-none  border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0  peer",
           props?.className
         )}
         placeholder=" "

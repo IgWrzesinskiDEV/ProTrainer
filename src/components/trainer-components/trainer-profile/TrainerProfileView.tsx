@@ -1,5 +1,5 @@
-import ProfileWrapper from "../profile/ProfileWrapper";
-import WrapperSplitter from "../UI/WrapperSplitter";
+import ProfileWrapper from "@/components/profile/ProfileWrapper";
+import WrapperSplitter from "@/components/UI/WrapperSplitter";
 import TrainerProfileDescriptionForm from "./TrainerProfileDescriptionForm";
 import TrainerProfileAdditionalForm from "./TrainerProfileAdditionalForm";
 import { getTrainerAdditionalData } from "@/utils/data/getTrainers";

@@ -19,6 +19,7 @@ import { InfoSection } from "./InfoSection";
 import SocialLink from "./SocialLink";
 import AddTrainerButton from "./AddTrainerButton";
 import TrainerInfoColumn from "./TrainerInfoColumn";
+import BackToLink from "@/components/UI/Buttons/BackToLink";
 export default async function SingleTrainer({
   params,
 }: {
@@ -68,25 +69,33 @@ export default async function SingleTrainer({
   return (
     <ProfileWrapper title="">
       <div className="max-w-4xl mx-auto bg-gray-800 shadow-2xl rounded-lg overflow-hidden transition-all duration-300 hover:shadow-blue-400/10">
-        <div className="bg-[#3b82f6] text-white p-8">
-          <h2 className="text-4xl font-bold flex items-center mb-4">
-            {profileDetails?.avatarFileName ? (
-              <ProfileAvatar
-                fileName={profileDetails.avatarFileName}
-                className="w-20 h-20 mr-4 border-2 border-gray-800 rounded-full"
-              />
-            ) : (
-              <LuUser className="w-20 h-20 mr-4" />
-            )}
-            {userName}
-          </h2>
-          <a
-            className="text-xl flex items-center opacity-90 hover:text-gray-200 transition-colors duration-300"
-            href={`mailto:${email}`}
+        <div className="bg-[#3b82f6] text-white p-8 flex justify-start items-center">
+          <div>
+            <h2 className="text-4xl font-bold flex items-center mb-4">
+              {profileDetails?.avatarFileName ? (
+                <ProfileAvatar
+                  fileName={profileDetails.avatarFileName}
+                  className="w-20 h-20 mr-4 border-2 border-gray-800 rounded-full"
+                />
+              ) : (
+                <LuUser className="w-20 h-20 mr-4" />
+              )}
+              {userName}
+            </h2>
+            <a
+              className="text-xl flex items-center opacity-90 hover:text-gray-200 transition-colors duration-300"
+              href={`mailto:${email}`}
+            >
+              <LuMail className="mr-3" size={24} />
+              {email}
+            </a>
+          </div>
+          <BackToLink
+            href="/dashboard/trainers"
+            className="mb-auto ml-auto items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900/50 rounded-lg hover:bg-gray-900/70 transition-all duration-200 border border-yellow-500/20 hover:border-yellow-500/40 backdrop-blur-sm"
           >
-            <LuMail className="mr-3" size={24} />
-            {email}
-          </a>
+            Back to trainers
+          </BackToLink>
         </div>
         <div className="p-8 bg-gray-900 bg-opacity-50">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

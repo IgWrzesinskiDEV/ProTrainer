@@ -11,7 +11,7 @@ export interface ITrainerOnlyDetails {
 
 export interface ITrainerDetails {
   clients?: string[] | undefined;
-
+  clientsInvites?: string[] | undefined;
   socialAndExpiriance?: ITrainerSocials;
   [TrainerAdditionalDataHeadingType.Certifications]?: string[] | undefined;
   [TrainerAdditionalDataHeadingType.Services]?: string[] | undefined;
