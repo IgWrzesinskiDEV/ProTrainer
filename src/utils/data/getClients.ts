@@ -22,7 +22,7 @@ export async function getClients(invitedClients = false) {
       trainerId,
       query
     );
-    console.log(trainersClients);
+
     if (!trainersClients) return [];
     if (invitedClients) {
       const clients = User.find({

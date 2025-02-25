@@ -15,11 +15,19 @@ import {
 } from "react-icons/lu";
 import { PiCertificate } from "react-icons/pi";
 import { FaWhatsapp } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa6";
+
 import { InfoSection } from "./InfoSection";
 import SocialLink from "./SocialLink";
 import AddTrainerButton from "./AddTrainerButton";
 import TrainerInfoColumn from "./TrainerInfoColumn";
-import BackToLink from "@/components/UI/Buttons/BackToLink";
+
+import { MdOutlineChevronLeft } from "react-icons/md";
+
+import { verifyAuth } from "@/lib/lucia/auth";
+
+import RemoveTrainerButton from "./RemoveTrainerButton";
+import Link from "next/link";
 export default async function SingleTrainer({
   params,
 }: {
@@ -27,7 +35,8 @@ export default async function SingleTrainer({
 }) {
   const trainerId = (await params).trainerSlug;
   const trainer = await getTrainerById(trainerId);
-
+  const { user } = await verifyAuth();
+  const currentTrainer = user?.currentTrainer;
   if (!trainer) {
     return (
       <ProfileWrapper title="">
@@ -38,7 +47,7 @@ export default async function SingleTrainer({
     );
   }
 
-  const { userName, email, trainerDetails, profileDetails } = trainer;
+  const { userName, email, trainerDetails, profileDetails, _id } = trainer;
   const socialAndExpiriance = trainerDetails?.socialAndExpiriance;
   const socialAndExpirianceArray = Object.entries(
     trainerDetails?.socialAndExpiriance?.socialMedia || {}
@@ -67,11 +76,23 @@ export default async function SingleTrainer({
   };
 
   return (
-    <ProfileWrapper title="">
-      <div className="max-w-4xl mx-auto bg-gray-800 shadow-2xl rounded-lg overflow-hidden transition-all duration-300 hover:shadow-blue-400/10">
-        <div className="bg-[#3b82f6] text-white p-8 flex justify-start items-center">
-          <div>
-            <h2 className="text-4xl font-bold flex items-center mb-4">
+    <ProfileWrapper title="" className="realtive">
+      {/* <BackToLink
+        href="/dashboard/trainers"
+        className="items-center gap-2 absolute top-2 left-2 px-4 py-2 text-sm font-medium text-white bg-[#18202F] rounded-lg transition-all duration-200 border border-white/20 hover:border-amber-500/30 backdrop-blur-sm"
+      >
+        Back to trainers
+      </BackToLink> */}
+      <div className="max-w-4xl mx-auto bg-gray-800 shadow-2xl rounded-lg  transition-all duration-300 hover:shadow-blue-400/10">
+        <div className="bg-[#3b82f6] relative text-white p-8 flex justify-start items-center">
+          <Link
+            href="/dashboard/trainers"
+            className="group absolute left-0 top-0 bottom-0 w-16 flex items-center justify-center bg-blue-700/30 hover:bg-blue-700/50 transition-all duration-300 border-r border-blue-400/20 hover:border-blue-400/30"
+          >
+            <MdOutlineChevronLeft className="text-4xl text-white/70 group-hover:text-white transition-all duration-300 transform group-hover:-translate-x-1" />
+          </Link>
+          <div className="ml-14">
+            <h2 className="text-4xl font-bold  capitalize flex items-center mb-4">
               {profileDetails?.avatarFileName ? (
                 <ProfileAvatar
                   fileName={profileDetails.avatarFileName}
@@ -81,21 +102,33 @@ export default async function SingleTrainer({
                 <LuUser className="w-20 h-20 mr-4" />
               )}
               {userName}
+              {currentTrainer === _id && (
+                <div className="flex gap-2">
+                  <span className="flex ml-3 items-center cursor-default justify-center gap-1.5 px-2.5 py-1 text-sm font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 rounded-full shadow-sm shadow-yellow-500/20 transition-all duration-300 hover:shadow-yellow-500/30 hover:scale-105">
+                    <FaRegStar className="w-4 h-4" />
+                    My trainer
+                  </span>
+                  <RemoveTrainerButton trainerId={trainerId} />
+                </div>
+              )}
             </h2>
             <a
-              className="text-xl flex items-center opacity-90 hover:text-gray-200 transition-colors duration-300"
+              className="text-xl flex w-fit items-center opacity-90 hover:text-gray-200 transition-colors duration-300"
               href={`mailto:${email}`}
             >
               <LuMail className="mr-3" size={24} />
               {email}
             </a>
           </div>
-          <BackToLink
-            href="/dashboard/trainers"
-            className="mb-auto ml-auto items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900/50 rounded-lg hover:bg-gray-900/70 transition-all duration-200 border border-yellow-500/20 hover:border-yellow-500/40 backdrop-blur-sm"
-          >
-            Back to trainers
-          </BackToLink>
+          {/* <div className="flex flex-col justify-between  items-center ml-auto gap-f">
+            <BackToLink
+              href="/dashboard/trainers"
+              className=" items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900/50 rounded-lg hover:bg-gray-900/70 transition-all duration-200 border border-yellow-500/20 hover:border-yellow-500/40 backdrop-blur-sm"
+            >
+              Back to trainers
+            </BackToLink>
+            <RemoveTrainerButton />
+          </div> */}
         </div>
         <div className="p-8 bg-gray-900 bg-opacity-50">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -183,7 +216,13 @@ export default async function SingleTrainer({
                   )}
                 </div>
                 <div className="mt-12 flex justify-center">
-                  <AddTrainerButton trainerId={trainerId} />
+                  <AddTrainerButton
+                    trainerId={trainerId}
+                    isDisabled={!!currentTrainer}
+                    className={
+                      "bg-[#3b82f6] disabled:text-white/30 disabled:hover:scale-100 disabled:border-opacity-30 disabled:hover:shadow-none disabled:bg-transparent border border-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    }
+                  />
                 </div>
               </div>
             </div>

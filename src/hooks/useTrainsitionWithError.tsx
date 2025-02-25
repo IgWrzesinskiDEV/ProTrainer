@@ -17,6 +17,13 @@ export default function useTransitionWithError(
         await onTrainsition();
         toastify(toastSuccesContent, 3000);
       } catch (e) {
+        if (e && typeof e === "object" && "digest" in e) {
+          const dig: string = (e as { digest: string }).digest;
+          if (dig.split(";")[0] === "NEXT_REDIRECT") {
+            return;
+          }
+        }
+
         toastify(
           <CustomToastContent
             message={e instanceof Error ? e.message : String(e)}

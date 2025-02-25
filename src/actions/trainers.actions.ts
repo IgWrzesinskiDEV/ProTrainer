@@ -9,6 +9,7 @@ import {
   TrainerSocialMediaSchema,
 } from "@/schemas/zSchemas";
 import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
+import { redirect } from "next/navigation";
 
 export async function sendInviteToTrainer(trainerId: string) {
   try {
@@ -17,7 +18,9 @@ export async function sendInviteToTrainer(trainerId: string) {
     if (!userId) {
       throw new Error("User not found");
     }
-
+    if (user.currentTrainer) {
+      throw new Error("Already have a trainer");
+    }
     const trainer = await User.findById(trainerId, "trainerDetails");
 
     if (!trainer) {
@@ -38,14 +41,61 @@ export async function sendInviteToTrainer(trainerId: string) {
   }
 }
 
+export async function removeTrainer(userId: string, trainerSide: boolean) {
+  try {
+    const { user } = await verifyAuth();
+    let trainerId, clientId;
+    if (trainerSide) {
+      trainerId = user?.id;
+      clientId = userId;
+    } else {
+      trainerId = userId;
+      clientId = user?.id;
+    }
+    if (!clientId || !trainerId) {
+      throw new Error("Users not found");
+    }
+    const trainer = await User.findById(trainerId, "trainerDetails");
+    const client = await User.findById(clientId);
+    if (!trainer) {
+      throw new Error("Trainer not found");
+    }
+    if (!client || !trainer.trainerDetails.clients.includes(clientId)) {
+      throw new Error("Client not found");
+    }
+    const index = trainer.trainerDetails.clients.indexOf(clientId);
+    trainer.trainerDetails.clients.splice(index, 1);
+    client.currentTrainer = null;
+    await client.save();
+    await trainer.save();
+    const pathToRevalidate = trainerSide
+      ? `/dashboard/clients`
+      : `/dashboard/trainers/${trainerId}`;
+    revalidatePath(pathToRevalidate);
+  } catch (e) {
+    throw new Error(e instanceof Error ? e.message : String(e));
+  }
+  if (trainerSide) {
+    redirect("/dashboard/clients");
+  }
+}
+
 export async function acceptInvite(clientId: string) {
   try {
     const { user } = await verifyAuth();
     const trainerId = user?.id;
 
     const trainer = await User.findById(trainerId, "trainerDetails");
+    const client = await User.findById(clientId);
+
     if (!trainer) {
       throw new Error("Trainer not found");
+    }
+    if (!client) {
+      throw new Error("Client not found");
+    }
+    if (client.currentTrainer) {
+      throw new Error("Client already has a trainer");
     }
     if (!trainer.trainerDetails.clients) {
       trainer.trainerDetails.clients = [];
@@ -56,7 +106,11 @@ export async function acceptInvite(clientId: string) {
     trainer.trainerDetails.clients.push(clientId);
     const index = trainer.trainerDetails.clientsInvites.indexOf(clientId);
     trainer.trainerDetails.clientsInvites.splice(index, 1);
+
+    client.currentTrainer = trainerId;
+
     await trainer.save();
+    await client.save();
 
     revalidatePath("/dashboard/invites");
   } catch (e) {

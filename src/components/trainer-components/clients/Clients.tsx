@@ -11,7 +11,7 @@ export default function ClientsList({ clients }: { clients: string }) {
   const searchedClients = clientsList.filter((client) =>
     client.userName.toLocaleLowerCase().includes(searchValue.toLowerCase())
   );
-  console.log(searchedClients);
+
   return (
     <ProfileWrapper title="Clients" className="rounded-tr-none relative z-10">
       <div className="flex flex-col items-center gap-10 w-full">
