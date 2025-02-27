@@ -1,8 +1,46 @@
 export interface Exercise {
   number: number;
   name: string;
+  exerciseDetailsId?: string;
   tempo: string;
   weekData: WeekData[];
+}
+
+export interface ExerciseDetails {
+  _id: string;
+  name: string;
+  instructions?: string;
+  equipment?: string;
+  category?: string;
+  muscleGroup?: MuscleGroups[];
+  videoUrl?: string;
+}
+
+export enum MuscleGroups {
+  Trapezius = "trapezius",
+  UpperBack = "upper-back",
+  LowerBack = "lower-back",
+  Chest = "chest",
+  Biceps = "biceps",
+  Triceps = "triceps",
+  Forearm = "forearm",
+  BackDeltoids = "back-deltoids",
+  FrontDeltoids = "front-deltoids",
+  Abs = "abs",
+  Obliques = "obliques",
+  Adductor = "adductor",
+  Hamstring = "hamstring",
+  Quadriceps = "quadriceps",
+  Abductors = "abductors",
+  Calves = "calves",
+  Gluteal = "gluteal",
+  Head = "head",
+  Neck = "neck",
+}
+
+export interface ExerciseDetailsShort {
+  _id: string;
+  name: string;
 }
 export enum WeekDays {
   Monday = "Monday",

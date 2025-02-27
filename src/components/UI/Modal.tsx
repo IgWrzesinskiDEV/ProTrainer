@@ -4,19 +4,26 @@ import clsx from "clsx";
 import { styled } from "@mui/system";
 import { Modal as BaseModal } from "@mui/base/Modal";
 import { BackdropProps } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function ModalUnstyled({
   children,
   ref,
   isBackDropClickClose = true,
+  isIntercepted = false,
 }: {
   children: React.ReactElement;
   ref: React.Ref<{ open: () => void; close: () => void }>;
   isBackDropClickClose?: boolean;
+  isIntercepted?: boolean;
 }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    if (isIntercepted) router.back();
+    setOpen(false);
+  };
   useImperativeHandle(ref, () => ({
     open: handleOpen,
     close: handleClose,

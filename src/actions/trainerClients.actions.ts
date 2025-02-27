@@ -106,7 +106,7 @@ export async function saveSingleDayExercises(
 
   //   return { errors: errors };
   // }
-  console.log(singleDay.exercises[0].weekData);
+  console.log(singleDay.exercises[0]);
   try {
     const plan = await Plan.findById(planId);
     if (!plan) {

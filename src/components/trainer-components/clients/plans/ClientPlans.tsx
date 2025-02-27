@@ -2,7 +2,10 @@
 import { useEffect, useState } from "react";
 import { LuMinus, LuPlus, LuCalendarX, LuCalendarPlus } from "react-icons/lu";
 
-import { WorkoutPlan } from "@/interfaces/workout/IWorkout";
+import {
+  ExerciseDetailsShort,
+  WorkoutPlan,
+} from "@/interfaces/workout/IWorkout";
 import { useActionState, useRef, useTransition } from "react";
 import {
   addEmptyWorkoutPlan,
@@ -22,9 +25,11 @@ const initialState = {
 export default function ClientPlans({
   clientId,
   clientPlans,
+  availableExercises,
 }: {
   clientId: string;
   clientPlans: string;
+  availableExercises: string;
 }) {
   const [formState, addEmptyPlanAction, isPending] = useActionState(
     (prevState: unknown, formData: FormData) =>
@@ -33,6 +38,8 @@ export default function ClientPlans({
   );
   const hasError = (formState?.errors?.length ?? 0) > 0;
   const workoutPlans: WorkoutPlan[] = JSON.parse(clientPlans);
+  const availableExercisesNamesList: ExerciseDetailsShort[] =
+    JSON.parse(availableExercises);
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<WorkoutPlan | null>(
     workoutPlans[0] || null
@@ -124,6 +131,7 @@ export default function ClientPlans({
         {selectedPlan &&
           selectedPlan.days.map((day) => (
             <SingleDay
+              availableExercisesNamesList={availableExercisesNamesList}
               day={day}
               key={day.weekDay}
               selectedPlan={selectedPlan}

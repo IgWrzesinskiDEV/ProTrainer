@@ -5,6 +5,8 @@ import {
   WeekDays,
   WorkoutPlan,
   WeekData,
+  ExerciseDetails,
+  ExerciseDetailsShort,
 } from "@/interfaces/workout/IWorkout";
 import {
   Fragment,
@@ -23,16 +25,27 @@ import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
 import SaveChangesToast from "@/components/UI/toastify/SaveChangesToast";
 import { toastify } from "@/components/UI/Toastify";
 
+import ExerciseSelecter from "./ExerciseSelecter";
+export interface ExerciseDe {
+  id: number;
+  name: string;
+  videoUrl?: string;
+  muscleGroups?: string[];
+  muscleModelImage?: string;
+  instructions?: string[];
+  description: string;
+}
+
 const initialState = {
   errors: [],
 };
 export default function SingleDay({
   day,
-
+  availableExercisesNamesList,
   selectedPlan,
 }: {
   day: WorkoutDay;
-
+  availableExercisesNamesList: ExerciseDetailsShort[];
   selectedPlan: WorkoutPlan;
 }) {
   useEffect(() => {
@@ -45,6 +58,9 @@ export default function SingleDay({
   const [restDay, setRestDay] = useState<boolean>(singleDay.isRestDay);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, startTransition] = useTransition();
+  if (singleDay.weekDay === "Monday") {
+    console.log(singleDay, "singleDay");
+  }
 
   const [saveSingleDayState, saveSingleDayAction, pending] = useActionState(
     () => saveSingleDayExercises(singleDay, selectedPlan._id),
@@ -72,12 +88,25 @@ export default function SingleDay({
   function updateExercise(
     exerciseNumber: number,
     field: keyof Exercise,
-    value: string
+    value: string,
+    exerciseDetailsIdValue?: string
   ) {
     const updatedDay = {
       ...singleDay,
       exercises: singleDay.exercises.map((ex) => {
         if (ex.number === exerciseNumber) {
+          if (
+            exerciseDetailsIdValue !== undefined &&
+            exerciseDetailsIdValue !== ""
+          ) {
+            return {
+              ...ex,
+              [field]: value,
+              exerciseDetailsId: exerciseDetailsIdValue,
+            };
+          }
+
+          delete ex.exerciseDetailsId;
           return { ...ex, [field]: value };
         }
         return ex;
@@ -145,7 +174,7 @@ export default function SingleDay({
   }
 
   return (
-    <div className="bg-gray-600 rounded-lg overflow-hidden mb-4">
+    <div className="bg-gray-600 rounded-lg  mb-4">
       <div
         className={`flex items-center justify-between p-4 cursor-pointer ${
           restDay && "cursor-default   pointer-events-none"
@@ -180,18 +209,18 @@ export default function SingleDay({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="p-4">
-              <div className="overflow-x-auto w-full planScrollbar">
-                <table className="w-full border-separate border-spacing-0 ">
+            <div className="p-4  ">
+              <div className="overflow-y-visible  overflow-x-auto relative z-10 planScrollbar">
+                <table className="w-full  border-separate border-spacing-0 ">
                   <thead>
                     <tr className="bg-gray-700">
                       <th className="sticky left-0 top-0 z-10 bg-gray-700  border-t border-r border-gray-600 px-4 py-2 text-left w-12">
                         #
                       </th>
-                      <th className="sticky left-10 z-10 bg-gray-700 border-t border-r border-gray-600 px-4 py-2 text-left ">
+                      <th className=" left-10 z-10 bg-gray-700 border-t border-r border-gray-600 px-4 py-2 text-left ">
                         <p className="w-60">Exercise</p>
                       </th>
-                      <th className="sticky left-[312px] z-10 border-t border-r bg-gray-700 border-gray-600 px-4 py-2 ">
+                      <th className=" left-[312px] z-10 border-t border-r bg-gray-700 border-gray-600 px-4 py-2 ">
                         <p className="w-32">Tempo</p>
                       </th>
 
@@ -214,26 +243,20 @@ export default function SingleDay({
                   </thead>
                   <tbody>
                     {singleDay.exercises.map((exercise) => (
-                      <tr key={exercise.number} className="bg-gray-800">
+                      <tr key={exercise.number} className="bg-gray-800 ">
                         <td className="sticky left-0 z-10 bg-gray-800 border-b  border-r border-gray-600 px-4 py-2 w-12">
                           {exercise.number}
                         </td>
-                        <td className="sticky left-10 z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
-                          <InputFloatingLabel
-                            forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseName`}
-                            label="Exercise name"
-                            type="text"
-                            value={exercise.name || ""}
-                            onChange={(e) =>
-                              updateExercise(
-                                exercise.number,
-                                "name",
-                                e.target.value
-                              )
-                            }
+                        <td className="    z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
+                          <ExerciseSelecter
+                            exerciseNumber={exercise.number}
+                            availableExercises={availableExercisesNamesList}
+                            weekDay={singleDay.weekDay}
+                            defaultValue={exercise.name}
+                            updateExercise={updateExercise}
                           />
                         </td>
-                        <td className="sticky left-[312px] z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-40">
+                        <td className=" left-[312px]  z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-40">
                           <InputFloatingLabel
                             forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseTempo`}
                             label="Tempo"
@@ -256,7 +279,7 @@ export default function SingleDay({
                             <td className="border-b border-gray-600 -z-10 px-4 py-2 w-24">
                               <InputFloatingLabel
                                 forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-trainerData`}
-                                label="Trainer data"
+                                label="Trainer"
                                 type="text"
                                 value={week.trainerData || ""}
                                 onChange={(e) =>
@@ -272,7 +295,7 @@ export default function SingleDay({
                             <td className="border-b border-r border-gray-600 px-4 -z-10 py-3 w-24">
                               <InputFloatingLabel
                                 forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-clientData`}
-                                label="Client data"
+                                label="Client"
                                 type="text"
                                 value={week.clientData || ""}
                                 onChange={(e) =>
@@ -297,6 +320,7 @@ export default function SingleDay({
                     ))}
                   </tbody>
                 </table>
+
                 <div className="flex gap-2 mt-4 text-red-500">
                   {saveSingleDayState?.errors &&
                     saveSingleDayState.errors.map((error) => (

@@ -1,4 +1,6 @@
 import ClientPlans from "@/components/trainer-components/clients/plans/ClientPlans";
+import { ExerciseDetailsShort } from "@/interfaces/workout/IWorkout";
+import { getAvaliableExercisesNames } from "@/utils/data/getAvailableExercises";
 import { getClientPlans } from "@/utils/data/getClientPlans";
 export default async function ClientPlansPage({
   params,
@@ -7,9 +9,16 @@ export default async function ClientPlansPage({
 }) {
   const clientId = (await params).clientSlug;
   const plans = await getClientPlans(clientId);
+  const avaliableExercises: ExerciseDetailsShort[] =
+    await getAvaliableExercisesNames();
+  //console.log(avaliableExercises, "avaliableExercises");
 
   return (
-    <ClientPlans clientId={clientId} clientPlans={JSON.stringify(plans)} />
+    <ClientPlans
+      clientId={clientId}
+      clientPlans={JSON.stringify(plans)}
+      availableExercises={JSON.stringify(avaliableExercises)}
+    />
   );
 }
 

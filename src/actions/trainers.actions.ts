@@ -26,7 +26,10 @@ export async function sendInviteToTrainer(trainerId: string) {
     if (!trainer) {
       throw new Error("Trainer not found");
     }
-    if (!trainer.trainerDetails.clientsInvites) {
+    if (!trainer.trainerDetails) {
+      trainer.trainerDetails = {};
+    }
+    if (!trainer?.trainerDetails?.clientsInvites) {
       trainer.trainerDetails.clientsInvites = [];
     }
     if (trainer.trainerDetails.clientsInvites.includes(userId)) {
