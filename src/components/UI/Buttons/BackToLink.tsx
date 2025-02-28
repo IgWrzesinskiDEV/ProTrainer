@@ -1,7 +1,6 @@
 import { cn } from "@/lib/twMergeUtill";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { AiOutlineRollback } from "react-icons/ai";
 
 export default function BackToLink({
   href,
@@ -15,9 +14,12 @@ export default function BackToLink({
   return (
     <Link
       href={href}
-      className={cn("flex items-center gap-2 text-blue-500 ", className)}
+      className={cn(
+        " flex items-center gap-2 px-4 py-2    rounded-lg  transition-all duration-150",
+        className
+      )}
     >
-      {children} <AiOutlineRollback className="text-2xl text-yellow-500" />
+      {children}
     </Link>
   );
 }

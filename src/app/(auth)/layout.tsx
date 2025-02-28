@@ -1,47 +1,37 @@
-import Image from "next/image";
-import Link from "next/link";
-
-import logo from "/public/logos/b.png";
 import { verifyAuth } from "@/lib/lucia/auth";
-import { logout } from "@/actions/auth.actions";
+
 import { redirect } from "next/navigation";
+
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 export default async function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const { user } = await verifyAuth();
+
   if (!user) {
     return redirect("/auth/login");
   }
+  console.log("user", user);
   return (
     <>
-      <nav className="flex  items-center  py-4 text-xl px-44 gap-10 border-b-2 border-stone-700 shadow-2xl sticky top-0 bg-background z-50">
-        <div className="flex-shrink-0">
-          <Image src={logo} width={110} alt="Heavy dumbbel" />{" "}
-        </div>
-        <ul className="flex gap-3 w-full  justify-center items-center">
-          <li>
-            <Link
-              href="/dashboard/profile"
-              className="hover:text-blue-500 transition-colors duration-300"
-            >
-              Profile
-            </Link>
-          </li>
-          <li className="ml-auto">
-            <p>Hello,{user?.userName}</p>
-          </li>
-          <li>
-            <form action={logout}>
-              <button className="bg-blue-500 px-3 py-2 rounded-lg">
-                Logout
-              </button>
-            </form>
-          </li>
-        </ul>
-      </nav>
-      <main className=" h-full  px-32 py-20">{children}</main>
+      <div className="min-h-screen bg-[#2a2522] text-white">
+        <DashboardHeader
+          profileDetails={user?.profileDetails}
+          userName={user.userName}
+          currentTrainer={user?.currentTrainer}
+          role={user.role}
+        />
+
+        {/* Main Navigation Tabs */}
+        <DashboardNav />
+        <main className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {children}
+        </main>
+      </div>
+      {/* <main className=" h-full  px-32 py-20">{children}</main> */}
     </>
   );
 }

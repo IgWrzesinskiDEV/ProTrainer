@@ -1,16 +1,14 @@
 import { LuTarget } from "react-icons/lu";
-import Model, {
-  IExerciseData,
-  IMuscleStats,
-  Muscle,
-} from "react-body-highlighter";
-import { MuscleGroups } from "@/interfaces/workout/IWorkout";
+import Model, { Muscle } from "react-body-highlighter";
+
 export default function MusclesTab({
   muscleGroup,
   exerciseName,
+  isModal,
 }: {
   muscleGroup: Muscle[];
   exerciseName: string;
+  isModal?: boolean;
 }) {
   return (
     <div className="space-y-4">

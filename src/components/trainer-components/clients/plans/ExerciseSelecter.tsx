@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { LuInfo } from "react-icons/lu";
 
-import ExerciseDetailsModal from "./ExerciseDetailsModal";
 import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
 import {
   Exercise,
@@ -12,8 +10,8 @@ import {
 } from "@/interfaces/workout/IWorkout";
 import { ExerciseDetails } from "@/interfaces/workout/IWorkout";
 import { Popper } from "@mui/material";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+
+import ExerciseDetailsLink from "@/components/UI/links/ExerciseDetailsLink";
 
 interface ExerciseSelectorProps {
   defaultValue?: string;
@@ -54,7 +52,7 @@ export default function ExerciseSelecter({
   //     componentName: "BaseAutocompleteIntroduction",
   //   });
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+
   const [searchTerm, setSearchTerm] = useState(defaultValue);
 
   const [filteredExercises, setFilteredExercises] =
@@ -128,20 +126,7 @@ export default function ExerciseSelecter({
           />
 
           {isPreDefinedExercise() && (
-            // <button
-            //   onClick={() => router.push(`?exercise=${preDefinedExerciseId}`)}
-            //   className="flex-shrink-0 p-2 hover:bg-slate-600 rounded-full transition-colors"
-            //   title="View exercise details"
-            // >
-            //   <LuInfo className="h-5 w-5 text-blue-400 " />
-            // </button>
-            <Link
-              href={`/dashboard/exercises/${preDefinedExerciseId}`}
-              className="flex-shrink-0 p-2 hover:bg-slate-600 rounded-full transition-colors"
-              title="View exercise details"
-            >
-              <LuInfo className="h-5 w-5 text-blue-400 " />
-            </Link>
+            <ExerciseDetailsLink exerciseId={preDefinedExerciseId} />
           )}
         </div>
 
@@ -198,14 +183,6 @@ export default function ExerciseSelecter({
           </Popper>
         )}
       </>
-
-      {/* {selectedExercise && (
-    //     <ExerciseDetailsModal
-    //       exercise={selectedExercise}
-    //       isOpen={isModalOpen}
-    //       onClose={() => setIsModalOpen(false)}
-    //     />
-    //   )} */}
     </div>
   );
 }

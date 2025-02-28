@@ -3,13 +3,18 @@ import {
   ITrainerDetails,
   TrainerAdditionalDataHeadingType,
 } from "@/interfaces/trainers/ITrainer";
+export enum IUserRole {
+  CLIENT = "CLIENT",
+  TRAINER = "TRAINER",
+  ADMIN = "ADMIN",
+}
 export interface IUser {
   _id: string;
   userName: string;
   email: string;
   emailVerified?: boolean;
   password?: string;
-  role: "USER" | "TRAINER" | "ADMIN";
+  role: IUserRole;
   currentTrainer?: string;
   plansIds?: string[];
   profileDetails: {
@@ -22,6 +27,7 @@ export interface IUser {
     weight: "kg" | "lbs";
     height: "cm" | "ft";
     bodyMeasurement: "cm" | "in";
+    distance: "km" | "mi";
   };
 }
 
@@ -83,8 +89,8 @@ const userSchema = new Schema<IUser>(
     password: { type: String, minlength: 6 },
     role: {
       type: String,
-      default: "USER",
-      enum: ["USER", "TRAINER", "ADMIN"],
+      default: IUserRole.CLIENT,
+      enum: Object.values(IUserRole),
       required: true,
     },
     currentTrainer: { type: String },
@@ -99,6 +105,7 @@ const userSchema = new Schema<IUser>(
       weight: { type: String, default: "kg" },
       height: { type: String, default: "cm" },
       bodyMeasurement: { type: String, default: "cm" },
+      distance: { type: String, default: "km" },
     },
   } as const,
   { _id: false }

@@ -1,4 +1,4 @@
-import Plans from "@/components/plans/Plans";
+import Plans from "@/components/client-components/plans/Plans";
 
 export default async function PlansPage() {
   return <Plans />;

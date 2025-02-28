@@ -15,12 +15,12 @@ export default function WorkoutPlan({
   const weekCount = selectedPlan.days[0]?.exercises[0]?.weekData?.length || 0;
 
   return (
-    <div className="w-4/5 p-4 space-y-3">
+    <div className="w-full p-4 space-y-3">
       <div className="flex items-center justify-between ">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+        <div className="flex items-center gap-3 ml-5">
+          {/* <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
             <LuCalendar className="w-5 h-5 text-blue-500" />
-          </div>
+          </div> */}
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-white">
               {selectedPlan.planName || "Workout Plan"}
@@ -104,7 +104,7 @@ export default function WorkoutPlan({
                         <span className="text-lg font-medium mb-2 text-gray-300">
                           Rest Day
                         </span>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-500 text-center">
                           Recovery & Regeneration
                         </span>
                       </div>
@@ -126,7 +126,7 @@ export default function WorkoutPlan({
                           <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-200">
                             <LuDumbbell className="w-4 h-4 text-white" />
                           </div>
-                          <span className="text-blue-400 font-medium">
+                          <span className="text-blue-400 font-medium text-base">
                             {day.exercises.length} Exercises
                           </span>
                         </div>
@@ -134,13 +134,14 @@ export default function WorkoutPlan({
                           {day.exercises.map((exercise) => (
                             <li
                               key={exercise.number}
-                              className="flex items-center gap-3 group/item  transition-colors duration-200"
+                              className="flex items-start gap-3 group/item  transition-colors duration-200"
                             >
-                              <span className="flex items-center text-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 text-xs font-medium">
+                              <span className="flex items-center text-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 text-sm font-medium">
                                 {exercise.number}
                               </span>
-                              <span className="text-sm font-medium w-3/4">
-                                {exercise.name}
+                              <span className="text-base font-medium w-3/4">
+                                {exercise.name.at(0)!.toUpperCase() +
+                                  exercise.name.slice(1)}
                               </span>
                             </li>
                           ))}

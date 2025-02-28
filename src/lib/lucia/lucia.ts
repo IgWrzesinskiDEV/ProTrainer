@@ -5,6 +5,7 @@ import {
   unitsInterface,
   profileDetailsInterface,
 } from "@/interfaces/user/IUser";
+import { IUserRole } from "../models/user.model";
 //import connectMongoDb from "../mongodb/mogodb";
 //await connectMongoDb();
 export const luciaAuth = new Lucia(adapter, {
@@ -24,7 +25,7 @@ export const luciaAuth = new Lucia(adapter, {
       role: attributes.role,
       units: attributes.units,
       email_verified: attributes.email_verified,
-      avatarFileName: attributes.avatarFileName,
+
       profileDetails: attributes.profileDetails,
       currentTrainer: attributes.currentTrainer,
     };
@@ -41,9 +42,9 @@ export interface DatabaseUserAttributes {
   userName: string;
   units: unitsInterface;
   email: string;
-  role: string;
+  role: IUserRole;
   email_verified: boolean;
-  avatarFileName: string;
+
   profileDetails: profileDetailsInterface;
   currentTrainer: string;
 }

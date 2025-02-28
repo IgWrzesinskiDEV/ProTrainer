@@ -6,8 +6,7 @@ import saveProfileUnits from "@/actions/profile.actions";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { useActionState, useEffect, useState } from "react";
 
-import { FiCheckCircle } from "react-icons/fi";
-import { LuLoaderCircle } from "react-icons/lu";
+import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 const initialState = {
   error: "",
 };
@@ -38,65 +37,71 @@ export default function ProfileUnitsForm() {
   };
 
   return (
-    <div className="bg-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full mx-auto">
-      <h2 className="text-2xl font-bold text-white mb-6 text-center">
-        Measurement Units
-      </h2>
-      <form action={formAction} className="space-y-6">
-        {["weight", "bodyMeasurement", "height"].map((unit) => (
-          <div key={unit} className="space-y-2">
-            <label
-              htmlFor={unit}
-              className="text-white text-sm font-medium block"
-            >
-              {unit.charAt(0).toUpperCase() + unit.slice(1)} Unit
+    <div className="bg-[#252220] rounded-xl shadow-lg p-6">
+      <h2 className="text-xl font-bold mb-6 text-center">Measurement Units</h2>
+      <form
+        action={formAction}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        {["weight", "bodyMeasurement", "height", "distance"].map((unit) => (
+          <div key={unit} className="bg-[#1d3a5f] rounded-lg p-5">
+            <label htmlFor={unit} className="text-lg font-semibold ">
+              {unit === "bodyMeasurement"
+                ? "Body Measurement"
+                : unit.charAt(0).toUpperCase() + unit.slice(1)}{" "}
+              Unit
             </label>
-            <select
-              id={unit}
-              name={unit}
-              value={units[unit as keyof typeof units]}
-              onChange={handleChange}
-              className="w-full p-3 rounded-md bg-stone-700 text-white border border-stone-600 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out"
-            >
-              {unit === "weight" ? (
-                <>
-                  <option value="kg">Kilograms (kg)</option>
-                  <option value="lbs">Pounds (lbs)</option>
-                </>
-              ) : unit === "height" ? (
-                <>
-                  <option value="cm">Centimeters (cm)</option>
-                  <option value="ft">Feet (ft)</option>
-                </>
-              ) : (
-                <>
-                  <option value="cm">Centimeters (cm)</option>
-                  <option value="in">Inches (in)</option>
-                </>
-              )}
-            </select>
+            <div className="relative mt-4">
+              <select
+                id={unit}
+                name={unit}
+                value={units[unit as keyof typeof units]}
+                onChange={handleChange}
+                className="w-full px-4 cursor-pointer py-3 bg-[#2a4a75] border border-[#3a5a85] rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#2673e8] text-white"
+              >
+                {unit === "weight" ? (
+                  <>
+                    <option value="kg">Kilograms (kg)</option>
+                    <option value="lbs">Pounds (lbs)</option>
+                  </>
+                ) : unit === "height" ? (
+                  <>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="ft">Feet (ft)</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="in">Inches (in)</option>
+                  </>
+                )}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg
+                  className="h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
           </div>
         ))}
-        <button
-          type="submit"
-          disabled={isPending}
-          className={`w-full py-3 px-4 rounded-md text-white font-medium transition duration-150 ease-in-out ${
-            isPending
-              ? "bg-blue-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-stone-800"
-          }`}
-        >
-          {isPending ? (
-            <LuLoaderCircle className="animate-spin mx-auto h-5 w-5" />
-          ) : formState.success ? (
-            <div className="flex items-center justify-center">
-              <FiCheckCircle className="mr-2 h-5 w-5" />
-              Saved
-            </div>
-          ) : (
-            "Save Changes"
-          )}
-        </button>
+
+        <div className="mt-8 col-span-2">
+          <ButtonWithLoading
+            type="submit"
+            className="w-full bg-[#2673e8] hover:bg-blue-600 text-white py-3 rounded-md transition-colors duration-200 font-medium"
+            isLoading={isPending}
+          >
+            Save Changes
+          </ButtonWithLoading>
+        </div>
       </form>
       {formState.error && (
         <p className="mt-4 text-red-400 text-sm text-center">

@@ -4,11 +4,13 @@ interface InputFloatingLabelProps
   extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   forHTMLLabel: string;
+  classNameAdded?: string;
 }
 
 export default function InputFloatingLabel({
   label,
   forHTMLLabel,
+  classNameAdded,
   ...props
 }: InputFloatingLabelProps) {
   return (
@@ -20,7 +22,7 @@ export default function InputFloatingLabel({
         {...(props.value !== undefined && { value: props.value })}
         className={cn(
           "block p-2 w-full  min-w-24    bg-gray-700 text-white outline-none   rounded      appearance-none  border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0  peer",
-          props?.className
+          classNameAdded
         )}
         {...props}
         placeholder=" "

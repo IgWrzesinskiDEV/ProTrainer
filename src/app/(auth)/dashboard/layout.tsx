@@ -1,8 +1,6 @@
-import AsideNav from "@/components/dashboard/AsideNav";
-import TrainerNavLinks from "@/components/dashboard/TrainerNavLinks";
-import ClientNavLinks from "@/components/dashboard/ClientNavLinks";
 import { verifyAuth } from "@/lib/lucia/auth";
-import { getUserAvatarById } from "@/utils/data/user";
+
+import { IUserRole } from "@/lib/models/user.model";
 export const revalidate = 0;
 export default async function profileLayout({
   trainer,
@@ -12,19 +10,30 @@ export default async function profileLayout({
   client: React.ReactNode;
 }) {
   const { user } = await verifyAuth();
-  const { userName, id, role } = user!;
-  const avatar = await getUserAvatarById(id);
+  const { role } = user!;
 
   return (
     <>
-      <AsideNav
+      {/* <AsideNav
         avatarFileName={avatar.profileDetails.avatarFileName}
         userName={userName}
       >
         {role === "USER" ? <ClientNavLinks /> : <TrainerNavLinks />}
-      </AsideNav>
+      </AsideNav> */}
+      {/* <nav className="bg-[#252220] shadow-inner">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-1 overflow-x-auto py-2">
+            {["Profile", "Account", "Plans", "Measurement", "Trainers"].map(
+              (tab) => (
+                <ProfileLink key={tab} href="/dashboard/profile" text={tab} />
+              )
+            )}
+          </div>
+        </div>
+      </nav> */}
+      {}
 
-      <section>{role === "USER" ? client : trainer}</section>
+      <section>{role === IUserRole.CLIENT ? client : trainer}</section>
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { getClientPlans } from "@/utils/data/getClientPlans";
-import ProfileWrapper from "../profile/ProfileWrapper";
 
 import { verifyAuth } from "@/lib/lucia/auth";
 
@@ -10,10 +9,8 @@ export default async function Plans() {
   const { id } = user!;
   const plans = await getClientPlans(id);
   return (
-    <ProfileWrapper title="Plans">
-      <div className="flex items-center justify-center flex-col w-full gap-5 relative">
-        <SelectAndPlans workoutPlans={JSON.stringify(plans)} />
-      </div>
-    </ProfileWrapper>
+    <div className="flex flex-col w-full  px-4 md:px-6 lg:px-8 gap-6">
+      <SelectAndPlans workoutPlans={JSON.stringify(plans)} />
+    </div>
   );
 }

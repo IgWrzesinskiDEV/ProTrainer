@@ -5,7 +5,6 @@ import {
   WeekDays,
   WorkoutPlan,
   WeekData,
-  ExerciseDetails,
   ExerciseDetailsShort,
 } from "@/interfaces/workout/IWorkout";
 import {
@@ -105,8 +104,11 @@ export default function SingleDay({
               exerciseDetailsId: exerciseDetailsIdValue,
             };
           }
+          console.log(ex);
+          if (field === "name") {
+            delete ex.exerciseDetailsId;
+          }
 
-          delete ex.exerciseDetailsId;
           return { ...ex, [field]: value };
         }
         return ex;
@@ -172,7 +174,7 @@ export default function SingleDay({
     };
     setSingleDay(updatedDay);
   }
-
+  console.log(singleDay, "singleDay");
   return (
     <div className="bg-gray-600 rounded-lg  mb-4">
       <div

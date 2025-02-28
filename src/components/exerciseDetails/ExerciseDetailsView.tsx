@@ -13,6 +13,7 @@ import ExerciseTabs from "./ExerciseTabs";
 import InstructionsTab from "./InstructionsTab";
 import MusclesTab from "./MusclesTab";
 import DemoTab from "./DemoTab";
+import { Muscle } from "react-body-highlighter";
 
 export interface ExerciseDetails {
   _id: string;
@@ -37,12 +38,17 @@ export default function ExerciseDetailsView({
   const [activeTab, setActiveTab] = useState<
     "demo" | "muscles" | "instructions"
   >("demo");
-
+  const isModal = !!modalCloseHandler;
+  console.log(exercise);
   return (
-    <div className="bg-[#1e1e24] max-w-4xl  rounded-lg overflow-hidden shadow-xl w-full">
+    <div
+      className={`bg-[#1e1e24] z-10 rounded-t-none relative  rounded-lg overflow-hidden shadow-xl w-full ${
+        isModal && "max-w-4xl"
+      }`}
+    >
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-gray-700">
-        <h2 className="text-xl font-semibold text-white">Exercise Details</h2>
+        <h2 className="text-lg font-thin text-white">Exercise Details</h2>
         {modalCloseHandler && (
           <button
             onClick={modalCloseHandler}
@@ -55,7 +61,7 @@ export default function ExerciseDetailsView({
 
       {/* Exercise Name */}
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
-        <h1 className="text-2xl font-bold text-white">{exercise.name}</h1>
+        <h1 className="text-3xl font-bold text-blue-500">{exercise.name}</h1>
       </div>
 
       {/* Content Area */}
@@ -66,6 +72,7 @@ export default function ExerciseDetailsView({
         <div className="bg-[#121218] rounded-lg p-4">
           {activeTab === "demo" && (
             <DemoTab
+              isModal={isModal}
               videoUrl={exercise.videoUrl}
               equipment={exercise.equipment}
               category={exercise.category}
@@ -75,7 +82,8 @@ export default function ExerciseDetailsView({
 
           {activeTab === "muscles" && (
             <MusclesTab
-              muscleGroup={exercise.muscleGroup}
+              isModal={isModal}
+              muscleGroup={exercise.muscleGroup as Muscle[]}
               exerciseName={exercise.name}
             />
           )}

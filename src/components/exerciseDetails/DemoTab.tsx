@@ -5,19 +5,25 @@ export default function DemoTab({
   equipment,
   category,
   name,
+  isModal,
 }: {
   videoUrl?: string;
   equipment?: string;
   category?: string;
   name: string;
+  isModal?: boolean;
 }) {
   return (
     <div className="space-y-4">
       {videoUrl ? (
-        <div className="aspect-video bg-black rounded-lg overflow-hidden relative">
+        <div
+          className={`aspect-video bg-black mx-auto rounded-lg overflow-hidden relative ${
+            isModal ? "" : "w-1/2 my-5"
+          }`}
+        >
           <iframe
             src={"https://www.youtube.com/embed/" + videoUrl}
-            className="w-full h-full"
+            className={"w-full h-full"}
             allowFullScreen
             title={`${name} demonstration`}
           />

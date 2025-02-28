@@ -5,17 +5,13 @@ export interface unitsInterface {
 }
 
 export interface profileDetailsInterface {
-  fullName: string;
-  bio: string;
-  avatarFileName: string;
+  fullName?: string;
+  bio?: string;
+  avatarFileName?: string;
 }
 
 export interface IUserBacisDetails {
   userName: string;
   _id: string;
-  profileDetails: {
-    avatarFileName?: string;
-    bio?: string;
-    fullName?: string;
-  };
+  profileDetails: profileDetailsInterface;
 }
