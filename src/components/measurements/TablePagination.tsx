@@ -1,14 +1,16 @@
+import type React from "react";
 import { forwardRef } from "react";
 import {
   TablePagination as TablePaginationMui,
-  TablePaginationProps,
+  type TablePaginationProps,
 } from "@mui/base/TablePagination";
 import clsx from "clsx";
 import FirstPageRoundedIcon from "@mui/icons-material/FirstPageRounded";
 import LastPageRoundedIcon from "@mui/icons-material/LastPageRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import { ISingleMeasurement } from "@/lib/models/measurement.model";
+import type { ISingleMeasurement } from "@/lib/models/measurement.model";
+
 interface TablePaginationComponentProps {
   TABLE_HEAD: string[];
   TABLE_ROWS: ISingleMeasurement[];
@@ -57,6 +59,7 @@ export default function TablePaginationComponent({
     />
   );
 }
+
 const resolveSlotProps = (fn: unknown, args: unknown) =>
   typeof fn === "function" ? fn(args) : fn;
 
@@ -70,10 +73,9 @@ const CustomTablePagination = forwardRef<
       ref={ref}
       {...props}
       slots={{ root: "div" }}
-      className={clsx("CustomTablePagination p-4 ", props.className)}
+      className={clsx("CustomTablePagination", props.className)}
       slotProps={{
         ...props.slotProps,
-
         select: (ownerState) => {
           const resolvedSlotProps = resolveSlotProps(
             props.slotProps?.select,
@@ -82,7 +84,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "font-sans py-[2px] pl-[4px] pr-[2px]  border border-solid border-[#303740] rounded-[6px] bg-backgroundLite  hover:bg-backgroundLite focus:outline-0 [&>button:focus]:ring-[3px]  focus:border-blue-500  focus:hover:border-blue-500 transition",
+              "font-sans py-2 px-3 border border-gray-700 rounded-lg bg-gray-800 text-gray-300 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200",
               resolvedSlotProps?.className
             ),
           };
@@ -95,7 +97,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "flex gap-[6px] text-center [&>button]:my-0 [&>button]:p-0 [&>button]:flex [&>button]:items-center [&>button]:rounded-full [&>button]:bg-transparent [&>button]:border [&>button]:border-solid  [&>button]:border-[#303740] [&>button:hover]:border-zinc-700   [&>button:hover]:bg-zinc-800 [&>button:focus]:outline-0 [&>button:focus]:ring-[2px]  [&>button:focus]:border-blue-500 [&>button:focus:hover]:border-blue-500  [&>button>svg]:text-[22px] [&>button:disabled]:opacity-[0.3] [&>button:disabled:hover]:bg-transparent  [&>button:disabled:hover]:border-zinc-700",
+              "flex items-center gap-2 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:w-9 [&>button]:h-9 [&>button]:rounded-md [&>button]:border  [&>button]:border-gray-700  [&>button]:bg-gray-800  [&>button]:text-gray-300  [&>button:hover]:bg-blue-900/20  [&>button:hover]:border-blue-700 [&>button:focus]:outline-none [&>button:focus]:ring-2 [&>button:focus]:ring-blue-500 [&>button:focus]:border-blue-500 [&>button>svg]:text-[20px] [&>button:disabled]:opacity-40 [&>button:disabled]:cursor-not-allowed  [&>button:disabled:hover]:bg-gray-800  [&>button:disabled:hover]:border-gray-700 [&>button]:transition-all [&>button]:duration-200",
               resolvedSlotProps?.className
             ),
           };
@@ -105,7 +107,6 @@ const CustomTablePagination = forwardRef<
             props.slotProps?.spacer,
             ownerState
           );
-
           return {
             ...resolvedSlotProps,
             className: clsx("hidden", resolvedSlotProps?.className),
@@ -119,7 +120,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "flex flex-col items-end gap-[8px] md:flex-row md:items-center ml-auto",
+              "flex flex-col sm:flex-row items-end sm:items-center justify-end gap-4 ml-auto bg-gray-800 p-3 rounded-lg border border-gray-700 shadow-sm",
               resolvedSlotProps?.className
             ),
           };
@@ -131,7 +132,10 @@ const CustomTablePagination = forwardRef<
           );
           return {
             ...resolvedSlotProps,
-            className: clsx(" ml-auto m-0", resolvedSlotProps?.className),
+            className: clsx(
+              "text-gray-400 font-medium m-0",
+              resolvedSlotProps?.className
+            ),
           };
         },
         displayedRows: (ownerState) => {
@@ -141,7 +145,10 @@ const CustomTablePagination = forwardRef<
           );
           return {
             ...resolvedSlotProps,
-            className: clsx("m-0 ", resolvedSlotProps?.className),
+            className: clsx(
+              "text-gray-400 font-medium m-0",
+              resolvedSlotProps?.className
+            ),
           };
         },
       }}

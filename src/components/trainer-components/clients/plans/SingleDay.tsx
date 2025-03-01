@@ -246,8 +246,18 @@ export default function SingleDay({
                   <tbody>
                     {singleDay.exercises.map((exercise) => (
                       <tr key={exercise.number} className="bg-gray-800 ">
-                        <td className="sticky left-0 z-10 bg-gray-800 border-b  border-r border-gray-600 px-4 py-2 w-12">
+                        <td className="sticky left-0 z-30  select-none bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-12  group">
                           {exercise.number}
+                          <div className="absolute top-1/2 left-full -translate-y-1/2 ml-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform scale-95 group-hover:scale-100 pointer-events-none z-40">
+                            <div className="bg-gray-900 text-white text-sm rounded-md py-1.5 px-3 shadow-lg max-w-xs">
+                              <p className="whitespace-normal">
+                                {exercise.name}
+                              </p>
+
+                              {/* Triangle pointer pointing left */}
+                              <div className="absolute h-2 w-2 bg-gray-900 transform rotate-45 top-1/2 -translate-y-1/2 -left-1"></div>
+                            </div>
+                          </div>
                         </td>
                         <td className="    z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
                           <ExerciseSelecter

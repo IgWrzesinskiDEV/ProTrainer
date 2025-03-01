@@ -45,10 +45,11 @@ export const ProfileDetailsSchema = z.object({
   avatar: z
     .any()
     .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
-      "Only .jpg, .jpeg, .png formats are allowed."
-    ),
+    .refine((file) => {
+      if (file.size === 0) return true;
+
+      return ACCEPTED_IMAGE_TYPES.includes(file?.type);
+    }, "Only .jpg, .jpeg, .png formats are allowed."),
 });
 
 export const MeasurementSchema = z.object({

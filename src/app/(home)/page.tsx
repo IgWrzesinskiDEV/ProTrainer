@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div className="h-[200vh]">test</div>;
+import Home from "@/components/ladingPage/home/Home";
+
+export default function HomePage() {
+  return <Home />;
 }

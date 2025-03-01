@@ -1,11 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
-import logo from "/public/logos/b.png";
+
 import { profileDetailsInterface } from "@/interfaces/user/IUser";
 import ProfileAvatar from "../UI/ProfileAvatar";
 import { cn } from "@/lib/twMergeUtill";
 import { IUserRole } from "@/lib/models/user.model";
 import LogoutButton from "../UI/Buttons/LogoutButton";
+import ProTrainerLogo from "../UI/logo/ProTrainerLogo";
 export default function DashboardHeader({
   profileDetails,
   userName,
@@ -25,13 +25,7 @@ export default function DashboardHeader({
           <div className="flex items-center space-x-8">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
-              <Image
-                src={logo}
-                alt="Pro Trainer Logo"
-                width={40}
-                height={40}
-                className="w-auto h-10"
-              />
+              <ProTrainerLogo className="w-auto h-10" />
             </Link>
             <div className="h-8 w-px bg-gray-700" /> {/* Vertical divider */}
             {/* User info */}

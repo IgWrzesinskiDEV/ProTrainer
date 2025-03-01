@@ -33,7 +33,6 @@ export default async function clientLayout({
           <div className="flex items-center ">
             <ProfileAvatar
               fileName={clientInfo?.profileDetails?.avatarFileName}
-              className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold"
             />
 
             <div className="ml-6">

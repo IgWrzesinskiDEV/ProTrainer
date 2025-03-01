@@ -21,7 +21,10 @@ export default function ProfileDescriptionForm() {
     <div className="lg:col-span-1">
       <div className="bg-[#252220] rounded-xl shadow-lg p-6">
         <form action={formAction} className="flex flex-col items-center">
-          <ImagePicker name="avatar" />
+          <ImagePicker
+            name="avatar"
+            avatarFileName={profileDetails?.avatarFileName}
+          />
           <div className="w-full space-y-4">
             <Input
               label="Full Name"
@@ -37,7 +40,7 @@ export default function ProfileDescriptionForm() {
               isArea
             />
           </div>
-          <ul className="h-5">
+          <ul className="h-5 mb-3">
             {formState?.errors?.map((error) => (
               <li key={error} className="text-red-500">
                 {error}

@@ -149,8 +149,8 @@ export default function SingleDayWorkout({
                     idx % 2 === 0 ? "bg-[#182030]" : "bg-[#131B2B]"
                   }`}
                 >
-                  <td className="sticky left-0 z-10 bg-inherit border-b border-r border-gray-800 px-6 py-4">
-                    <span className="flex items-center mx-auto  justify-center w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 font-semibold transition-all group-hover:bg-blue-500/20 group-hover:text-blue-300">
+                  <td className="sticky left-0 z-30 bg-inherit border-b border-r border-gray-800 px-6 py-4">
+                    <span className="flex items-center mx-auto  justify-center w-9 h-8 rounded-lg bg-inherit  text-blue-400 font-semibold transition-all group-hover:bg-blue-500/20 group-hover:text-blue-300">
                       {exercise.number}
                     </span>
                   </td>

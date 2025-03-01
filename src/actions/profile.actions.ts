@@ -23,7 +23,8 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
 
   const { fullName, bio, avatar } = validateData.data;
 
-  if (avatar) {
+  if (avatar.size > 0) {
+    console.log("avatar2");
     const avatarFileName = await saveAvatarImage(avatar, id);
 
     await User.findByIdAndUpdate(id, {
@@ -33,7 +34,9 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
     return { success: "Profile with avatar saved" };
   }
 
-  await User.findByIdAndUpdate(id, { profileDetails: { fullName, bio } });
+  const userDetails = await User.findById(id, { profileDetails: 1 });
+  userDetails.profileDetails = { ...userDetails.profileDetails, fullName, bio };
+  await userDetails.save();
   revalidatePath("/dashboard/profile");
   return { success: "Profile saved" };
 }
@@ -51,9 +54,10 @@ export default async function saveProfileUnits(
   const weight = formData.get("weight") as string;
   const height = formData.get("height") as string;
   const bodyMeasurement = formData.get("bodyMeasurement") as string;
+  const distance = formData.get("distance") as string;
 
   await User.findByIdAndUpdate(id, {
-    units: { weight, height, bodyMeasurement },
+    units: { weight, height, bodyMeasurement, distance },
   });
   revalidatePath("/dashboard/profile");
   return { success: "Units saved" };

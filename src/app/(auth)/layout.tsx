@@ -14,7 +14,7 @@ export default async function AuthLayout({
   if (!user) {
     return redirect("/auth/login");
   }
-  console.log("user", user);
+
   return (
     <>
       <div className="min-h-screen bg-[#2a2522] text-white">
@@ -26,7 +26,7 @@ export default async function AuthLayout({
         />
 
         {/* Main Navigation Tabs */}
-        <DashboardNav />
+        <DashboardNav role={user.role} />
         <main className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {children}
         </main>

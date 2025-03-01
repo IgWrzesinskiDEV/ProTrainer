@@ -41,7 +41,7 @@ export default function PlanSearchSelect({
 
       {isDropdownOpen && (
         <div className="absolute z-50 mt-2 w-full bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden">
-          <div className="max-h-60 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+          <div className="max-h-60 overflow-y-auto py-1 planScrollbar trainerDataSquareScrollbar">
             {workoutPlans.map((plan) => (
               <button
                 key={plan._id}

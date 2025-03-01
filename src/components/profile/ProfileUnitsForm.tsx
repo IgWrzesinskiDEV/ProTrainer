@@ -16,6 +16,7 @@ export default function ProfileUnitsForm() {
     height: "cm",
     weight: "kg",
     bodyMeasurement: "cm",
+    distance: "km",
   });
   const [formState, formAction, isPending] = useActionState(
     saveProfileUnits,
@@ -69,10 +70,15 @@ export default function ProfileUnitsForm() {
                     <option value="cm">Centimeters (cm)</option>
                     <option value="ft">Feet (ft)</option>
                   </>
-                ) : (
+                ) : unit === "bodyMeasurement" ? (
                   <>
                     <option value="cm">Centimeters (cm)</option>
                     <option value="in">Inches (in)</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="km">Kilometers (km)</option>
+                    <option value="mi">Miles (mi)</option>
                   </>
                 )}
               </select>

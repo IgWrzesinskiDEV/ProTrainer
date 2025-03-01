@@ -1,13 +1,15 @@
 "use client";
 
-import { ISingleMeasurement } from "@/lib/models/measurement.model";
+import type React from "react";
+
+import type { ISingleMeasurement } from "@/lib/models/measurement.model";
 import CustomPopper from "../UI/Popper";
 import TablePaginationComponent from "./TablePagination";
 import { IoMdArrowDropup } from "react-icons/io";
 import camelize from "@/utils/camelizeString";
 import { cn } from "@/lib/twMergeUtill";
 import { useState } from "react";
-import { unitsInterface } from "@/interfaces/user/IUser";
+import type { unitsInterface } from "@/interfaces/user/IUser";
 
 export default function MeasurementsTable({
   TABLE_HEAD,
@@ -18,7 +20,6 @@ export default function MeasurementsTable({
   TABLE_HEAD: string[];
   measurementsData: string;
   units: string;
-
   role:
     | { roleName: "trainer" }
     | { roleName: "client"; deleteHandler: (id: string) => void };
@@ -83,14 +84,14 @@ export default function MeasurementsTable({
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-lg">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100 dark:bg-gray-700">
+            <tr className="bg-blue-900/30">
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="p-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                  className="p-4 text-left text-xs font-semibold text-blue-300 uppercase tracking-wider cursor-pointer border-b border-blue-800 transition-colors duration-200 hover:bg-blue-800/30"
                   onClick={() => handleSortClick(head)}
                 >
                   <div className="flex items-center">
@@ -98,7 +99,7 @@ export default function MeasurementsTable({
                     {sort.keyToSort === camelize(head) && (
                       <IoMdArrowDropup
                         className={cn(
-                          "ml-1",
+                          "ml-1 text-blue-400 transition-transform duration-200",
                           sort.order === "desc" && "rotate-180"
                         )}
                       />
@@ -108,7 +109,7 @@ export default function MeasurementsTable({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="bg-gray-800 divide-y divide-gray-700">
             {(rowsPerPage > 0
               ? sortedArray.slice(
                   page * rowsPerPage,
@@ -120,43 +121,48 @@ export default function MeasurementsTable({
                 <CustomPopper
                   isDelete
                   onPopperClickHandler={role.deleteHandler}
-                  trClassName="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                  trClassName="hover:bg-blue-900/10 transition-all duration-200"
                   key={data._id}
                   id={data._id}
                 >
                   {Object.keys(data)
                     .filter((measurementData) => measurementData !== "_id")
                     .map((key) => (
-                      <td
-                        className="p-3 text-sm text-gray-700 dark:text-gray-300"
-                        key={key}
-                      >
-                        {data[key as keyof typeof data]}{" "}
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {key === "weight" && userUnits.weight}
-                          {key !== "weight" &&
-                            key !== "date" &&
-                            userUnits.bodyMeasurement}
-                        </span>
+                      <td className="p-4 text-sm text-gray-300" key={key}>
+                        <div className="flex items-baseline">
+                          <span className="font-medium">
+                            {data[key as keyof typeof data]}
+                          </span>{" "}
+                          <span className="ml-1 text-xs text-gray-400">
+                            {key === "weight" && userUnits.weight}
+                            {key !== "weight" &&
+                              key !== "date" &&
+                              userUnits.bodyMeasurement}
+                          </span>
+                        </div>
                       </td>
                     ))}
                 </CustomPopper>
               ) : (
-                <tr key={data._id}>
+                <tr
+                  key={data._id}
+                  className="hover:bg-blue-900/10 transition-all duration-200"
+                >
                   {Object.keys(data)
                     .filter((measurementData) => measurementData !== "_id")
                     .map((key) => (
-                      <td
-                        className="p-3 text-sm text-gray-700 dark:text-gray-300"
-                        key={key}
-                      >
-                        {data[key as keyof typeof data]}{" "}
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {key === "weight" && userUnits.weight}
-                          {key !== "weight" &&
-                            key !== "date" &&
-                            userUnits.bodyMeasurement}
-                        </span>
+                      <td className="p-4 text-sm text-gray-300" key={key}>
+                        <div className="flex items-baseline">
+                          <span className="font-medium">
+                            {data[key as keyof typeof data]}
+                          </span>{" "}
+                          <span className="ml-1 text-xs text-gray-400">
+                            {key === "weight" && userUnits.weight}
+                            {key !== "weight" &&
+                              key !== "date" &&
+                              userUnits.bodyMeasurement}
+                          </span>
+                        </div>
                       </td>
                     ))}
                 </tr>
@@ -164,13 +170,24 @@ export default function MeasurementsTable({
             })}
             {emptyRows > 0 && (
               <tr>
-                <td colSpan={TABLE_HEAD.length} className="p-3" />
+                <td colSpan={TABLE_HEAD.length} className="p-4" />
+              </tr>
+            )}
+            {sortedArray.length === 0 && (
+              <tr>
+                <td
+                  colSpan={TABLE_HEAD.length}
+                  className="p-8 text-center text-gray-400"
+                >
+                  No measurements found. Add your first measurement to start
+                  tracking your progress.
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <div className="mt-4">
+      <div className="mt-6">
         <TablePaginationComponent
           TABLE_HEAD={TABLE_HEAD}
           TABLE_ROWS={sortedArray}

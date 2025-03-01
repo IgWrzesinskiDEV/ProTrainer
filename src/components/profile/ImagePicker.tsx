@@ -2,7 +2,13 @@
 
 import { useRef, useState } from "react";
 import { Avatar } from "@mui/material";
-export default function ImagePicker({ name }: { name: string }) {
+export default function ImagePicker({
+  name,
+  avatarFileName,
+}: {
+  name: string;
+  avatarFileName?: string;
+}) {
   const [pickedImage, setPickedImage] = useState<string | ArrayBuffer | null>();
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -34,12 +40,16 @@ export default function ImagePicker({ name }: { name: string }) {
       <div className="relative mb-4">
         <div className="h-32 w-32 rounded-full overflow-hidden bg-gray-600 flex items-center justify-center">
           <Avatar
-            src={(pickedImage as string) || undefined}
-            alt="The image selected by the user."
+            src={
+              (pickedImage as string) ||
+              `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${avatarFileName}` ||
+              undefined
+            }
             className="h-full w-full text-gray-300 bg-[#4B5563] "
           />
         </div>
         <button
+          type="button"
           onClick={handlePickClick}
           className="absolute bottom-0 right-0 bg-[#2673e8] hover:bg-blue-600 text-white p-2 rounded-full shadow-lg transition-colors duration-200"
         >

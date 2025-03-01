@@ -1,8 +1,6 @@
-import ProfileWrapper from "../../profile/ProfileWrapper";
 import { getTrainerById } from "@/utils/data/getTrainers";
 import ProfileAvatar from "../../UI/ProfileAvatar";
 import {
-  LuUser,
   LuMail,
   LuBriefcase,
   LuAward,
@@ -12,22 +10,19 @@ import {
   LuGraduationCap,
   LuLanguages,
   LuStar,
+  LuArrowLeft,
 } from "react-icons/lu";
 import { PiCertificate } from "react-icons/pi";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa6";
-
 import { InfoSection } from "./InfoSection";
 import SocialLink from "./SocialLink";
 import AddTrainerButton from "./AddTrainerButton";
 import TrainerInfoColumn from "./TrainerInfoColumn";
-
-import { MdOutlineChevronLeft } from "react-icons/md";
-
 import { verifyAuth } from "@/lib/lucia/auth";
-
 import RemoveTrainerButton from "./RemoveTrainerButton";
 import Link from "next/link";
+
 export default async function SingleTrainer({
   params,
 }: {
@@ -37,13 +32,21 @@ export default async function SingleTrainer({
   const trainer = await getTrainerById(trainerId);
   const { user } = await verifyAuth();
   const currentTrainer = user?.currentTrainer;
+
   if (!trainer) {
     return (
-      <ProfileWrapper title="">
-        <div className="flex flex-col items-center gap-10">
-          <p className="text-white text-xl">Trainer not found</p>
-        </div>
-      </ProfileWrapper>
+      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6">
+        <div className="text-4xl text-gray-500">😕</div>
+        <h1 className="text-2xl font-semibold text-gray-300">
+          Trainer not found
+        </h1>
+        <Link
+          href="/dashboard/trainers"
+          className="text-blue-400 hover:text-blue-300 transition-colors duration-300"
+        >
+          Browse other trainers
+        </Link>
+      </div>
     );
   }
 
@@ -76,73 +79,83 @@ export default async function SingleTrainer({
   };
 
   return (
-    <ProfileWrapper title="" className="realtive">
-      {/* <BackToLink
-        href="/dashboard/trainers"
-        className="items-center gap-2 absolute top-2 left-2 px-4 py-2 text-sm font-medium text-white bg-[#18202F] rounded-lg transition-all duration-200 border border-white/20 hover:border-amber-500/30 backdrop-blur-sm"
-      >
-        Back to trainers
-      </BackToLink> */}
-      <div className="max-w-4xl mx-auto bg-gray-800 shadow-2xl rounded-lg  transition-all duration-300 hover:shadow-blue-400/10">
-        <div className="bg-[#3b82f6] relative text-white p-8 flex justify-start items-center">
+    <div className="max-w-5xl mx-auto">
+      <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-gray-700/50">
+        {/* Header Section */}
+        <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+          <div className="absolute inset-0 bg-blue-900/20 backdrop-blur-sm" />
+
+          {/* Back Button */}
           <Link
             href="/dashboard/trainers"
-            className="group absolute left-0 top-0 bottom-0 w-16 flex items-center justify-center bg-blue-700/30 hover:bg-blue-700/50 transition-all duration-300 border-r border-blue-400/20 hover:border-blue-400/30"
+            className="group absolute left-0 z-10 top-0 bottom-0 w-16 flex items-center justify-center 
+                     bg-blue-900/30 hover:bg-blue-900/50 transition-all duration-300 
+                     border-r border-blue-400/20"
           >
-            <MdOutlineChevronLeft className="text-4xl text-white/70 group-hover:text-white transition-all duration-300 transform group-hover:-translate-x-1" />
+            <LuArrowLeft
+              className="text-2xl text-white/70 group-hover:text-white 
+                                transition-all duration-300 transform group-hover:-translate-x-1"
+            />
           </Link>
-          <div className="ml-14">
-            <h2 className="text-4xl font-bold  capitalize flex items-center mb-4">
-              {profileDetails?.avatarFileName ? (
-                <ProfileAvatar
-                  fileName={profileDetails.avatarFileName}
-                  className="w-20 h-20 mr-4 border-2 border-gray-800 rounded-full"
-                />
-              ) : (
-                <LuUser className="w-20 h-20 mr-4" />
-              )}
-              {userName}
-              {currentTrainer === _id && (
-                <div className="flex gap-2">
-                  <span className="flex ml-3 items-center cursor-default justify-center gap-1.5 px-2.5 py-1 text-sm font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 rounded-full shadow-sm shadow-yellow-500/20 transition-all duration-300 hover:shadow-yellow-500/30 hover:scale-105">
-                    <FaRegStar className="w-4 h-4" />
-                    My trainer
-                  </span>
-                  <RemoveTrainerButton trainerId={trainerId} />
+
+          {/* Profile Header */}
+          <div className="relative p-8 pl-24">
+            <div className="flex items-start gap-6">
+              <ProfileAvatar
+                fileName={profileDetails?.avatarFileName}
+                size="large"
+                className="flex-shrink-0"
+              />
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-4 flex-wrap">
+                  <h1 className="text-4xl font-bold text-white">{userName}</h1>
+
+                  {currentTrainer === _id && (
+                    <div className="flex gap-3">
+                      <span
+                        className="flex items-center px-3 py-1.5 text-sm font-medium 
+                                   bg-gradient-to-r from-yellow-400 to-yellow-500 
+                                   text-gray-900 rounded-xl shadow-lg shadow-yellow-500/20 
+                                   transition-all duration-300 hover:shadow-yellow-500/30"
+                      >
+                        <FaRegStar className="w-4 h-4 mr-2" />
+                        Current Trainer
+                      </span>
+                      <RemoveTrainerButton trainerId={trainerId} />
+                    </div>
+                  )}
                 </div>
-              )}
-            </h2>
-            <a
-              className="text-xl flex w-fit items-center opacity-90 hover:text-gray-200 transition-colors duration-300"
-              href={`mailto:${email}`}
-            >
-              <LuMail className="mr-3" size={24} />
-              {email}
-            </a>
+
+                <a
+                  href={`mailto:${email}`}
+                  className="mt-3 inline-flex items-center text-lg text-white/80 
+                         hover:text-white transition-colors duration-300"
+                >
+                  <LuMail className="mr-2" />
+                  {email}
+                </a>
+              </div>
+            </div>
           </div>
-          {/* <div className="flex flex-col justify-between  items-center ml-auto gap-f">
-            <BackToLink
-              href="/dashboard/trainers"
-              className=" items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900/50 rounded-lg hover:bg-gray-900/70 transition-all duration-200 border border-yellow-500/20 hover:border-yellow-500/40 backdrop-blur-sm"
-            >
-              Back to trainers
-            </BackToLink>
-            <RemoveTrainerButton />
-          </div> */}
         </div>
-        <div className="p-8 bg-gray-900 bg-opacity-50">
+
+        {/* Content Section */}
+        <div className="p-8 bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-8">
+            {/* Left Column */}
+            <div className="space-y-6">
               <InfoSection
-                icon={<LuStar className="text-[#3b82f6]" size={24} />}
+                icon={<LuStar size={24} />}
                 title="Specialization"
                 content={
                   socialAndExpiriance?.specialization ||
                   "No specialization added yet"
                 }
               />
+
               <InfoSection
-                icon={<LuAward className="text-[#3b82f6]" size={24} />}
+                icon={<LuAward size={24} />}
                 title="Experience"
                 content={
                   socialAndExpiriance?.experience ||
@@ -150,15 +163,17 @@ export default async function SingleTrainer({
                 }
                 large
               />
+
               <InfoSection
-                icon={<PiCertificate className="text-[#3b82f6]" size={24} />}
+                icon={<PiCertificate size={24} />}
                 title="Certifications"
                 content={
                   certifications.length > 0 ? (
-                    <ul className="list-disc pl-5">
+                    <ul className="space-y-2">
                       {certifications.map((cert, index) => (
-                        <li key={index} className="text-gray-300">
-                          {cert}
+                        <li key={index} className="flex items-start">
+                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <span className="text-gray-300">{cert}</span>
                         </li>
                       ))}
                     </ul>
@@ -167,15 +182,17 @@ export default async function SingleTrainer({
                   )
                 }
               />
+
               <InfoSection
-                icon={<LuGraduationCap className="text-[#3b82f6]" size={24} />}
+                icon={<LuGraduationCap size={24} />}
                 title="Education"
                 content={
                   education.length > 0 ? (
-                    <ul className="list-disc pl-5">
+                    <ul className="space-y-2">
                       {education.map((edu, index) => (
-                        <li key={index} className="text-gray-300">
-                          {edu}
+                        <li key={index} className="flex items-start">
+                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <span className="text-gray-300">{edu}</span>
                         </li>
                       ))}
                     </ul>
@@ -185,16 +202,26 @@ export default async function SingleTrainer({
                 }
               />
             </div>
+
+            {/* Right Column */}
             <div className="space-y-8">
               <TrainerInfoColumn
                 InfoSections={[workingModes, services, languages]}
               />
 
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-200">
+              <div
+                className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 
+                           border border-gray-700/50 hover:border-blue-500/20 
+                           transition-all duration-300"
+              >
+                <h3 className="text-xl font-semibold mb-4 text-white flex items-center">
+                  <span className="p-2 bg-blue-500/10 rounded-xl mr-3 text-blue-400">
+                    <LuGlobe size={24} />
+                  </span>
                   Social Media
                 </h3>
-                <div className="flex space-x-4">
+
+                <div className="flex flex-wrap gap-3">
                   {socialAndExpirianceArray.length > 0 ? (
                     socialAndExpirianceArray.map(({ key, value }, index) => (
                       <SocialLink
@@ -202,33 +229,42 @@ export default async function SingleTrainer({
                         href={value}
                         icon={
                           {
-                            instagram: <LuInstagram size={24} />,
-                            facebook: <LuFacebook size={24} />,
-                            whatsapp: <FaWhatsapp size={24} />,
+                            instagram: <LuInstagram size={20} />,
+                            facebook: <LuFacebook size={20} />,
+                            whatsapp: <FaWhatsapp size={20} />,
                           }[key]
                         }
+                        label={`${key} profile`}
                       />
                     ))
                   ) : (
-                    <p className="text-gray-300 font-thin">
-                      No social media added yet
+                    <p className="text-gray-400 italic">
+                      No social media profiles added yet
                     </p>
                   )}
                 </div>
-                <div className="mt-12 flex justify-center">
-                  <AddTrainerButton
-                    trainerId={trainerId}
-                    isDisabled={!!currentTrainer}
-                    className={
-                      "bg-[#3b82f6] disabled:text-white/30 disabled:hover:scale-100 disabled:border-opacity-30 disabled:hover:shadow-none disabled:bg-transparent border border-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              </div>
+
+              <div className="flex justify-center pt-6">
+                <AddTrainerButton
+                  trainerId={trainerId}
+                  isDisabled={!!currentTrainer}
+                  className={`
+                    relative overflow-hidden
+                    px-8 py-3 rounded-xl text-lg font-medium
+                    transition-all duration-300 transform
+                    ${
+                      currentTrainer
+                        ? "bg-gray-800 text-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5 active:translate-y-0"
                     }
-                  />
-                </div>
+                  `}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </ProfileWrapper>
+    </div>
   );
 }
