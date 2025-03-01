@@ -22,7 +22,6 @@ export default async function ClientPlansPage({
   );
 }
 
-// const clientData: ClientInfo = {
 //   username: "JaneDoe123",
 //   email: "jane.doe@example.com",
 //   bio: "Fitness enthusiast, yoga lover, and aspiring marathon runner. Always striving to be the best version of myself!",

@@ -2,44 +2,65 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { LuDumbbell, LuRuler, LuUser } from "react-icons/lu";
+import { motion } from "framer-motion";
 
 export default function ClientNav({ clientId }: { clientId: string }) {
   const activeTab = usePathname().split("/").pop();
+
+  const navItems = [
+    {
+      href: `/dashboard/clients/${clientId}/info`,
+      icon: LuUser,
+      label: "Basic Info",
+      isActive: activeTab === "info",
+      className: "rounded-l-xl",
+    },
+    {
+      href: `/dashboard/clients/${clientId}/measurements`,
+      icon: LuRuler,
+      label: "Measurements",
+      isActive: activeTab === "measurements",
+    },
+    {
+      href: `/dashboard/clients/${clientId}/plans`,
+      icon: LuDumbbell,
+      label: "Workout Plans",
+      isActive: activeTab === "plans",
+      className: "rounded-r-xl",
+    },
+  ];
+
   return (
-    <nav className="flex mb-8">
-      <Link
-        href={`/dashboard/clients/${clientId}/info`}
-        className={`flex items-center px-4 py-2 rounded-tl-lg ${
-          activeTab === "info"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-        }`}
-      >
-        <LuUser className="w-5 h-5 mr-2" />
-        Basic Info
-      </Link>
-      <Link
-        href={`/dashboard/clients/${clientId}/measurements`}
-        className={`flex items-center px-4 py-2 ${
-          activeTab === "measurements"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-        }`}
-      >
-        <LuRuler className="w-5 h-5 mr-2" />
-        Measurements
-      </Link>
-      <Link
-        href={`/dashboard/clients/${clientId}/plans`}
-        className={`flex items-center px-4 py-2 rounded-tr-lg ${
-          activeTab === "plans"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-        }`}
-      >
-        <LuDumbbell className="w-5 h-5 mr-2" />
-        Workout Plans
-      </Link>
+    <nav className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-0">
+      {navItems.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={`
+            relative flex items-center gap-2 flex-1
+            px-4 py-3 sm:py-4 text-sm sm:text-base
+            transition-all duration-300
+            ${item.className || ""}
+            ${
+              item.isActive
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
+            }
+          `}
+        >
+          <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="hidden sm:inline">{item.label}</span>
+          <span className="sm:hidden">{item.label.split(" ")[0]}</span>
+
+          {item.isActive && (
+            <motion.div
+              layoutId="activeTab"
+              className="absolute inset-0 bg-blue-500 -z-10"
+              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+            />
+          )}
+        </Link>
+      ))}
     </nav>
   );
 }
