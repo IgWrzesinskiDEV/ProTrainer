@@ -160,7 +160,7 @@ export default function ClientPreview({
     <Link
       href={`/dashboard/clients/${client._id}/info`}
       key={client._id}
-      className={containerClasses}
+      className={containerClasses + " block"}
     >
       {content}
     </Link>

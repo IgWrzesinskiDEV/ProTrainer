@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { LuSearch } from "react-icons/lu";
-import ProfileWrapper from "../../profile/ProfileWrapper";
+
 import ClientPreview from "../clients/ClientPreview";
 import { IClientPreview } from "@/interfaces/clients/IClient";
 import { acceptInvite, declineInvite } from "@/actions/trainers.actions";
+
+import { RiUserAddLine } from "react-icons/ri";
+import { motion } from "framer-motion";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import ListWraper from "@/components/UI/list/ListWraper";
+
 export default function InviteList({
   clientsInvitations,
 }: {
@@ -19,30 +24,58 @@ export default function InviteList({
   );
 
   return (
-    <ProfileWrapper title="Invites" className="rounded-tr-none relative z-10">
-      <div className="flex flex-col items-center gap-10 w-full">
-        <div className="relative w-full max-w-md">
-          <input
-            type="text"
-            className="w-full px-4 py-2 pl-10 text-sm text-white  bg-gray-800 border border-gray-700 rounded-full focus:outline-none outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.currentTarget.value)}
-            placeholder="Search invites..."
-          />
-          <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-        </div>
-        <div className="flex flex-wrap gap-5 flex-1 justify-center w-full">
+    <ListWraper
+      title="Client Invitations"
+      Icon={<AiOutlineUsergroupAdd className="text-blue-400" />}
+      text="Manage your pending client invitations"
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    >
+      {searchedClients.length > 0 ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+        >
           {searchedClients.map((client) => (
-            <ClientPreview
-              client={client}
+            <motion.div
               key={client._id}
-              isInvite={true}
-              onAccept={acceptInvite}
-              onDecline={declineInvite}
-            />
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ClientPreview
+                client={client}
+                isInvite
+                onAccept={acceptInvite}
+                onDecline={declineInvite}
+              />
+            </motion.div>
           ))}
-        </div>
-      </div>
-    </ProfileWrapper>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="flex flex-col items-center justify-center py-12 sm:py-16"
+        >
+          <div className="bg-slate-800/50 rounded-full p-4 mb-4">
+            <RiUserAddLine className="w-8 h-8 text-slate-400" />
+          </div>
+          <h3 className="text-lg sm:text-xl font-medium text-slate-300 mb-2">
+            No invitations found
+          </h3>
+          <p className="text-sm sm:text-base text-slate-400 text-center max-w-md">
+            {searchValue
+              ? "No invitations match your search. Try different keywords."
+              : "You don't have any pending invitations at the moment."}
+          </p>
+        </motion.div>
+      )}
+    </ListWraper>
   );
 }

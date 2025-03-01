@@ -1,19 +1,21 @@
-import * as React from "react";
+"use client";
+
+import type * as React from "react";
 import { Checkbox } from "@base-ui-components/react/checkbox";
 import { CheckboxGroup } from "@base-ui-components/react/checkbox-group";
 import { useState } from "react";
+
 interface IWorkingModes {
   onSite: boolean;
   online: boolean;
 }
+
 export default function LocationsCheckBoxes({
   workingModes,
 }: {
   workingModes: IWorkingModes;
 }) {
   const [values, setValues] = useState(workingModes);
-  const checkBoxClassName =
-    "flex size-5 items-center justify-center rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 data-[checked]:bg-blue-500 data-[unchecked]:border data-[unchecked]:border-gray-300";
 
   function handleChange(name: keyof IWorkingModes, checked: boolean) {
     setValues((prevValues) => ({
@@ -21,44 +23,50 @@ export default function LocationsCheckBoxes({
       [name]: checked,
     }));
   }
+
   return (
-    <CheckboxGroup
-      aria-labelledby="workingmodes-caption"
-      // defaultValue={result}
-      className="flex flex-col items-start gap-1 text-slate-200"
-    >
-      <p className="text-xl " id="workingmodes-caption">
-        Working modes
-      </p>
+    <div className="space-y-2 sm:space-y-3">
+      <h3 className="text-base sm:text-lg font-medium text-white">
+        Working Modes
+      </h3>
 
-      <label className="flex items-center gap-2">
-        <Checkbox.Root
-          name="onSite"
-          className={checkBoxClassName}
-          checked={values?.onSite || false}
-          onCheckedChange={(checked) => handleChange("onSite", checked)}
-        >
-          <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
-            <CheckIcon className="size-3" />
-          </Checkbox.Indicator>
-        </Checkbox.Root>
-        On-site
-      </label>
+      <CheckboxGroup
+        aria-labelledby="workingmodes-caption"
+        className="space-y-2.5 sm:space-y-3 bg-slate-800/30 p-3 sm:p-4 rounded-lg sm:rounded-xl border border-slate-700/50"
+      >
+        <label className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
+          <Checkbox.Root
+            name="onSite"
+            className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-md border border-slate-600 bg-slate-800 transition-all duration-200 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 data-[checked]:bg-blue-500 data-[checked]:border-blue-500"
+            checked={values?.onSite || false}
+            onCheckedChange={(checked) => handleChange("onSite", checked)}
+          >
+            <Checkbox.Indicator className="flex text-white data-[unchecked]:hidden">
+              <CheckIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+            </Checkbox.Indicator>
+          </Checkbox.Root>
+          <span className="text-sm sm:text-base text-white group-hover:text-blue-300 transition-colors duration-200">
+            On-site Training
+          </span>
+        </label>
 
-      <label className="flex items-center gap-2">
-        <Checkbox.Root
-          name="online"
-          className={checkBoxClassName}
-          checked={values?.online || false}
-          onCheckedChange={(checked) => handleChange("online", checked)}
-        >
-          <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
-            <CheckIcon className="size-3" />
-          </Checkbox.Indicator>
-        </Checkbox.Root>
-        Online
-      </label>
-    </CheckboxGroup>
+        <label className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
+          <Checkbox.Root
+            name="online"
+            className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-md border border-slate-600 bg-slate-800 transition-all duration-200 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 data-[checked]:bg-blue-500 data-[checked]:border-blue-500"
+            checked={values?.online || false}
+            onCheckedChange={(checked) => handleChange("online", checked)}
+          >
+            <Checkbox.Indicator className="flex text-white data-[unchecked]:hidden">
+              <CheckIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+            </Checkbox.Indicator>
+          </Checkbox.Root>
+          <span className="text-sm sm:text-base text-white group-hover:text-blue-300 transition-colors duration-200">
+            Online Coaching
+          </span>
+        </label>
+      </CheckboxGroup>
+    </div>
   );
 }
 
