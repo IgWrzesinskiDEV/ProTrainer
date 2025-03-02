@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-
-import logo from "/public/logos/b.png";
+import ProTrainerLogo from "@/components/UI/logo/ProTrainerLogo";
 
 export default function SignInLayout({
   children,
@@ -9,13 +7,18 @@ export default function SignInLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <nav className="flex  items-center pl-14  py-4 text-xl  border-b-2 border-stone-700 shadow-2xl  bg-background ">
-        <Link href="/" className="flex-shrink-0">
-          <Image src={logo} width={90} alt="Heavy dumbbel" />{" "}
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-900 to-black text-white">
+      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-800 bg-black/50 backdrop-blur-sm">
+        <Link href="/" className="flex items-center">
+          <ProTrainerLogo className="w-12 h-12" />
+          <span className="ml-2 text-xl font-bold hidden sm:inline-block">
+            ProTrainer
+          </span>
         </Link>
       </nav>
-      <main className="mt-5 lg:mt-12">{children}</main>
-    </>
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        {children}
+      </main>
+    </div>
   );
 }

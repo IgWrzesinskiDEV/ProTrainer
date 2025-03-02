@@ -1,10 +1,12 @@
-import { ComponentProps } from "react";
+import type React from "react";
+import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface AuthButtonProps extends ComponentProps<"button"> {
   children: React.ReactNode;
   className?: string;
 }
+
 export default function AuthButton({
   children,
   className,
@@ -14,7 +16,11 @@ export default function AuthButton({
     <button
       {...props}
       className={twMerge(
-        `py-2 text-xl hover:bg-blue-600 bg-blue-500 rounded-lg flex items-center justify-center w-full mx-auto mt-4 disabled:bg-opacity-0 disabled:border-stone-700 disabled:border-2 transition-all duration-150 `,
+        `relative py-3 px-6 text-base sm:text-lg font-medium bg-blue-600 hover:bg-blue-700 
+        active:bg-blue-800 rounded-lg flex items-center justify-center w-full 
+        transition-all duration-300 ease-in-out shadow-lg hover:shadow-blue-500/20
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900
+        disabled:bg-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed`,
         className
       )}
     >

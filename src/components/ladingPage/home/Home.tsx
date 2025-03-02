@@ -11,7 +11,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pt-20 lg:pt-0">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary-950 to-secondary-900 h-[85vh] -z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary-950 to-secondary-900 h-[109vh] -z-10"></div>
 
         <div className="container  mx-auto px-4 lg:min-h-[85vh] flex flex-col lg:flex-row items-center">
           <div className="pt-16 lg:pt-0 lg:w-1/2 z-30 text-center lg:text-left">
@@ -69,7 +69,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-sm text-gray-300">
+                <p className="text-sm text-primary-500">
                   Trusted by 1000+ fitness enthusiasts
                 </p>
               </div>
@@ -80,19 +80,19 @@ export default function Home() {
               {/* Main app screenshot */}
               <div className="relative z-10 rounded-xl overflow-hidden shadow-2xl border border-gray-800 animate-float">
                 <Image
-                  src={screen}
+                  src={screen || "/placeholder.svg"}
                   priority
                   alt="ProTrainer App"
                   width={400}
                   height={1000}
-                  className="w-full"
+                  className="w-full h-auto max-w-[280px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-full mx-auto"
                 />
               </div>
               {/* Decorative elements */}
-              <div className="absolute top-1/4 -left-10 w-20 h-20 bg-primary-500/20 rounded-full blur-xl"></div>
-              <div className="absolute bottom-1/3 -right-10 w-32 h-32 bg-primary-600/20 rounded-full blur-xl"></div>
+              <div className="absolute top-1/4 -left-10 w-20 h-20 bg-primary-500/20 rounded-full blur-xl hidden md:block"></div>
+              <div className="absolute bottom-1/3 -right-10 w-32 h-32 bg-primary-600/20 rounded-full blur-xl hidden md:block"></div>
               {/* Feature cards floating around */}
-              <div className="absolute -left-16 top-1/4 z-30 bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-white/20 w-40 animate-float">
+              <div className="absolute -left-16 top-1/4 z-30 bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-white/20 w-40 animate-float hidden md:flex">
                 <div className="flex items-center">
                   <div className="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center">
                     <svg
@@ -115,7 +115,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="absolute -right-12 bottom-1/3 z-30 bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-white/20 w-44 animate-float"
+                className="absolute -right-12 bottom-1/3 z-30 bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-white/20 w-44 animate-float hidden md:flex"
                 style={{ animationDelay: "2s" }}
               >
                 <div className="flex items-center">

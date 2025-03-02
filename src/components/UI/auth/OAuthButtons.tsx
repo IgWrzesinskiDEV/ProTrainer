@@ -1,10 +1,8 @@
 "use client";
-import { Button } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
-
 import { createGoogleAuthorizationURL } from "@/actions/oauth.actions";
-
 import { toast } from "react-toastify";
+
 export default function OAuthButtons({ isLogin }: { isLogin: boolean }) {
   async function signInWithGoogle() {
     const resData = await createGoogleAuthorizationURL();
@@ -26,14 +24,17 @@ export default function OAuthButtons({ isLogin }: { isLogin: boolean }) {
   }
 
   return (
-    <div className="flex items-center justify-center flex-col gap-7 w-1/6">
-      <Button
+    <div className="w-full max-w-md">
+      <button
         onClick={signInWithGoogle}
-        className="relative flex justify-center items-center border-2 border-stone-400 w-full bg-background text-white font-medium rounded-md  shadow-xl py-2"
+        type="button"
+        className="relative w-full flex justify-center items-center gap-2 bg-white/10 hover:bg-white/15 
+        text-white font-medium rounded-lg py-3 px-6 transition-all duration-300 
+        border border-gray-700 hover:border-gray-600 shadow-lg"
       >
-        <FcGoogle className="text-2xl absolute left-5  h-full" />
-        {isLogin ? "Login with Google" : "Sign up with Google"}
-      </Button>
+        <FcGoogle className="text-2xl" />
+        <span>{isLogin ? "Login with Google" : "Sign up with Google"}</span>
+      </button>
     </div>
   );
 }

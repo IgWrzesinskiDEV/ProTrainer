@@ -24,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className}  antialiased min-h-screen`}>
+      <body
+        className={` ${inter.className} scrollBarRectangle trainerDataSquareScrollbar antialiased min-h-screen`}
+      >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           {children}
         </AppRouterCacheProvider>

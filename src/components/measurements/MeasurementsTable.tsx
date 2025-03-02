@@ -98,10 +98,10 @@ export default function MeasurementsTable({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-xl border border-gray-700/50">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse overflow-hidden">
+    <div className="space-y-6 ">
+      <div className="relative overflow-hidden  rounded-xl border border-gray-700/50">
+        <div className="overflow-x-auto planScrollbar">
+          <table className="w-full border-collapse  overflow-hidden">
             {/* Table Header */}
             <thead>
               <tr className="bg-gradient-to-r from-blue-900/30 to-blue-800/20">
@@ -138,7 +138,7 @@ export default function MeasurementsTable({
             </thead>
 
             {/* Table Body */}
-            <tbody className="divide-y divide-gray-700/50">
+            <tbody className="divide-y  divide-gray-700/50">
               <AnimatePresence mode="wait">
                 {(rowsPerPage > 0
                   ? sortedArray.slice(

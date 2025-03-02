@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? "bg-white/95 backdrop-blur-sm shadow-md py-3"
           : "bg-transparent py-5"
       }`}
@@ -35,7 +35,9 @@ export default function Navbar() {
           <ProTrainerLogo className="w-10 h-10" />
           <span
             className={`text-xl font-bold ${
-              isScrolled ? "text-secondary-900" : "text-white"
+              isScrolled || isMobileMenuOpen
+                ? "text-secondary-900"
+                : "text-white"
             }`}
           >
             ProTrainer
@@ -99,7 +101,7 @@ export default function Navbar() {
               className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke={isScrolled ? "currentColor" : "white"}
+              stroke="black"
             >
               <path
                 strokeLinecap="round"
@@ -114,7 +116,7 @@ export default function Navbar() {
               className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke={isScrolled ? "currentColor" : "white"}
+              stroke={isScrolled ? "black" : "white"}
             >
               <path
                 strokeLinecap="round"
@@ -137,7 +139,7 @@ export default function Navbar() {
             >
               Home
             </Link>
-            <Link
+            {/* <Link
               href="/pricing"
               className="font-medium text-secondary-800 hover:text-primary-600"
             >
@@ -148,7 +150,7 @@ export default function Navbar() {
               className="font-medium text-secondary-800 hover:text-primary-600"
             >
               About us
-            </Link>
+            </Link> */}
             <hr className="border-gray-200" />
             <Link
               href="/login"
