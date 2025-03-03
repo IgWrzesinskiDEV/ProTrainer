@@ -15,7 +15,9 @@ export default function MeasurementWrapper({
   measurements: string;
   units: string;
 }) {
-  const measurementsData: ISingleMeasurement[] = JSON.parse(measurements);
+  const measurementsData: ISingleMeasurement[] = measurements
+    ? JSON.parse(measurements)
+    : [];
 
   const hasData = measurementsData && measurementsData.length > 0;
   const sortedMeasurmentsByDate = measurementsData.sort(
@@ -102,16 +104,18 @@ export default function MeasurementWrapper({
       )}
 
       {/* Table Section */}
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
-        <div className="p-4 sm:p-6">
-          <MeasurementsTable
-            measurementsData={measurements}
-            units={units}
-            TABLE_HEAD={TABLE_HEAD}
-            role={{ roleName: "trainer" }}
-          />
+      {hasData && (
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
+          <div className="p-4 sm:p-6">
+            <MeasurementsTable
+              measurementsData={measurements}
+              units={units}
+              TABLE_HEAD={TABLE_HEAD}
+              role={{ roleName: "trainer" }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Empty State */}
       {!hasData && (

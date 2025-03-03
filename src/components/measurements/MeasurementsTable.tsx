@@ -57,7 +57,7 @@ export default function MeasurementsTable({
     }
   };
 
-  const rawTableRows = JSON.parse(measurementsData);
+  const rawTableRows = measurementsData ? JSON.parse(measurementsData) : [];
   const sortedArray = getSortedArray(rawTableRows);
   const userUnits: unitsInterface = JSON.parse(units);
 
@@ -233,8 +233,9 @@ export default function MeasurementsTable({
                             No measurements found
                           </p>
                           <p className="text-sm text-gray-500">
-                            Add your first measurement to start tracking
-                            progress
+                            {role.roleName === "client"
+                              ? "Add your first measurement to start tracking progress"
+                              : " No measurements recorded yet"}
                           </p>
                         </div>
                       </div>

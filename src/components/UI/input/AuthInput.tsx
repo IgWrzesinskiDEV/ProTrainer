@@ -4,9 +4,15 @@ import { twMerge } from "tailwind-merge";
 interface InputProps extends ComponentProps<"input"> {
   label: string;
   className?: string;
+  name: string;
 }
 
-export default function AuthInput({ label, className, ...props }: InputProps) {
+export default function AuthInput({
+  label,
+  name,
+  className,
+  ...props
+}: InputProps) {
   return (
     <div className="w-full">
       <label className="block text-sm font-medium text-gray-300 mb-1 capitalize">
@@ -14,7 +20,7 @@ export default function AuthInput({ label, className, ...props }: InputProps) {
       </label>
       <input
         {...props}
-        name={label}
+        name={name}
         placeholder={`Enter your ${label}`}
         className={twMerge(
           `w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg 

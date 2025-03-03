@@ -1,5 +1,5 @@
 "use client";
-import Input from "../Input";
+
 import AuthButton from "./AuthButton";
 import { signup, login } from "@/actions/auth.actions";
 import { useActionState } from "react";
@@ -21,10 +21,20 @@ export default function AuthForm() {
   return (
     <form action={formAction} className="w-full max-w-md space-y-4">
       {!isLogin && (
-        <AuthInput label="username" type="text" disabled={isPending} />
+        <AuthInput
+          label="username"
+          name="username"
+          type="text"
+          disabled={isPending}
+        />
       )}
-      <AuthInput label="email" type="text" disabled={isPending} />
-      <AuthInput label="password" type="password" disabled={isPending} />
+      <AuthInput label="email" name="email" type="text" disabled={isPending} />
+      <AuthInput
+        label="password"
+        name="password"
+        type="password"
+        disabled={isPending}
+      />
 
       {formState?.errors && formState.errors.length > 0 && (
         <div className="bg-red-900/30 border border-red-800 rounded-lg p-3">

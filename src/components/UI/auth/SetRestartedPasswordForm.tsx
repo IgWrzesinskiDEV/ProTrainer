@@ -1,8 +1,6 @@
 "use client";
 
-import Input from "../Input";
 import { useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -11,6 +9,7 @@ import AuthButton from "./AuthButton";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { redirect } from "next/navigation";
 import { toastify } from "../Toastify";
+import AuthInput from "../input/AuthInput";
 
 const initialState = { error: [] as string[], success: "" };
 
@@ -27,15 +26,14 @@ export default function SetRestartedPasswordForm() {
   useEffect(() => {
     if (formState?.success) {
       toastify(
-        <div className="flex items-center gap-2">
-          <RiLockPasswordFill className="text-blue-500  text-7xl" />
-          <div className="flex flex-col gap-1">
-            <h2 className="text-xl">
-              Your password has been successfully updated
+        <div className="flex items-center gap-3">
+          <RiLockPasswordFill className="text-blue-400 text-3xl flex-shrink-0" />
+          <div>
+            <h2 className="text-lg font-medium">
+              Password updated successfully
             </h2>
-            <p className="text-sm text-stone-400 font-normal">
-              You will be redirected to profile page in{" "}
-              <strong className="font-bold">3s</strong>
+            <p className="text-sm text-gray-400">
+              Redirecting to profile in <span className="font-bold">3s</span>
             </p>
           </div>
         </div>,
@@ -48,33 +46,57 @@ export default function SetRestartedPasswordForm() {
   }, [formState?.success]);
 
   return (
-    <>
-      <form className="flex flex-col gap-6 w-1/6" action={formAction}>
-        <Input
-          label="Old password"
-          name="oldPassword"
-          type="password"
-          disabled={isPending}
-        />
-        <Input label="password" type="password" disabled={isPending} />
-        <Input
-          label="Confirm Password"
-          name="confirmPassword"
-          type="password"
-          disabled={isPending}
-        />
+    <form className="w-full max-w-md space-y-4" action={formAction}>
+      <AuthInput
+        label="old password"
+        name="oldPassword"
+        type="password"
+        disabled={isPending}
+      />
 
-        {formState?.errors && (
-          <ul className="flex flex-col gap-2 text-red-500">
+      <AuthInput
+        label="password"
+        name="password"
+        type="password"
+        disabled={isPending}
+      />
+
+      <AuthInput
+        label="confirm password"
+        name="confirmPassword"
+        type="password"
+        disabled={isPending}
+      />
+
+      {formState?.errors && formState.errors.length > 0 && (
+        <div className="bg-red-900/30 border border-red-800 rounded-lg p-3">
+          <ul className="text-red-400 text-sm space-y-1">
             {formState.errors.map((error, index) => (
-              <li key={index}>{error}</li>
+              <li key={index} className="flex items-start">
+                <span className="mr-2">•</span>
+                <span>{error}</span>
+              </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      <AuthButton disabled={isPending} type="submit">
+        {!isPending ? (
+          "Set new password"
+        ) : (
+          <div className="flex items-center justify-center">
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            <span>Updating...</span>
+          </div>
         )}
-        <AuthButton disabled={isPending} type="submit">
-          {!isPending ? "Set new password" : <CircularProgress size={25} />}
-        </AuthButton>
-      </form>
-    </>
+      </AuthButton>
+    </form>
   );
 }
+
+// const [formState, formAction, isPending] = useActionState(
+//   (prevState: unknown, formData: FormData) =>
+//     CreateNewPassword(prevState, formData, token),
+//   initialState
+// );

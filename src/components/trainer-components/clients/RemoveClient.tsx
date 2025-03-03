@@ -6,7 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { removeTrainer } from "@/actions/trainers.actions";
 import { RiUserMinusLine } from "react-icons/ri";
 import CustomToastContent from "@/components/UI/toastify/CustomToast";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function RemoveClient({ clientId }: { clientId: string }) {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -28,15 +28,15 @@ export default function RemoveClient({ clientId }: { clientId: string }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={handleClick}
         onMouseLeave={() => setShowConfirm(false)}
         disabled={isPending}
         className={`
-          relative group flex items-center gap-2
-          px-4 py-2.5 sm:px-5 sm:py-3
+          relative group flex items-center gap-2 w-52
+          px-4 py-2.5 sm:px-5 sm:py-3 justify-center
           text-sm sm:text-base font-medium
           rounded-xl overflow-hidden
           transition-all duration-300
@@ -74,30 +74,6 @@ export default function RemoveClient({ clientId }: { clientId: string }) {
       </motion.button>
 
       {/* Confirmation Tooltip */}
-      <AnimatePresence>
-        {showConfirm && !isPending && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute left-1/2 -translate-x-1/2 -top-12
-                     px-3 py-2 
-                     bg-blue-500 
-                     rounded-lg shadow-lg
-                     border border-blue-400/20"
-          >
-            <p className="text-white text-sm whitespace-nowrap">
-              Click again to confirm
-            </p>
-            <div
-              className="absolute left-1/2 -translate-x-1/2 -bottom-1 
-                          w-2 h-2 
-                          bg-blue-500 
-                          rotate-45"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
