@@ -17,7 +17,7 @@ export default function TrainerPreview({ trainer }: { trainer: ITrainer }) {
     <Link
       href={`/dashboard/trainers/${trainer._id}`}
       key={trainer._id}
-      className="group relative bg-gradient-to-b from-gray-800/80 to-gray-900/80 backdrop-blur-sm 
+      className="group relative bg-gradient-to-b from-gray-800/80 to-gray-900/80 
                  rounded-2xl overflow-hidden shadow-lg border border-gray-800/50
                  hover:border-blue-500/30 hover:shadow-blue-500/20 hover:-translate-y-1
                  transition-all duration-300 flex flex-col"

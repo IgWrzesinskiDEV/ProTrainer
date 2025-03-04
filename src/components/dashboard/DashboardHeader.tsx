@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { profileDetailsInterface } from "@/interfaces/user/IUser";
+import type { profileDetailsInterface } from "@/interfaces/user/IUser";
 import ProfileAvatar from "../UI/ProfileAvatar";
 import { cn } from "@/lib/twMergeUtill";
 import { IUserRole } from "@/lib/models/user.model";
@@ -19,28 +19,33 @@ export default function DashboardHeader({
 }) {
   return (
     <header className="bg-[#1e1b19] shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left section with logo and user info */}
-          <div className="flex items-center space-x-8">
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <ProTrainerLogo className="w-auto h-10" />
+          <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-8">
+            {/* Logo - hidden on smallest screens */}
+            <Link href="/" className="flex-shrink-0 hidden sm:block">
+              <ProTrainerLogo className="w-auto h-8 sm:h-10" />
             </Link>
-            <div className="h-8 w-px bg-gray-700" /> {/* Vertical divider */}
+            {/* Mobile logo - smaller version for mobile */}
+            <Link href="/" className="flex-shrink-0 sm:hidden">
+              <ProTrainerLogo className="w-auto h-7" />
+            </Link>
+            <div className="h-8 w-px bg-gray-700 hidden sm:block" />{" "}
+            {/* Vertical divider - hidden on mobile */}
             {/* User info */}
-            <div className="flex items-center space-x-4">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden bg-gray-600">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-full overflow-hidden bg-gray-600">
                 <ProfileAvatar
                   fileName={profileDetails?.avatarFileName}
                   className="h-full w-full bg-gray-500 flex items-center justify-center"
                 />
               </div>
               <div className="flex flex-col">
-                <h1 className="text-base font-semibold leading-tight">
+                <h1 className="text-sm sm:text-base font-semibold leading-tight truncate max-w-[150px] sm:max-w-full">
                   {profileDetails?.fullName || userName}
                 </h1>
-                <p className="text-sm font-thin text-gray-400">
+                <p className="text-xs sm:text-sm font-thin text-gray-400">
                   {role.charAt(0) + role.slice(1).toLowerCase()}
                 </p>
               </div>
@@ -50,10 +55,10 @@ export default function DashboardHeader({
           {/* Right section */}
           <div className="flex items-center space-x-4">
             {/* Notifications */}
-            <button className="p-2 rounded-full hover:bg-[#2a2522] transition-colors duration-200">
+            <button className="p-1.5 sm:p-2 rounded-full hover:bg-[#2a2522] transition-colors duration-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-300"
+                className="h-5 w-5 sm:h-6 sm:w-6 text-gray-300"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -74,13 +79,13 @@ export default function DashboardHeader({
                 }
                 title={currentTrainer ? "View Details" : "No Trainer Assigned"}
                 className={cn(
-                  "bg-[#c27c3d] hover:bg-[#d68c4d] text-white px-4 py-2 rounded-md transition-colors duration-200 flex items-center",
+                  "bg-[#c27c3d] hover:bg-[#d68c4d] text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md transition-colors duration-200 flex items-center text-xs sm:text-sm",
                   !currentTrainer && "pointer-events-none opacity-50"
                 )}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2"
+                  className="h-5 w-5   sm:mr-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -90,10 +95,36 @@ export default function DashboardHeader({
                     clipRule="evenodd"
                   />
                 </svg>
-                My Trainer
+                <span className="hidden sm:block">My Trainer</span>
               </Link>
             )}
-            <LogoutButton />
+
+            {/* Mobile-optimized logout button */}
+            <div className="hidden sm:block">
+              <LogoutButton />
+            </div>
+
+            {/* Mobile logout icon only */}
+            <button
+              className="sm:hidden p-1.5 rounded-md bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white transition-all duration-200"
+              title="Logout"
+              //onClick={logout}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

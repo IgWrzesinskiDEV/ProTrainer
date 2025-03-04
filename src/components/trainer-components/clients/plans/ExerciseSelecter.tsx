@@ -24,6 +24,8 @@ interface ExerciseSelectorProps {
   ) => void;
   weekDay: WeekDays;
   availableExercises: ExerciseDetailsShort[];
+  inputClassName?: string;
+  labelClassName?: string;
 }
 
 export default function ExerciseSelecter({
@@ -32,6 +34,8 @@ export default function ExerciseSelecter({
   updateExercise,
   availableExercises,
   weekDay,
+  inputClassName,
+  labelClassName,
 }: ExerciseSelectorProps) {
   //     getInputProps,
   //     getPopupIndicatorProps,
@@ -105,10 +109,7 @@ export default function ExerciseSelecter({
   return (
     <div ref={wrapperRef}>
       <>
-        <div
-          ref={anchorRef}
-          className="relative  bg-slate-700 z-0 flex items-center gap-2"
-        >
+        <div ref={anchorRef} className="relative   z-0 flex items-center gap-2">
           <InputFloatingLabel
             forHTMLLabel={`${weekDay}-${exerciseNumber}-exerciseName`}
             label="Exercise name"
@@ -123,7 +124,9 @@ export default function ExerciseSelecter({
               //   setSelectedExercise(null);
               // }
             }}
-          />
+            classNameAdded={inputClassName + ""}
+            classNameLabel={labelClassName}
+          ></InputFloatingLabel>
 
           {isPreDefinedExercise() && (
             <ExerciseDetailsLink exerciseId={preDefinedExerciseId} />

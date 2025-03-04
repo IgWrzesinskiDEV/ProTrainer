@@ -41,6 +41,14 @@
     background: linear-gradient(90deg, #1e3a8a, #2563eb);
     /* Darker gradient on hover */
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
 :root {

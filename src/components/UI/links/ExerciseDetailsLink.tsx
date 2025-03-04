@@ -14,7 +14,7 @@ export default function ExerciseDetailsLink({
     <Link
       href={`/dashboard/exercises/${exerciseId}`}
       className={cn(
-        "flex-shrink-0 p-2 hover:bg-slate-600 rounded-full transition-colors",
+        "block absolute top-1/2 -translate-y-1/2 right-1 z-50 p-1.5 hover:bg-slate-600 rounded-full transition-colors",
         className
       )}
       title="View exercise details"

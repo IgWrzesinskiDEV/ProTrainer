@@ -5,12 +5,14 @@ interface InputFloatingLabelProps
   label: string;
   forHTMLLabel: string;
   classNameAdded?: string;
+  classNameLabel?: string;
 }
 
 export default function InputFloatingLabel({
   label,
   forHTMLLabel,
   classNameAdded,
+  classNameLabel,
   ...props
 }: InputFloatingLabelProps) {
   return (
@@ -29,7 +31,10 @@ export default function InputFloatingLabel({
       />
       <label
         htmlFor={forHTMLLabel}
-        className="absolute select-none font-thin text-nowrap cursor-text text-gray-400  duration-300 transform  -translate-y-5 scale-75 top-2 z-0 origin-[0]   px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+        className={cn(
+          "absolute select-none font-thin text-nowrap cursor-text text-gray-400  duration-300 transform ml-1 -translate-y-5 scale-75 top-2 z-0 origin-[0]   px-1 peer-focus:px-1 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1",
+          classNameLabel
+        )}
       >
         {label}
       </label>

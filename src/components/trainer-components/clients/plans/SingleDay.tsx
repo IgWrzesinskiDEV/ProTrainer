@@ -17,7 +17,7 @@ import {
 import RestDayCheckBox from "@/components/UI/workoutPlans/RestDayCheckBox";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveSingleDayExercises } from "@/actions/trainerClients.actions";
-import { LuPlus, LuChevronDown, LuChevronUp } from "react-icons/lu";
+import { LuPlus, LuChevronDown, LuChevronUp, LuSave } from "react-icons/lu";
 import ButtonWithLoading from "@/components/UI/Buttons/ButtonWithLoading";
 import ExerciseActions from "./ExerciseActions";
 import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
@@ -25,6 +25,7 @@ import SaveChangesToast from "@/components/UI/toastify/SaveChangesToast";
 import { toastify } from "@/components/UI/Toastify";
 
 import ExerciseSelecter from "./ExerciseSelecter";
+
 export interface ExerciseDe {
   id: number;
   name: string;
@@ -38,6 +39,7 @@ export interface ExerciseDe {
 const initialState = {
   errors: [],
 };
+
 export default function SingleDay({
   day,
   availableExercisesNamesList,
@@ -50,16 +52,13 @@ export default function SingleDay({
   useEffect(() => {
     setSingleDay(day);
     setRestDay(day.isRestDay);
-  }, [selectedPlan, day]);
-  const [expandedDay, setExpandedDay] = useState<WeekDays | null>(null);
+  }, [day]);
 
+  const [expandedDay, setExpandedDay] = useState<WeekDays | null>(null);
   const [singleDay, setSingleDay] = useState<WorkoutDay>(day);
   const [restDay, setRestDay] = useState<boolean>(singleDay.isRestDay);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, startTransition] = useTransition();
-  if (singleDay.weekDay === "Monday") {
-    console.log(singleDay, "singleDay");
-  }
 
   const [saveSingleDayState, saveSingleDayAction, pending] = useActionState(
     () => saveSingleDayExercises(singleDay, selectedPlan._id),
@@ -104,7 +103,7 @@ export default function SingleDay({
               exerciseDetailsId: exerciseDetailsIdValue,
             };
           }
-          console.log(ex);
+
           if (field === "name") {
             delete ex.exerciseDetailsId;
           }
@@ -174,17 +173,25 @@ export default function SingleDay({
     };
     setSingleDay(updatedDay);
   }
-  console.log(singleDay, "singleDay");
+  const classNameAdded =
+    "bg-gray-800 border border-gray-700 focus:border-blue-500 text-white placeholder:text-gray-500 rounded-md px-3 py-2 w-full transition-colors hover:border-gray-600 focus:ring-2 focus:ring-blue-500/20 outline-none";
+  const classNameLabel = "bg-gray-800  p-0";
   return (
-    <div className="bg-gray-600 rounded-lg  mb-4">
+    <div className="bg-gray-800/80 rounded-lg border border-gray-700/50 shadow-md overflow-hidden">
       <div
-        className={`flex items-center justify-between p-4 cursor-pointer ${
-          restDay && "cursor-default   pointer-events-none"
+        className={`flex items-center justify-between p-4 ${
+          !restDay
+            ? "cursor-pointer hover:bg-gray-700/50 transition-colors"
+            : "cursor-default pointer-events-none"
         }`}
         onClick={expandDayHandler}
       >
         <div className="flex items-center gap-4">
-          <p className={`text-lg font-semibold ${restDay && "opacity-30"}`}>
+          <p
+            className={`text-lg font-medium text-white ${
+              restDay && "opacity-40"
+            }`}
+          >
             {singleDay.weekDay}
           </p>
 
@@ -195,14 +202,15 @@ export default function SingleDay({
             isRestDay={restDay}
           />
         </div>
-        <div className={restDay ? "opacity-30 pointer-events-none" : undefined}>
+        <div className={restDay ? "opacity-40 pointer-events-none" : undefined}>
           {expandedDay === singleDay.weekDay ? (
-            <LuChevronUp className="w-5 h-5" />
+            <LuChevronUp className="w-5 h-5 text-blue-400" />
           ) : (
-            <LuChevronDown className="w-5 h-5" />
+            <LuChevronDown className="w-5 h-5 text-blue-400" />
           )}
         </div>
       </div>
+
       <AnimatePresence>
         {expandedDay === singleDay.weekDay && (
           <motion.div
@@ -211,18 +219,18 @@ export default function SingleDay({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="p-4  ">
-              <div className="overflow-y-visible  overflow-x-auto relative z-10 planScrollbar">
-                <table className="w-full  border-separate border-spacing-0 ">
+            <div className="p-4 border-t border-gray-700/50">
+              <div className="overflow-y-visible overflow-x-auto relative z-10 planScrollbar">
+                <table className="w-full border-separate border-spacing-0">
                   <thead>
-                    <tr className="bg-gray-700">
-                      <th className="sticky left-0 top-0 z-10 bg-gray-700  border-t border-r border-gray-600 px-4 py-2 text-left w-12">
+                    <tr>
+                      <th className="sticky left-0 top-0 z-20 bg-gray-900 border-b border-r border-gray-700/70 px-4 py-2.5 text-left w-12 text-gray-300 font-medium">
                         #
                       </th>
-                      <th className=" left-10 z-10 bg-gray-700 border-t border-r border-gray-600 px-4 py-2 text-left ">
+                      <th className=" left-10 top-0 z-20 bg-gray-900 border-b border-r border-gray-700/70 px-4 py-2.5 text-left text-gray-300 font-medium">
                         <p className="w-60">Exercise</p>
                       </th>
-                      <th className=" left-[312px] z-10 border-t border-r bg-gray-700 border-gray-600 px-4 py-2 ">
+                      <th className=" left-[312px] top-0 z-20 bg-gray-900 border-b border-r border-gray-700/70 text-left px-4 py-2.5 text-gray-300 font-medium">
                         <p className="w-32">Tempo</p>
                       </th>
 
@@ -232,43 +240,45 @@ export default function SingleDay({
                           <th
                             key={i}
                             colSpan={2}
-                            className="border-t border-r border-gray-600 px-4 py-2 text-left w-48 text-nowrap"
+                            className="bg-gray-900 border-b border-r border-gray-700/70 px-4 py-2.5 text-left w-48 text-nowrap text-gray-300 font-medium"
                           >
                             Week {i + 1}
                           </th>
                         )
                       )}
-                      <th className="border-t border-r border-gray-600 px-4 py-2 text-left w-20">
+                      <th className="bg-gray-900 border-b border-r border-gray-700/70 px-4 py-2.5 text-left w-20 text-gray-300 font-medium">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {singleDay.exercises.map((exercise) => (
-                      <tr key={exercise.number} className="bg-gray-800 ">
-                        <td className="sticky left-0 z-30  select-none bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-12  group">
-                          {exercise.number}
-                          <div className="absolute top-1/2 left-full -translate-y-1/2 ml-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform scale-95 group-hover:scale-100 pointer-events-none z-40">
+                      <tr key={exercise.number} className="">
+                        <td className="sticky left-0 z-30 select-none bg-gray-800 hover:bg-gray-750 border-b border-r border-gray-700/50 px-4 py-3 w-12 group/cell">
+                          <span className="text-gray-400">
+                            {exercise.number}
+                          </span>
+                          <div className="absolute top-1/2 left-full -translate-y-1/2 ml-2 opacity-0 invisible group-hover/cell:opacity-100 group-hover/cell:visible transition-all duration-200 transform scale-95 group-hover/cell:scale-100 pointer-events-none z-40">
                             <div className="bg-gray-900 text-white text-sm rounded-md py-1.5 px-3 shadow-lg max-w-xs">
                               <p className="whitespace-normal">
-                                {exercise.name}
+                                {exercise.name || "No exercise selected"}
                               </p>
-
-                              {/* Triangle pointer pointing left */}
                               <div className="absolute h-2 w-2 bg-gray-900 transform rotate-45 top-1/2 -translate-y-1/2 -left-1"></div>
                             </div>
                           </div>
                         </td>
-                        <td className="    z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-60">
+                        <td className=" left-10 z-10 bg-gray-800 group-hover:bg-gray-750 border-b border-r border-gray-700/50 px-4 py-3 w-60">
                           <ExerciseSelecter
                             exerciseNumber={exercise.number}
                             availableExercises={availableExercisesNamesList}
                             weekDay={singleDay.weekDay}
                             defaultValue={exercise.name}
                             updateExercise={updateExercise}
+                            inputClassName={classNameAdded}
+                            labelClassName={classNameLabel}
                           />
                         </td>
-                        <td className=" left-[312px]  z-10 bg-gray-800 border-b border-r border-gray-600 px-4 py-2 w-40">
+                        <td className=" left-[312px] z-10 bg-gray-800 group-hover:bg-gray-750 border-b border-r border-gray-700/50 px-4 py-3 w-40">
                           <InputFloatingLabel
                             forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-exerciseTempo`}
                             label="Tempo"
@@ -281,6 +291,8 @@ export default function SingleDay({
                                 e.target.value
                               )
                             }
+                            classNameAdded={classNameAdded}
+                            classNameLabel={classNameLabel}
                           />
                         </td>
 
@@ -288,7 +300,7 @@ export default function SingleDay({
                           <Fragment
                             key={`${exercise.number}-${week.weekNumber}-${index}`}
                           >
-                            <td className="border-b border-gray-600 -z-10 px-4 py-2 w-24">
+                            <td className="bg-gray-800 group-hover:bg-gray-750 border-b border-gray-700/50 px-4 py-3 w-24">
                               <InputFloatingLabel
                                 forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-trainerData`}
                                 label="Trainer"
@@ -302,9 +314,11 @@ export default function SingleDay({
                                     e.target.value
                                   )
                                 }
+                                classNameAdded={classNameAdded}
+                                classNameLabel={classNameLabel}
                               />
                             </td>
-                            <td className="border-b border-r border-gray-600 px-4 -z-10 py-3 w-24">
+                            <td className="bg-gray-800 group-hover:bg-gray-750 border-b border-r border-gray-700/50 px-4 py-3 w-24">
                               <InputFloatingLabel
                                 forHTMLLabel={`${singleDay.weekDay}-${exercise.number}-${week.weekNumber}-clientData`}
                                 label="Client"
@@ -318,11 +332,13 @@ export default function SingleDay({
                                     e.target.value
                                   )
                                 }
+                                classNameAdded={classNameAdded}
+                                classNameLabel={classNameLabel}
                               />
                             </td>
                           </Fragment>
                         ))}
-                        <td className="border-b border-r   border-gray-600 px-4 py-2 w-20">
+                        <td className="bg-gray-800 group-hover:bg-gray-750 border-b border-r border-gray-700/50 px-4 py-3 w-20">
                           <ExerciseActions
                             deleteExercise={deleteExercise}
                             exercise={exercise}
@@ -333,35 +349,40 @@ export default function SingleDay({
                   </tbody>
                 </table>
 
-                <div className="flex gap-2 mt-4 text-red-500">
+                <div className="flex gap-2 mt-4 text-red-400">
                   {saveSingleDayState?.errors &&
                     saveSingleDayState.errors.map((error) => (
                       <p key={error}>{error}</p>
                     ))}
                 </div>
               </div>
-              <button
-                onClick={addExercise}
-                type="button"
-                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
-              >
-                <LuPlus className="w-5 h-5" />
-                Add Exercise
-              </button>
-              <ButtonWithLoading
-                isDisabled={pending}
-                isLoading={pending}
-                type="submit"
-                onClick={() =>
-                  startTransition(() => {
-                    saveSingleDayAction();
-                    toastify(<SaveChangesToast />, 3000);
-                  })
-                }
-                className="flex w-fit h-12 items-center gap-2 px-4 py-2 mx-auto bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
-              >
-                Save Changes
-              </ButtonWithLoading>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+                <button
+                  onClick={addExercise}
+                  type="button"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-md text-sm w-full sm:w-auto justify-center"
+                >
+                  <LuPlus className="w-4 h-4" />
+                  Add Exercise
+                </button>
+
+                <ButtonWithLoading
+                  isDisabled={pending}
+                  isLoading={pending}
+                  type="submit"
+                  onClick={() =>
+                    startTransition(() => {
+                      saveSingleDayAction();
+                      toastify(<SaveChangesToast />, 3000);
+                    })
+                  }
+                  className="flex w-full sm:w-auto h-10 items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-md text-sm justify-center sm:ml-auto"
+                >
+                  <LuSave className="w-4 h-4" />
+                  Save Changes
+                </ButtonWithLoading>
+              </div>
             </div>
           </motion.div>
         )}

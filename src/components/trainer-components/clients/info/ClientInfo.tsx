@@ -1,22 +1,16 @@
 import { getClientById } from "@/utils/data/getClients";
-import { motion } from "motion/react";
+
+import ClientSectionWraper from "../ClientSectionWraper";
+import { MdInfo } from "react-icons/md";
 
 export default async function ClientInfo({ clientId }: { clientId: string }) {
   const clientInfo = await getClientById(clientId);
 
   return (
-    <div
-      // initial={{ opacity: 0, y: 20 }}
-      // animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
+    <ClientSectionWraper
+      title="Basic Info"
+      Icon={<MdInfo className="w-6 h-6 text-blue-400" />}
     >
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
-          <span className="h-8 w-1 bg-blue-500 rounded-full"></span>
-          About Me
-        </h2>
-      </div>
-
       <div className="bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm border border-gray-700/50">
         {clientInfo?.profileDetails?.bio ? (
           <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
@@ -45,6 +39,6 @@ export default async function ClientInfo({ clientId }: { clientId: string }) {
           </div>
         )}
       </div>
-    </div>
+    </ClientSectionWraper>
   );
 }

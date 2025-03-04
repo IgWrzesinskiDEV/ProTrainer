@@ -1,79 +1,43 @@
 "use client";
 
-import useTransitionWithError from "@/hooks/useTrainsitionWithError";
 import { useState } from "react";
-import { LuTrash2 } from "react-icons/lu";
-import { removeTrainer } from "@/actions/trainers.actions";
-import { RiUserMinusLine } from "react-icons/ri";
-import CustomToastContent from "@/components/UI/toastify/CustomToast";
-import { motion } from "framer-motion";
+import { MdDelete } from "react-icons/md";
 
 export default function RemoveClient({ clientId }: { clientId: string }) {
-  const [showConfirm, setShowConfirm] = useState(false);
-  const { isPending, onClickHandler } = useTransitionWithError(
-    <CustomToastContent
-      message="Client removed!"
-      CustomIcon={<RiUserMinusLine className="text-2xl text-red-500" />}
-    />,
-    () => removeTrainer(clientId, true)
-  );
+  const [isConfirming, setIsConfirming] = useState(false);
 
-  const handleClick = () => {
-    if (showConfirm) {
-      onClickHandler();
-      setShowConfirm(false);
-    } else {
-      setShowConfirm(true);
-    }
+  const handleRemove = () => {
+    // Implementation for removing client
+    console.log("Removing client:", clientId);
   };
 
+  if (isConfirming) {
+    return (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setIsConfirming(false)}
+          className="px-3 py-2 text-sm font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors duration-300"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleRemove}
+          className="px-3 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors duration-300 flex items-center gap-1"
+        >
+          <MdDelete className="text-lg" />
+          Confirm
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative ">
-      <motion.button
-        whileTap={{ scale: 0.95 }}
-        onClick={handleClick}
-        onMouseLeave={() => setShowConfirm(false)}
-        disabled={isPending}
-        className={`
-          relative group flex items-center gap-2 w-52
-          px-4 py-2.5 sm:px-5 sm:py-3 justify-center
-          text-sm sm:text-base font-medium
-          rounded-xl overflow-hidden
-          transition-all duration-300
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${
-            showConfirm
-              ? "bg-red-500 hover:bg-red-600"
-              : "bg-gray-700/50 hover:bg-gray-600/50"
-          }
-        `}
-      >
-        {/* Background animation */}
-        <div
-          className={`
-          absolute inset-0 bg-gradient-to-r from-red-500 to-rose-500
-          transition-transform duration-300 ease-out
-          ${showConfirm ? "translate-x-0" : "translate-x-full"}
-        `}
-        />
-
-        {/* Content */}
-        <div className="relative flex items-center gap-2">
-          <LuTrash2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-          <span className="text-white">
-            {showConfirm ? "Confirm remove" : "Remove client"}
-          </span>
-        </div>
-
-        {/* Loading spinner */}
-        {isPending && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          </div>
-        )}
-      </motion.button>
-
-      {/* Confirmation Tooltip */}
-    </div>
+    <button
+      onClick={() => setIsConfirming(true)}
+      className="px-4 py-2 text-sm font-medium text-white bg-slate-800 hover:bg-red-600 rounded-lg border border-slate-700 hover:border-red-700 transition-all duration-300 flex items-center gap-2"
+    >
+      <MdDelete className="text-lg" />
+      Remove client
+    </button>
   );
 }

@@ -3,7 +3,7 @@ import { logout } from "@/actions/auth.actions";
 export default function LogoutButton() {
   return (
     <button
-      className="group relative flex items-center gap-2 bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white px-4 py-2 rounded-md transition-all duration-200 overflow-hidden"
+      className="group relative flex items-center gap-1 sm:gap-2 bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-all duration-200 overflow-hidden text-sm"
       title="Logout"
       onClick={logout}
     >
@@ -13,7 +13,7 @@ export default function LogoutButton() {
       {/* Logout icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-200"
+        className="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-200"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

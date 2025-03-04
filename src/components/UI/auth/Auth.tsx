@@ -10,7 +10,7 @@ interface AuthProps extends ComponentProps<"div"> {
 export default function Auth({ isLogin }: AuthProps) {
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
+      <div className="bg-gray-800/40  border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
             {isLogin ? "Welcome Back" : "Create Account"}

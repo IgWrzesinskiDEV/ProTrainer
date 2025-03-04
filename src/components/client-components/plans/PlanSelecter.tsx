@@ -4,14 +4,16 @@ import * as React from "react";
 
 import { LuChevronDown } from "react-icons/lu";
 
-export default function PlanSearchSelect({
+export default function PlanSelect({
   workoutPlans,
   selectedPlanId,
   setSelectedPlanId,
+  setSelectedPlan,
 }: {
   workoutPlans: WorkoutPlan[];
   selectedPlanId: string | null;
-  setSelectedPlanId: Dispatch<SetStateAction<string | null>>;
+  setSelectedPlanId?: Dispatch<SetStateAction<string | null>>;
+  setSelectedPlan?: Dispatch<SetStateAction<WorkoutPlan | null>>;
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
@@ -46,7 +48,13 @@ export default function PlanSearchSelect({
               <button
                 key={plan._id}
                 onClick={() => {
-                  setSelectedPlanId(plan._id);
+                  if (setSelectedPlan) {
+                    setSelectedPlan(plan);
+                  }
+                  if (setSelectedPlanId) {
+                    setSelectedPlanId(plan._id);
+                  }
+
                   setIsDropdownOpen(false);
                 }}
                 className={`w-full text-left px-4 py-3 hover:bg-blue-500/20 transition-colors duration-150 ${

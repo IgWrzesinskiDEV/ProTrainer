@@ -162,7 +162,7 @@ export default function SingleDayWorkout({
                       {exercise.exerciseDetailsId && (
                         <ExerciseDetailsLink
                           exerciseId={exercise.exerciseDetailsId}
-                          className="p-1.5 rounded-md hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors"
+                          className="p-1.5  hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors"
                         />
                       )}
                     </p>
@@ -194,7 +194,7 @@ export default function SingleDayWorkout({
                                 e.target.value
                               )
                             }
-                            classNameAdded="bg-gray-800/90 focus:ring-1 focus:ring-blue-500/50"
+                            classNameAdded="bg-gray-800/90 "
                           />
                         </div>
                       </td>

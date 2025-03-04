@@ -3,10 +3,11 @@
 import MeasurementsTable from "@/components/measurements/MeasurementsTable";
 
 import { TABLE_HEAD } from "@/utils/data/measurements";
-import { motion } from "framer-motion";
+
 import { LuRuler, LuCalendarDays } from "react-icons/lu";
 import { BiLineChart } from "react-icons/bi";
 import { ISingleMeasurement } from "@/lib/models/measurement.model";
+import ClientSectionWraper from "../ClientSectionWraper";
 
 export default function MeasurementWrapper({
   measurements,
@@ -24,23 +25,11 @@ export default function MeasurementWrapper({
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-blue-500/10">
-            <LuRuler className="w-6 h-6 text-blue-400" />
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">
-            Body Measurements
-          </h2>
-        </div>
-
-        {hasData && (
+    <ClientSectionWraper
+      title="Body Measurements"
+      Icon={<LuRuler className="w-6 h-6 text-blue-400" />}
+      additionaTitleComponent={
+        hasData && (
           <div className="flex items-center gap-3 text-sm text-gray-400">
             <div className="flex items-center gap-2">
               <LuCalendarDays className="w-4 h-4" />
@@ -55,9 +44,9 @@ export default function MeasurementWrapper({
               <span>{measurementsData.length} records</span>
             </div>
           </div>
-        )}
-      </div>
-
+        )
+      }
+    >
       {/* Stats Cards */}
       {hasData && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -72,7 +61,7 @@ export default function MeasurementWrapper({
             return (
               <div
                 key={stat}
-                className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50"
+                className="bg-gray-800/50  rounded-xl p-4 border border-gray-700/50"
               >
                 <div className="flex items-start justify-between">
                   <p className="text-gray-400 text-sm">{stat}</p>
@@ -105,7 +94,7 @@ export default function MeasurementWrapper({
 
       {/* Table Section */}
       {hasData && (
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
+        <div className="bg-gray-800/50  rounded-xl border border-gray-700/50 overflow-hidden">
           <div className="p-4 sm:p-6">
             <MeasurementsTable
               measurementsData={measurements}
@@ -132,6 +121,6 @@ export default function MeasurementWrapper({
           </p>
         </div>
       )}
-    </motion.div>
+    </ClientSectionWraper>
   );
 }
