@@ -35,9 +35,9 @@ export default async function SingleTrainer({
 
   if (!trainer) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6">
+      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 px-4">
         <div className="text-4xl text-gray-500">😕</div>
-        <h1 className="text-2xl font-semibold text-gray-300">
+        <h1 className="text-2xl font-semibold text-gray-300 text-center">
           Trainer not found
         </h1>
         <Link
@@ -79,47 +79,49 @@ export default async function SingleTrainer({
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
       <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-gray-700/50">
         {/* Header Section */}
         <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-          <div className="absolute inset-0 bg-blue-900/20 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-blue-900/20" />
 
           {/* Back Button */}
           <Link
             href="/dashboard/trainers"
-            className="group absolute left-0 z-10 top-0 bottom-0 w-16 flex items-center justify-center 
+            className="group absolute left-0 z-10 top-0 bottom-0 w-12 sm:w-16 flex items-center justify-center 
                      bg-blue-900/30 hover:bg-blue-900/50 transition-all duration-300 
                      border-r border-blue-400/20"
           >
             <LuArrowLeft
-              className="text-2xl text-white/70 group-hover:text-white 
+              className="text-xl sm:text-2xl text-white/70 group-hover:text-white 
                                 transition-all duration-300 transform group-hover:-translate-x-1"
             />
           </Link>
 
           {/* Profile Header */}
-          <div className="relative p-8 pl-24">
-            <div className="flex items-start gap-6">
+          <div className="relative p-4 sm:p-6 md:p-8 pl-16 sm:pl-20 md:pl-24">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
               <ProfileAvatar
                 fileName={profileDetails?.avatarFileName}
                 size="large"
                 className="flex-shrink-0"
               />
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-4 flex-wrap">
-                  <h1 className="text-4xl font-bold text-white">{userName}</h1>
+              <div className="flex-1 min-w-0 text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 flex-wrap">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white break-words">
+                    {userName}
+                  </h1>
 
                   {currentTrainer === _id && (
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-2 sm:mt-0">
                       <span
-                        className="flex items-center px-3 py-1.5 text-sm font-medium 
+                        className="flex items-center px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium 
                                    bg-gradient-to-r from-yellow-400 to-yellow-500 
                                    text-gray-900 rounded-xl shadow-lg shadow-yellow-500/20 
                                    transition-all duration-300 hover:shadow-yellow-500/30"
                       >
-                        <FaRegStar className="w-4 h-4 mr-2" />
+                        <FaRegStar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                         Current Trainer
                       </span>
                       <RemoveTrainerButton trainerId={trainerId} />
@@ -129,11 +131,11 @@ export default async function SingleTrainer({
 
                 <a
                   href={`mailto:${email}`}
-                  className="mt-3 inline-flex items-center text-lg text-white/80 
-                         hover:text-white transition-colors duration-300"
+                  className="mt-2 sm:mt-3 inline-flex items-center text-base sm:text-lg text-white/80 
+                         hover:text-white transition-colors duration-300 break-all"
                 >
-                  <LuMail className="mr-2" />
-                  {email}
+                  <LuMail className="mr-2 flex-shrink-0" />
+                  <span className="truncate">{email}</span>
                 </a>
               </div>
             </div>
@@ -141,10 +143,10 @@ export default async function SingleTrainer({
         </div>
 
         {/* Content Section */}
-        <div className="p-8 bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-b from-gray-800/50 to-gray-900/50">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {/* Left Column */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <InfoSection
                 icon={<LuStar size={24} />}
                 title="Specialization"
@@ -172,7 +174,7 @@ export default async function SingleTrainer({
                     <ul className="space-y-2">
                       {certifications.map((cert, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
                           <span className="text-gray-300">{cert}</span>
                         </li>
                       ))}
@@ -191,7 +193,7 @@ export default async function SingleTrainer({
                     <ul className="space-y-2">
                       {education.map((edu, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
                           <span className="text-gray-300">{edu}</span>
                         </li>
                       ))}
@@ -204,24 +206,24 @@ export default async function SingleTrainer({
             </div>
 
             {/* Right Column */}
-            <div className="space-y-8">
+            <div className="space-y-4 sm:space-y-6 md:space-y-8">
               <TrainerInfoColumn
                 InfoSections={[workingModes, services, languages]}
               />
 
               <div
-                className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 
+                className="bg-gray-800/50 rounded-2xl p-4 sm:p-6 
                            border border-gray-700/50 hover:border-blue-500/20 
                            transition-all duration-300"
               >
-                <h3 className="text-xl font-semibold mb-4 text-white flex items-center">
-                  <span className="p-2 bg-blue-500/10 rounded-xl mr-3 text-blue-400">
-                    <LuGlobe size={24} />
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white flex items-center">
+                  <span className="p-1.5 sm:p-2 bg-blue-500/10 rounded-xl mr-2 sm:mr-3 text-blue-400">
+                    <LuGlobe size={20} className="sm:w-6 sm:h-6" />
                   </span>
                   Social Media
                 </h3>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {socialAndExpirianceArray.length > 0 ? (
                     socialAndExpirianceArray.map(({ key, value }, index) => (
                       <SocialLink
@@ -229,9 +231,18 @@ export default async function SingleTrainer({
                         href={value}
                         icon={
                           {
-                            instagram: <LuInstagram size={20} />,
-                            facebook: <LuFacebook size={20} />,
-                            whatsapp: <FaWhatsapp size={20} />,
+                            instagram: (
+                              <LuInstagram
+                                size={18}
+                                className="sm:w-5 sm:h-5"
+                              />
+                            ),
+                            facebook: (
+                              <LuFacebook size={18} className="sm:w-5 sm:h-5" />
+                            ),
+                            whatsapp: (
+                              <FaWhatsapp size={18} className="sm:w-5 sm:h-5" />
+                            ),
                           }[key]
                         }
                         label={`${key} profile`}
@@ -245,13 +256,13 @@ export default async function SingleTrainer({
                 </div>
               </div>
 
-              <div className="flex justify-center pt-6">
+              <div className="flex justify-center pt-2 sm:pt-4 md:pt-6">
                 <AddTrainerButton
                   trainerId={trainerId}
                   isDisabled={!!currentTrainer}
                   className={`
                     relative overflow-hidden
-                    px-8 py-3 rounded-xl text-lg font-medium
+                    px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base sm:text-lg font-medium
                     transition-all duration-300 transform
                     ${
                       currentTrainer

@@ -35,7 +35,7 @@ export default function TablePaginationComponent({
     <CustomTablePagination
       rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
       colSpan={TABLE_HEAD.length}
-      className="ml-auto"
+      className="ml-auto w-full sm:w-auto"
       count={TABLE_ROWS.length}
       rowsPerPage={rowsPerPage}
       page={page}
@@ -73,7 +73,10 @@ const CustomTablePagination = forwardRef<
       ref={ref}
       {...props}
       slots={{ root: "div" }}
-      className={clsx("CustomTablePagination", props.className)}
+      className={clsx(
+        "CustomTablePagination w-full sm:w-auto",
+        props.className
+      )}
       slotProps={{
         ...props.slotProps,
         select: (ownerState) => {
@@ -84,7 +87,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "font-sans py-2 px-3 border border-gray-700 rounded-lg bg-gray-800 text-gray-300 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200",
+              "font-sans py-2 px-3 border border-gray-700 rounded-lg bg-gray-800 text-gray-300 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 w-full sm:w-auto",
               resolvedSlotProps?.className
             ),
           };
@@ -97,19 +100,9 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "flex items-center gap-2 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:w-9 [&>button]:h-9 [&>button]:rounded-md [&>button]:border  [&>button]:border-gray-700  [&>button]:bg-gray-800  [&>button]:text-gray-300  [&>button:hover]:bg-blue-900/20  [&>button:hover]:border-blue-700 [&>button:focus]:outline-none [&>button:focus]:ring-2 [&>button:focus]:ring-blue-500 [&>button:focus]:border-blue-500 [&>button>svg]:text-[20px] [&>button:disabled]:opacity-40 [&>button:disabled]:cursor-not-allowed  [&>button:disabled:hover]:bg-gray-800  [&>button:disabled:hover]:border-gray-700 [&>button]:transition-all [&>button]:duration-200",
+              "flex items-center justify-center sm:justify-end gap-2 flex-wrap [&>button]:w-9 [&>button]:h-9 [&>button]:rounded-md [&>button]:border [&>button]:border-gray-700 [&>button]:bg-gray-800 [&>button]:text-gray-300 [&>button:hover]:bg-blue-900/20 [&>button:hover]:border-blue-700 [&>button:focus]:outline-none [&>button:focus]:ring-2 [&>button:focus]:ring-blue-500 [&>button:focus]:border-blue-500 [&>button>svg]:text-[20px] [&>button:disabled]:opacity-40 [&>button:disabled]:cursor-not-allowed transition-all duration-200",
               resolvedSlotProps?.className
             ),
-          };
-        },
-        spacer: (ownerState) => {
-          const resolvedSlotProps = resolveSlotProps(
-            props.slotProps?.spacer,
-            ownerState
-          );
-          return {
-            ...resolvedSlotProps,
-            className: clsx("hidden", resolvedSlotProps?.className),
           };
         },
         toolbar: (ownerState) => {
@@ -120,7 +113,7 @@ const CustomTablePagination = forwardRef<
           return {
             ...resolvedSlotProps,
             className: clsx(
-              "flex flex-col sm:flex-row items-end sm:items-center justify-end gap-4 ml-auto bg-gray-800 p-3 rounded-lg border border-gray-700 shadow-sm",
+              "flex flex-col sm:flex-row items-center  gap-2 bg-gray-800 p-3 rounded-lg border border-gray-700 shadow-sm w-full sm:w-auto",
               resolvedSlotProps?.className
             ),
           };

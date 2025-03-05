@@ -36,17 +36,20 @@ export default function DashboardNav({ role }: { role: IUserRole }) {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden relative">
+        <div className="md:hidden z-50 relative">
           {/* Current Tab Display with Dropdown Toggle */}
           <div
-            className="flex items-center justify-between py-3 cursor-pointer"
+            className="flex  items-center justify-between py-3 cursor-pointer"
             onClick={toggleMenu}
           >
             <div className="flex items-center">
               <span className="text-white font-medium">
-                {NavLinks.find((tab) =>
-                  path.includes(tab.split(" ").join("-").toLowerCase())
-                )}
+                {NavLinks.find((tab) => {
+                  return (
+                    path.split("/")[2] ===
+                    tab.split(" ").join("-").toLowerCase()
+                  );
+                })}
               </span>
               <LuChevronDown
                 className={`ml-2 h-5 w-5 text-gray-400 transition-transform duration-200 ${

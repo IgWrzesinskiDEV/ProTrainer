@@ -1,9 +1,13 @@
 "use client";
 import { logout } from "@/actions/auth.actions";
-export default function LogoutButton() {
+import { cn } from "@/lib/twMergeUtill";
+export default function LogoutButton({ className }: { className?: string }) {
   return (
     <button
-      className="group relative flex items-center gap-1 sm:gap-2 bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-all duration-200 overflow-hidden text-sm"
+      className={cn(
+        "group relative flex items-center gap-1 sm:gap-2 bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-all duration-200 overflow-hidden text-sm",
+        className
+      )}
       title="Logout"
       onClick={logout}
     >

@@ -41,49 +41,49 @@ export default function TrainerProfileDescriptionForm({
   ) as { [key: string]: string };
 
   return (
-    <div className="space-y-5 sm:space-y-6">
-      <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
-        <span className="bg-blue-500 h-6 sm:h-8 w-1 rounded-full mr-2 sm:mr-3"></span>
+    <div className="space-y-3 sm:space-y-4 md:space-y-5">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-6 flex items-center">
+        <span className="bg-blue-500 h-5 sm:h-6 md:h-8 w-1 rounded-full mr-2 sm:mr-3"></span>
         Personal Information
       </h2>
 
-      <form className="space-y-6 sm:space-y-8" action={formAction}>
-        <div className="space-y-3 sm:space-y-4">
-          <label className="block text-base sm:text-lg font-medium text-white">
+      <form className="space-y-4 sm:space-y-6 md:space-y-8" action={formAction}>
+        <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          <label className="block text-sm sm:text-base md:text-lg font-medium text-white">
             Experience
           </label>
           <TextArea
             label=""
             name="experience"
-            className="w-full min-h-[100px] sm:min-h-[120px] bg-slate-800/50 border border-slate-700 rounded-lg sm:rounded-xl p-3 sm:p-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            className="w-full min-h-[80px] sm:min-h-[100px] md:min-h-[120px] bg-slate-800/50 border border-slate-700 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 text-xs sm:text-sm md:text-base text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
             defaultValue={fetchedData?.experience}
             error={err}
             success={formState.success}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          <div className="space-y-5 sm:space-y-6">
-            <div className="space-y-2">
-              <label className="block text-base sm:text-lg font-medium text-white">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+          <div className="space-y-3 sm:space-y-4 md:space-y-5">
+            <div className="space-y-1.5 sm:space-y-2">
+              <label className="block text-sm sm:text-base md:text-lg font-medium text-white">
                 Specialization
               </label>
               <input
                 name="specialization"
                 type="text"
                 defaultValue={fetchedData?.specialization}
-                className="w-full bg-slate-800/50 border border-slate-700 rounded-lg sm:rounded-xl p-2.5 sm:p-3 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full outline-none bg-slate-800/50 border border-slate-700 rounded-lg sm:rounded-xl p-2 sm:p-2.5 md:p-3 text-xs sm:text-sm md:text-base text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500  transition-all duration-200"
               />
             </div>
 
             <LocationsCheckBoxes workingModes={fetchedData?.workingModes} />
           </div>
 
-          <div className="space-y-5 sm:space-y-6">
-            <h3 className="text-base sm:text-lg font-medium text-white">
+          <div className="space-y-3 sm:space-y-4 md:space-y-5">
+            <h3 className="text-sm sm:text-base md:text-lg font-medium text-white">
               Social Media
             </h3>
-            <div className="space-y-4 sm:space-y-5 bg-slate-800/30 p-3 sm:p-4 rounded-lg sm:rounded-xl border border-slate-700/50">
+            <div className="space-y-3 sm:space-y-4 md:space-y-5 bg-slate-800/30 p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-slate-700/50">
               <SocialMediaInput
                 Icon={FaInstagram}
                 name="instagram"
@@ -107,15 +107,15 @@ export default function TrainerProfileDescriptionForm({
         </div>
 
         {err?.error && (
-          <p className="text-red-400 font-medium text-sm bg-red-500/10 p-2 rounded-lg border border-red-500/20">
+          <p className="text-red-400 font-medium text-xs sm:text-sm bg-red-500/10 p-2 rounded-lg border border-red-500/20">
             {err.error}
           </p>
         )}
 
-        <div className="flex justify-center pt-2 sm:pt-4">
+        <div className="flex justify-center pt-1 sm:pt-2 md:pt-4">
           <ButtonWithLoading
             type="submit"
-            className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-lg sm:rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+            className="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white text-xs sm:text-sm md:text-base font-medium rounded-lg sm:rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 touch-manipulation"
             isLoading={isPending}
           >
             Save Changes

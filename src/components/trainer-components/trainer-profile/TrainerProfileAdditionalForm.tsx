@@ -35,13 +35,13 @@ export default function TrainerProfileAdditionalForm({
 
   return (
     <>
-      <div className="space-y-4">
-        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
-          <span className="bg-blue-500 h-6 sm:h-8 w-1 rounded-full mr-2 sm:mr-3"></span>
+      <div className="space-y-3 sm:space-y-4">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-6 flex items-center">
+          <span className="bg-blue-500 h-5 sm:h-6 md:h-8 w-1 rounded-full mr-2 sm:mr-3"></span>
           Additional Information
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-5">
           <TrainerAdditionalDataSquare
             heading={TrainerAdditionalDataHeadingType.Certifications}
             openModalHandler={openModal}

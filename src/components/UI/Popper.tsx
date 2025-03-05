@@ -40,14 +40,13 @@ export default function CustomPopper({
   };
 
   const open = isPending || Boolean(anchorEl);
-  const color = isDelete ? "red-500" : "green-500";
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <tr
         key={id}
         className={`${trClassName} ${
-          anchorEl ? "bg-blue-50 dark:bg-blue-900/20" : ""
+          anchorEl ? "bg-blue-900/20" : ""
         } cursor-pointer relative`}
         onClick={handleClick}
       >
@@ -64,7 +63,7 @@ export default function CustomPopper({
             <div
               className={`w-0 h-0 
                 border-t-[6px] border-t-transparent
-                border-r-[9px] border-r-${color}
+                border-r-[9px] border-r-red-500
                 border-b-[6px] border-b-transparent
                 drop-shadow-md
               `}
@@ -73,7 +72,7 @@ export default function CustomPopper({
               className={`
                 z-50 rounded-lg w-12 h-12 p-3 
                 border border-solid flex items-center justify-center 
-                border-${color} bg-white dark:bg-gray-800 
+                border-red-500 bg-gray-800 
                 shadow-lg hover:shadow-xl transition-all duration-300
                 transform hover:scale-105 active:scale-95
               `}
@@ -83,7 +82,7 @@ export default function CustomPopper({
               aria-label={isDelete ? "Delete measurement" : "Confirm action"}
             >
               {isPending ? (
-                <CircularProgress size={24} className={`text-${color}`} />
+                <CircularProgress size={24} className={`text-red-500`} />
               ) : isDelete ? (
                 <MdOutlineDelete className="text-2xl text-center text-red-500" />
               ) : (

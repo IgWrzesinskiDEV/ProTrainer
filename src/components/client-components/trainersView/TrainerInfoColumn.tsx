@@ -13,20 +13,20 @@ export default function TrainerInfoColumn({
   InfoSections: InfoSections[];
 }) {
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4 sm:gap-6">
       {InfoSections.map((section, index) => (
         <InfoSection
           key={index}
-          icon={<section.icon className="text-blue-400" size={24} />}
+          icon={<section.icon className="text-blue-400" size={20} />}
           title={section.title}
           content={
             section.data.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {section.data.map((data, index) => (
                   <span
                     key={index}
                     className="relative group overflow-hidden bg-blue-500/10 
-                             text-blue-300 px-4 py-1.5 rounded-xl text-sm 
+                             text-blue-300 px-2 sm:px-4 py-1 sm:py-1.5 rounded-xl text-xs sm:text-sm 
                              transition-all duration-300 hover:bg-blue-500/20 
                              cursor-default select-none"
                   >
@@ -41,7 +41,7 @@ export default function TrainerInfoColumn({
                 ))}
               </div>
             ) : (
-              <p className="text-gray-400 italic">
+              <p className="text-gray-400 italic text-sm sm:text-base">
                 No {section.title.toLowerCase()} added yet
               </p>
             )

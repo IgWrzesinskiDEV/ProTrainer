@@ -4,11 +4,9 @@ import Model, { Muscle } from "react-body-highlighter";
 export default function MusclesTab({
   muscleGroup,
   exerciseName,
-  isModal,
 }: {
   muscleGroup: Muscle[];
   exerciseName: string;
-  isModal?: boolean;
 }) {
   return (
     <div className="space-y-4">
@@ -23,7 +21,7 @@ export default function MusclesTab({
               {muscleGroup.map((muscle, index) => (
                 <li
                   key={index}
-                  className="flex items-center text-gray-200 capitalize"
+                  className="flex items-center text-xs sm:text-base  text-gray-200 capitalize"
                 >
                   <div className="w-2 h-2 rounded-full bg-blue-500 mr-2 "></div>
                   {muscle}

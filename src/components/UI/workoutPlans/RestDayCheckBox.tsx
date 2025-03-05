@@ -19,7 +19,7 @@ export default function RestDayCheckBox({
   const [isPending, startTransition] = React.useTransition();
 
   return (
-    <label className="group relative flex items-center gap-3 text-base text-white/90 select-none cursor-pointer">
+    <label className="group relative flex items-center gap-3 text-base text-white/90 select-none cursor-pointer touch-manipulation">
       <div className="relative">
         <Checkbox.Root
           checked={isRestDay}
@@ -28,7 +28,7 @@ export default function RestDayCheckBox({
             startTransition(() => saveSingleDayRestDay(weekDay, planId))
           }
           onCheckedChange={checkRestDayHandler}
-          className="flex disabled:opacity-55 size-[18px] pointer-events-auto items-center justify-center 
+          className="flex disabled:opacity-55 size-[22px] md:size-[18px] pointer-events-auto items-center justify-center 
             rounded-[4px] outline-none transition-all duration-200 ease-in-out
             hover:shadow-md hover:shadow-blue-500/20
             active:scale-95
@@ -44,7 +44,7 @@ export default function RestDayCheckBox({
               transition-all duration-200 ease-out
               data-[state=checked]:scale-100 data-[state=unchecked]:scale-75"
           >
-            <CheckIcon className="size-3.5" />
+            <CheckIcon className="size-4 md:size-3.5" />
           </Checkbox.Indicator>
         </Checkbox.Root>
         {isPending && (

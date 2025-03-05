@@ -71,7 +71,7 @@ export default function TextArea({
             "w-full min-h-[120px] sm:min-h-[140px] md:min-h-[160px]",
             "px-3 sm:px-4 py-2 sm:py-3",
             "text-sm sm:text-base md:text-lg",
-            "bg-slate-800/50 backdrop-blur-sm",
+            "bg-slate-800/50 ",
             "border-2 rounded-lg sm:rounded-xl ",
             "font-medium text-white placeholder-slate-400",
             "resize-none transition-all duration-200",

@@ -3,7 +3,7 @@ export default function SearchBar({ ...props }) {
     <input
       type="text"
       className="w-full px-6 py-4 pl-14 text-base text-white 
-                 bg-gray-800/50 backdrop-blur-sm border border-gray-700 
+                 bg-gray-800/50  border border-gray-700 
                  rounded-2xl focus:outline-none outline-none focus:border-blue-500/50 
                  focus:ring-4 focus:ring-blue-500/20 
                  placeholder:text-gray-500 transition-all duration-300

@@ -39,7 +39,9 @@ export default function RemoveTrainerButton({
   const { isPending, onClickHandler } = useTransitionWithError(
     <CustomToastContent
       message="Trainer removed!"
-      CustomIcon={<RiUserMinusLine className="text-2xl text-red-500" />}
+      CustomIcon={
+        <RiUserMinusLine className="text-xl sm:text-2xl text-red-500" />
+      }
     />,
     () => removeTrainer(trainerId, false)
   );
@@ -62,34 +64,34 @@ export default function RemoveTrainerButton({
         onClick={handleClick}
         disabled={isPending}
         className={cn(
-          "group flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium",
+          "group flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium",
           "transition-all duration-300 transform",
           "shadow-lg hover:shadow-xl active:scale-95",
           showConfirm
             ? "bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-red-500/20 hover:shadow-red-500/30"
-            : "bg-gradient-to-r from-gray-800 to-gray-900 text-white  border-gray-700 shadow-gray-900/20 hover:shadow-blue-500/10",
+            : "bg-gradient-to-r from-gray-800 to-gray-900 text-white border-gray-700 shadow-gray-900/20 hover:shadow-blue-500/10",
           isPending && "opacity-50 cursor-not-allowed"
         )}
       >
         <LuTrash2
           className={cn(
-            "w-4 h-4 transition-colors duration-300",
+            "w-3 h-3 sm:w-4 sm:h-4 transition-colors duration-300",
             showConfirm ? "text-white" : "text-red-500 group-hover:text-red-400"
           )}
         />
-        <span className="text-white/90 group-hover:text-white">
-          {showConfirm ? "Confirm removal" : "Remove trainer"}
+        <span className="text-white/90 group-hover:text-white whitespace-nowrap">
+          {showConfirm ? "Confirm" : "Remove"}
         </span>
       </button>
 
       {showConfirm && (
         <div
-          className="absolute left-1/2 -translate-x-1/2  mt-3
-                     flex items-center justify-center"
+          className="absolute left-1/2 -translate-x-1/2 mt-2 sm:mt-3
+                     flex items-center justify-center z-10"
         >
           <div
             className={cn(
-              "px-4 text-center py-2 w-32 bg-gray-900 text-white text-sm rounded-xl shadow-xl",
+              "px-2 sm:px-4 text-center py-1.5 sm:py-2 w-28 sm:w-32 bg-gray-900 text-white text-xs sm:text-sm rounded-xl shadow-xl",
               "animate-fade-in ",
               isPending && "opacity-50"
             )}
@@ -97,7 +99,7 @@ export default function RemoveTrainerButton({
             Click again to confirm
             <div
               className="absolute left-1/2 -z-10 -translate-x-1/2 -top-2 
-                        w-4 h-4 bg-gray-900 rotate-45 border-b border-r border-gray-800"
+                        w-3 h-3 sm:w-4 sm:h-4 bg-gray-900 rotate-45 border-b border-r border-gray-800"
             />
           </div>
         </div>

@@ -1,8 +1,7 @@
 import SingleDayWorkout from "@/components/client-components/plans/SingleDayWorkout";
 import { getSinglePlanDay } from "@/utils/data/getClientPlans";
 import { WeekDays } from "@/interfaces/workout/IWorkout";
-import { LuArrowLeft, LuCalendarDays } from "react-icons/lu";
-import BackToLink from "@/components/UI/Buttons/BackToLink";
+import { LuCalendarDays } from "react-icons/lu";
 
 export default async function Plans({
   params,
@@ -25,13 +24,13 @@ export default async function Plans({
           <h1 className="text-2xl font-bold text-white">Daily Workout</h1>
           <p className="text-gray-400">View and track your workout progress</p>
         </div>
-        <BackToLink
+        {/* <BackToLink
           href="/dashboard/plans"
           className=" ml-auto mr-3  text-sm text-gray-300  hover:text-white bg-blue-500/20 mt-3  rounded-lg hover:bg-gray-800 "
         >
           <LuArrowLeft className="w-4 h-4" />
           Back to plans
-        </BackToLink>
+        </BackToLink> */}
       </div>
 
       <SingleDayWorkout

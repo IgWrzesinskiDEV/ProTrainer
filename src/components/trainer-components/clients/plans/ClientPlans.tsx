@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { LuMinus, LuPlus, LuCalendarX, LuCalendarPlus } from "react-icons/lu";
 
-import {
+import type {
   ExerciseDetailsShort,
   WorkoutPlan,
 } from "@/interfaces/workout/IWorkout";
@@ -70,7 +70,7 @@ export default function ClientPlans({
         Icon={<MdFitnessCenter className="w-6 h-6 text-blue-400" />}
       >
         {/* Plan selector and new plan form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 items-start">
           <div className="w-full">
             <PlanSelect
               workoutPlans={workoutPlans}
@@ -81,19 +81,21 @@ export default function ClientPlans({
 
           <form
             action={addEmptyPlanAction}
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full"
           >
             <div className="w-full sm:flex-1">
               <InputWithErrorHandler
                 hasError={hasError}
                 errorMessage={formState.errors?.[0]}
+                placeholder="Enter new plan name"
+                autoFocus={false}
               />
             </div>
 
             <ButtonWithLoading
               isLoading={isPending}
               type="submit"
-              className="flex items-center justify-center w-full sm:w-auto text-sm gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-md font-medium"
+              className="flex items-center justify-center w-full sm:w-auto text-sm gap-2 px-5 py-2.5 h-11 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md font-medium"
             >
               <LuPlus className="w-4 h-4" />
               Add New Plan
@@ -103,10 +105,10 @@ export default function ClientPlans({
 
         {/* Action buttons for selected plan */}
         {selectedPlan && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <ButtonWithLoading
               isLoading={isPendingAddWeek}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors shadow-md text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-md text-sm font-medium"
               onClick={() =>
                 startTransitionAddWeek(async () => {
                   await addEmptyWeek(selectedPlan._id, clientId);
@@ -120,8 +122,8 @@ export default function ClientPlans({
             <ButtonWithLoading
               isLoading={isPendingRemoveLatestWeek}
               isDisabled={selectedPlan.weekCount === 0}
-              loadingClass="bg-opacity-50 hover:bg-red-500 pointer-events-none"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-md disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+              loadingClass="bg-opacity-50 hover:bg-red-600 pointer-events-none"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
               onClick={() =>
                 startTransitionRemoveLatestWeek(async () => {
                   await deleteLatestWeek(selectedPlan._id, clientId);
@@ -134,7 +136,7 @@ export default function ClientPlans({
 
             <button
               onClick={() => modalRef.current?.open()}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-md text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md text-sm font-medium"
             >
               <LuMinus className="w-4 h-4" />
               Remove Plan

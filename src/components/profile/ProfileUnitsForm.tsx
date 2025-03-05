@@ -38,27 +38,32 @@ export default function ProfileUnitsForm() {
   };
 
   return (
-    <div className="bg-[#252220] rounded-xl shadow-lg p-6">
-      <h2 className="text-xl font-bold mb-6 text-center">Measurement Units</h2>
+    <div className="bg-[#252220] rounded-xl shadow-lg p-4 sm:p-6">
+      <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">
+        Measurement Units
+      </h2>
       <form
         action={formAction}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
       >
         {["weight", "bodyMeasurement", "height", "distance"].map((unit) => (
-          <div key={unit} className="bg-[#1d3a5f] rounded-lg p-5">
-            <label htmlFor={unit} className="text-lg font-semibold ">
+          <div key={unit} className="bg-[#1d3a5f] rounded-lg p-3 sm:p-5">
+            <label
+              htmlFor={unit}
+              className="text-base sm:text-lg font-semibold block mb-2"
+            >
               {unit === "bodyMeasurement"
                 ? "Body Measurement"
                 : unit.charAt(0).toUpperCase() + unit.slice(1)}{" "}
               Unit
             </label>
-            <div className="relative mt-4">
+            <div className="relative">
               <select
                 id={unit}
                 name={unit}
                 value={units[unit as keyof typeof units]}
                 onChange={handleChange}
-                className="w-full px-4 cursor-pointer py-3 bg-[#2a4a75] border border-[#3a5a85] rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#2673e8] text-white"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#2a4a75] border border-[#3a5a85] rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#2673e8] text-white text-sm sm:text-base cursor-pointer"
               >
                 {unit === "weight" ? (
                   <>
@@ -84,9 +89,10 @@ export default function ProfileUnitsForm() {
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                 <svg
-                  className="h-5 w-5 text-gray-400"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -99,10 +105,10 @@ export default function ProfileUnitsForm() {
           </div>
         ))}
 
-        <div className="mt-8 col-span-2">
+        <div className="mt-4 sm:mt-8 col-span-1 sm:col-span-2">
           <ButtonWithLoading
             type="submit"
-            className="w-full bg-[#2673e8] hover:bg-blue-600 text-white py-3 rounded-md transition-colors duration-200 font-medium"
+            className="w-full bg-[#2673e8] hover:bg-blue-600 active:bg-blue-700 text-white py-2.5 sm:py-3 rounded-md transition-colors duration-200 font-medium text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#252220]"
             isLoading={isPending}
           >
             Save Changes
@@ -110,7 +116,7 @@ export default function ProfileUnitsForm() {
         </div>
       </form>
       {formState.error && (
-        <p className="mt-4 text-red-400 text-sm text-center">
+        <p className="mt-3 text-red-400 text-xs sm:text-sm text-center">
           {formState.error}
         </p>
       )}

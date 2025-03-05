@@ -6,6 +6,7 @@ import { cn } from "@/lib/twMergeUtill";
 import { IUserRole } from "@/lib/models/user.model";
 import LogoutButton from "../UI/Buttons/LogoutButton";
 import ProTrainerLogo from "../UI/logo/ProTrainerLogo";
+import { logout } from "@/actions/auth.actions";
 export default function DashboardHeader({
   profileDetails,
   userName,
@@ -100,15 +101,14 @@ export default function DashboardHeader({
             )}
 
             {/* Mobile-optimized logout button */}
-            <div className="hidden sm:block">
-              <LogoutButton />
-            </div>
+
+            <LogoutButton className="hidden sm:block" />
 
             {/* Mobile logout icon only */}
             <button
               className="sm:hidden p-1.5 rounded-md bg-transparent border border-gray-700 hover:border-red-500 text-gray-300 hover:text-white transition-all duration-200"
               title="Logout"
-              //onClick={logout}
+              onClick={logout}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

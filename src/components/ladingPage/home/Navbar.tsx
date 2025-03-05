@@ -153,13 +153,13 @@ export default function Navbar() {
             </Link> */}
             <hr className="border-gray-200" />
             <Link
-              href="/login"
+              href="/auth/login"
               className="font-medium text-secondary-800 hover:text-primary-600"
             >
               Log In
             </Link>
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full text-center"
             >
               Get Started
