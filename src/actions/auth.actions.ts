@@ -37,7 +37,8 @@ export async function signup(prevState: unknown, formData: FormData) {
 
     await sendVerificationEmail(
       verificationToken.email,
-      verificationToken.token
+      verificationToken.token,
+      userName
     );
     redirect("/auth/verify-email-send");
   } catch (error: unknown) {
