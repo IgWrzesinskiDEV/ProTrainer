@@ -59,6 +59,7 @@ const Modal = styled(BaseModal)`
   position: fixed;
   z-index: 1300;
   inset: 0;
+  bordercolor: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

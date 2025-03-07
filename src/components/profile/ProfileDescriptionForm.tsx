@@ -49,7 +49,8 @@ export default function ProfileDescriptionForm() {
           </ul>
           <ButtonWithLoading
             type="submit"
-            className="w-full bg-[#2673e8] hover:bg-blue-600 text-white py-2 rounded-md transition-colors duration-200 font-medium"
+            className="w-full bg-[#2673e8] hover:bg-blue-600 disabled:bg-transparent border border-[#2673e8] text-white py-2 rounded-md transition-colors duration-200 font-medium"
+            isDisabled={isPending}
             isLoading={isPending}
           >
             Save Profile

@@ -26,6 +26,7 @@ export default async function saveAvatarImage(image: File, id: string) {
     Key: fileName,
     Body: Buffer.from(bufferedImage),
     ContentType: image.type,
+    CacheControl: "no-cache, no-store, must-revalidate",
   });
   return fileName;
 }

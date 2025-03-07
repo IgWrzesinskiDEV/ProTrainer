@@ -1,4 +1,4 @@
-import Measurement from "@/components/measurements/Measurement";
+import MeasurementWrapper from "@/components/trainer-components/clients/measurements/MeasurmentWrapper";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { MeasurementModel } from "@/lib/models/measurement.model";
 export default async function MeasurementPage() {
@@ -10,9 +10,12 @@ export default async function MeasurementPage() {
   const measurements = measurementsData?.measurements || [];
 
   return (
-    <Measurement
-      measurementsData={JSON.stringify(measurements)}
-      units={JSON.stringify(user?.units)}
-    />
+    <div className="px-4 md:px-6 lg:px-8 w-full">
+      <MeasurementWrapper
+        measurements={JSON.stringify(measurements)}
+        units={JSON.stringify(user?.units)}
+        isClientSide
+      />
+    </div>
   );
 }

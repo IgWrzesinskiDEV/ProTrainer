@@ -11,7 +11,7 @@ import MeasurementsForm from "@/components/measurements/MeasurementsForm";
 import { deleteMeasurement } from "@/actions/measurements.action";
 import MeasurementsTable from "./MeasurementsTable";
 import { LuRuler } from "react-icons/lu";
-
+import { motion } from "motion/react";
 export default function Measurement({
   measurementsData,
   units,
@@ -28,7 +28,11 @@ export default function Measurement({
 
   return (
     <>
-      <div className="bg-gray-800 shadow-md rounded-lg p-4 sm:p-6 w-full">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gray-800 shadow-md rounded-lg p-4 sm:p-6 w-full"
+      >
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
@@ -51,7 +55,7 @@ export default function Measurement({
             Add Measurement
           </button>
         </div>
-        <div className="bg-gray-800 rounded-xl p-3 sm:p-5 shadow-inner">
+        <div className="bg-gray-800 rounded-xl p-3 sm:p-5 shadow-inner overflow-hidden">
           <MeasurementsTable
             measurementsData={measurementsData}
             TABLE_HEAD={TABLE_HEAD}
@@ -59,9 +63,9 @@ export default function Measurement({
             role={{ roleName: "client", deleteHandler: deleteMeasurement }}
           />
         </div>
-      </div>
+      </motion.div>
       <ModalUnstyled ref={modalRef}>
-        <div className="w-[95%] sm:w-auto mx-auto">
+        <div className="w-[95%] sm:w-auto mx-auto ">
           <MeasurementsForm
             TABLE_HEAD={TABLE_HEAD}
             units={formatedUnits}

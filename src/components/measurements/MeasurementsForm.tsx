@@ -27,7 +27,7 @@ export default function MeasurementsForm({
   );
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-2xl planScrollbar trainerDataSquareScrollbar text-gray-100 max-h-[92vh] overflow-y-auto relative">
+    <div className="w-full max-w-3xl  mx-auto p-4 sm:p-6 outline-none bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-2xl planScrollbar trainerDataSquareScrollbar text-gray-100 max-h-[92vh] overflow-y-auto relative">
       {/* Close button */}
       <button
         onClick={closeModal}

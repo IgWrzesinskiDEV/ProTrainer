@@ -97,8 +97,9 @@ export default function ProfileUnitsForm({
         <div className="mt-4 sm:mt-8 col-span-1 sm:col-span-2">
           <ButtonWithLoading
             type="submit"
-            className="w-full bg-[#2673e8] hover:bg-blue-600 active:bg-blue-700 text-white py-2.5 sm:py-3 rounded-md transition-colors duration-200 font-medium text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#252220]"
+            className="w-full bg-[#2673e8] disabled:bg-transparent border border-[#2673e8] hover:bg-blue-600 active:bg-blue-700 text-white py-2.5 sm:py-3 rounded-md transition-colors duration-200 font-medium text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#252220]"
             isLoading={isPending}
+            isDisabled={isPending}
           >
             Save Changes
           </ButtonWithLoading>

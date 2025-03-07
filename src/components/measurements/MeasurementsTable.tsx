@@ -26,7 +26,7 @@ export default function MeasurementsTable({
   units: string;
   role:
     | { roleName: "trainer" }
-    | { roleName: "client"; deleteHandler: (id: string) => void };
+    | { roleName: "client"; deleteHandler: (id: string) => Promise<void> };
 }) {
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState({
@@ -112,7 +112,7 @@ export default function MeasurementsTable({
       : sortedArray;
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-6 ">
       {/* Mobile Sort Controls */}
       <div className="md:hidden flex justify-between items-center">
         <div className="text-sm text-gray-400">
@@ -181,108 +181,108 @@ export default function MeasurementsTable({
             </thead>
 
             {/* Table Body */}
-            <tbody className="divide-y divide-gray-700/50">
-              <AnimatePresence mode="wait">
-                {paginatedData.map((data: ISingleMeasurement, index) => {
-                  const TableRow = ({
-                    children,
-                  }: {
-                    children: React.ReactNode;
-                  }) => (
+            <tbody className="divide-y divide-gray-700/50 ">
+              {paginatedData.map((data: ISingleMeasurement, index) => {
+                const TableRow = ({
+                  children,
+                }: {
+                  children: React.ReactNode;
+                }) => (
+                  <AnimatePresence>
                     <motion.tr
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="group hover:bg-blue-900/10 transition-all duration-200"
+                      className="group hover:bg-blue-900/10 transition-all duration-200 "
                     >
                       {children}
-                    </motion.tr>
-                  );
+                    </motion.tr>{" "}
+                  </AnimatePresence>
+                );
 
-                  const cells = Object.keys(data)
-                    .filter((key) => key !== "_id")
-                    .map((key) => (
-                      <td
-                        key={key}
-                        className="p-3 sm:p-4 text-sm first:font-medium"
-                      >
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-gray-200 group-hover:text-white transition-colors">
-                            {key === "date"
-                              ? formatDate(data[key])
-                              : data[key as keyof typeof data]}
-                          </span>
-                          {key !== "date" && (
-                            <span className="text-xs text-gray-400">
-                              {key === "weight"
-                                ? userUnits.weight
-                                : userUnits.bodyMeasurement}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                    ));
-
-                  return role.roleName === "client" ? (
-                    <CustomPopper
-                      key={data._id}
-                      isDelete
-                      onPopperClickHandler={role.deleteHandler}
-                      trClassName="group hover:bg-blue-900/10 transition-all duration-200"
-                      id={data._id}
-                    >
-                      {cells}
-                    </CustomPopper>
-                  ) : (
-                    <TableRow key={data._id}>{cells}</TableRow>
-                  );
-                })}
-
-                {emptyRows > 0 && (
-                  <tr>
-                    <td colSpan={TABLE_HEAD.length} className="p-3 sm:p-4" />
-                  </tr>
-                )}
-
-                {sortedArray.length === 0 && (
-                  <tr>
+                const cells = Object.keys(data)
+                  .filter((key) => key !== "_id")
+                  .map((key) => (
                     <td
-                      colSpan={TABLE_HEAD.length}
-                      className="py-12 sm:py-16 text-center"
+                      key={key}
+                      className="p-3 sm:p-4 text-sm first:font-medium"
                     >
-                      <div className="space-y-3">
-                        <div className="flex justify-center">
-                          <div className="p-3 rounded-full bg-blue-500/10">
-                            <svg
-                              className="w-6 h-6 text-blue-400"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-gray-400 font-medium">
-                            No measurements found
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {role.roleName === "client"
-                              ? "Add your first measurement to start tracking progress"
-                              : " No measurements recorded yet"}
-                          </p>
-                        </div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-gray-200 group-hover:text-white transition-colors">
+                          {key === "date"
+                            ? formatDate(data[key])
+                            : data[key as keyof typeof data]}
+                        </span>
+                        {key !== "date" && (
+                          <span className="text-xs text-gray-400">
+                            {key === "weight"
+                              ? userUnits.weight
+                              : userUnits.bodyMeasurement}
+                          </span>
+                        )}
                       </div>
                     </td>
-                  </tr>
-                )}
-              </AnimatePresence>
+                  ));
+
+                return role.roleName === "client" ? (
+                  <CustomPopper
+                    key={data._id}
+                    isDelete
+                    onPopperClickHandler={role.deleteHandler}
+                    trClassName="group hover:bg-blue-900/10 transition-all duration-200"
+                    id={data._id}
+                  >
+                    {cells}
+                  </CustomPopper>
+                ) : (
+                  <TableRow key={data._id}>{cells}</TableRow>
+                );
+              })}
+
+              {emptyRows > 0 && (
+                <tr>
+                  <td colSpan={TABLE_HEAD.length} className="p-3 sm:p-4" />
+                </tr>
+              )}
+
+              {sortedArray.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={TABLE_HEAD.length}
+                    className="py-12 sm:py-16 text-center"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex justify-center">
+                        <div className="p-3 rounded-full bg-blue-500/10">
+                          <svg
+                            className="w-6 h-6 text-blue-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-gray-400 font-medium">
+                          No measurements found
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {role.roleName === "client"
+                            ? "Add your first measurement to start tracking progress"
+                            : " No measurements recorded yet"}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
