@@ -20,11 +20,10 @@ export async function saveSingleDayExercisesClientData(
   });
 
   if (!validateWeekData.success) {
-    console.log(validateWeekData.error.errors);
     const errors = [
       ...new Set(validateWeekData.error.errors.map((error) => error.message)),
     ];
-    console.log(errors);
+
     return { errors: errors };
   }
 

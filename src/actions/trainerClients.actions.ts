@@ -91,7 +91,6 @@ export async function saveSingleDayExercises(
     return { errors: ["Trainer data required"] };
   }
 
-  console.log("after validation");
   try {
     const plan = await Plan.findById(planId);
     if (!plan) {

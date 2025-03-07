@@ -153,7 +153,6 @@ export async function addAdditionalTrainerData(
   formData: FormData,
   heading: TrainerAdditionalDataHeadingType
 ) {
-  console.log(formData.getAll("trainerDetails"));
   const validateData = TrainerAdditionalDataSchema.safeParse({
     trainerDetails: formData.getAll("trainerDetails"),
   });

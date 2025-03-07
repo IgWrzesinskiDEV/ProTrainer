@@ -9,10 +9,9 @@ export default async function ExerciseModalPage({
 }) {
   const exerciseId = (await params).exerciseId;
 
-  const exerciseDetails: ExerciseDetails = await getExerciseDetailsById(
-    exerciseId
-  );
-  console.log("in moidal");
+  const exerciseDetails: ExerciseDetails =
+    await getExerciseDetailsById(exerciseId);
+
   return (
     <ExerciseDetailsModal
       exerciseDetailsJSON={JSON.stringify(exerciseDetails)}

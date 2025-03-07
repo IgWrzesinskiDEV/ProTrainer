@@ -22,7 +22,6 @@ export default function RemoveClient({ clientId }: { clientId: string }) {
     // Implementation for removing client
     setIsConfirming(false);
     onClickHandler();
-    console.log("Removing client:", clientId);
   };
 
   if (isConfirming) {

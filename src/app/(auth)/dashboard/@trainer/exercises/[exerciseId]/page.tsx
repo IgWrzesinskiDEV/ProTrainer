@@ -8,10 +8,9 @@ export default async function ExerciseDetailsPage({
   params: Promise<{ exerciseId: string }>;
 }) {
   const exerciseId = (await params).exerciseId;
-  console.log(exerciseId);
-  const exerciseDetails: IExerciseDetails = await getExerciseDetailsById(
-    exerciseId
-  );
+
+  const exerciseDetails: IExerciseDetails =
+    await getExerciseDetailsById(exerciseId);
   return (
     <ExerciseDetailsView exerciseDetailJSON={JSON.stringify(exerciseDetails)} />
   );

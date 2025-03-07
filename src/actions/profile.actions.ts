@@ -25,7 +25,6 @@ export async function saveProfileData(prevState: unknown, formData: FormData) {
   const { fullName, bio, avatar } = validateData.data;
 
   if (avatar.size > 0) {
-    console.log("avatar2");
     const avatarFileName = await saveAvatarImage(avatar, id);
 
     await User.findByIdAndUpdate(id, {
