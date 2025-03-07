@@ -45,5 +45,14 @@ export async function getUserAvatarById(id: string) {
     console.error(e);
     return null;
   }
+}
 
+export async function getUserUnitsById(id: string) {
+  try {
+    const units = User.findById(id, "units");
+    return units;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }

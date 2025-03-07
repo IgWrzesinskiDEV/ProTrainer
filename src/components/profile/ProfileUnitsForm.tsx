@@ -3,40 +3,29 @@
 import type React from "react";
 
 import saveProfileUnits from "@/actions/profile.actions";
-import { verifyAuth } from "@/lib/lucia/auth";
-import { useActionState, useEffect, useState } from "react";
+
+import { useActionState, useState } from "react";
 
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 const initialState = {
   error: "",
 };
 
-export default function ProfileUnitsForm() {
-  const [units, setUnits] = useState({
-    height: "cm",
-    weight: "kg",
-    bodyMeasurement: "cm",
-    distance: "km",
-  });
+export default function ProfileUnitsForm({
+  units,
+}: {
+  units: Record<string, string>;
+}) {
   const [formState, formAction, isPending] = useActionState(
     saveProfileUnits,
     initialState
   );
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await verifyAuth();
-      if (data.user) {
-        setUnits(data.user.units);
-      }
-    };
-    getData().catch(console.error);
-  }, []);
+  const [localUnits, setLocalUnits] = useState(units);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUnits({ ...units, [e.target.name]: e.target.value });
+    setLocalUnits({ ...localUnits, [e.target.name]: e.target.value });
   };
-
   return (
     <div className="bg-[#252220] rounded-xl shadow-lg p-4 sm:p-6">
       <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">
@@ -61,7 +50,7 @@ export default function ProfileUnitsForm() {
               <select
                 id={unit}
                 name={unit}
-                value={units[unit as keyof typeof units]}
+                value={localUnits[unit] || ""}
                 onChange={handleChange}
                 className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#2a4a75] border border-[#3a5a85] rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#2673e8] text-white text-sm sm:text-base cursor-pointer"
               >

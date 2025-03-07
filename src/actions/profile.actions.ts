@@ -5,6 +5,7 @@ import saveAvatarImage from "@/lib/aws/saveAvatarImage";
 import { revalidatePath } from "next/cache";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { ProfileDetailsSchema } from "@/schemas/zSchemas";
+
 export async function saveProfileData(prevState: unknown, formData: FormData) {
   const { user } = await verifyAuth();
   const id = user?.id;
@@ -59,6 +60,6 @@ export default async function saveProfileUnits(
   await User.findByIdAndUpdate(id, {
     units: { weight, height, bodyMeasurement, distance },
   });
-  revalidatePath("/dashboard/profile");
+  revalidatePath("/dashboard/profile", "page");
   return { success: "Units saved" };
 }

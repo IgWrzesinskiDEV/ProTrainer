@@ -5,7 +5,7 @@ import { TbFaceIdError } from "react-icons/tb";
 
 export default function useTransitionWithError(
   toastSuccesContent: ReactNode,
-  onTrainsition?: () => Promise<void>
+  onTrainsition?: () => Promise<void | { error: string }>
 ) {
   if (!onTrainsition) {
     throw new Error("onTrainsition is required");
@@ -14,7 +14,10 @@ export default function useTransitionWithError(
   const onClickHandler = () => {
     startTransition(async () => {
       try {
-        await onTrainsition();
+        const data = await onTrainsition();
+        if (data && "error" in data) {
+          throw new Error(data.error);
+        }
         toastify(toastSuccesContent, 3000);
       } catch (e) {
         if (e && typeof e === "object" && "digest" in e) {

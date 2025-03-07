@@ -119,7 +119,9 @@ export const AddWeekDataSchema = z.object({
   weekData: z.array(
     z.object({
       weekNumber: z.number().positive(),
-      trainerData: z.string().min(1, { message: "Trainer data is required" }),
+      trainerData: z
+        .string({ message: "Trainer data is required" })
+        .min(1, { message: "Trainer data is required" }),
     })
   ),
 });
@@ -128,7 +130,9 @@ export const AddWeekDataClientSchema = z.object({
   weekData: z.array(
     z.object({
       weekNumber: z.number().positive(),
-      trainerData: z.string().min(1, { message: "Trainer data is required" }),
+      trainerData: z
+        .string({ message: "Trainer data is required" })
+        .min(1, { message: "Trainer data is required" }),
       clientData: z.string().optional(),
     })
   ),

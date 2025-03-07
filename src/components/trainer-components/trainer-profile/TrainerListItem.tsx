@@ -29,7 +29,7 @@ export default function TrainerListItem({
       <div className="flex-1 min-w-0">
         <input
           type="text"
-          name={heading.toLowerCase()}
+          name={"trainerDetails"}
           defaultValue={item}
           placeholder={`Enter ${heading.toLowerCase()}`}
           className="w-full bg-transparent text-xs sm:text-sm md:text-base text-white 

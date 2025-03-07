@@ -71,6 +71,11 @@ export default function SingleDay({
     initialState
   );
 
+  useEffect(() => {
+    if (saveSingleDayState?.success) {
+      toastify(<SaveChangesToast />, 3000);
+    }
+  }, [saveSingleDayState]);
   function addExercise() {
     const newExercise: Exercise = {
       number: (singleDay.exercises.length || 0) + 1,
@@ -529,7 +534,10 @@ export default function SingleDay({
                   onClick={() =>
                     startTransition(() => {
                       saveSingleDayAction();
-                      toastify(<SaveChangesToast />, 3000);
+
+                      // if (!saveSingleDayState?.errors?.length) {
+                      //   toastify(<SaveChangesToast />, 3000);
+                      // }
                     })
                   }
                   className="flex w-full sm:w-auto h-10 items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-md text-sm justify-center sm:ml-auto"

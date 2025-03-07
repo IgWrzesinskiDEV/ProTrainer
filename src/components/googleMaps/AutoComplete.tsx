@@ -20,7 +20,7 @@ const AutoCompleteComponent = forwardRef<
       } else if (geometry?.location) {
         bounds.extend(geometry.location);
       }
-      map.fitBounds(bounds);
+      map?.fitBounds(bounds);
     }
   };
   return (

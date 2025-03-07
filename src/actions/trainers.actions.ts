@@ -40,7 +40,8 @@ export async function sendInviteToTrainer(trainerId: string) {
     await trainer.save();
     revalidatePath(`/dashboard/trainers/${trainerId}`);
   } catch (e) {
-    throw new Error(e instanceof Error ? e.message : String(e));
+    return { error: e instanceof Error ? e.message : String(e) };
+    //throw new Error(e instanceof Error ? e.message : String(e));
   }
 }
 
@@ -152,6 +153,7 @@ export async function addAdditionalTrainerData(
   formData: FormData,
   heading: TrainerAdditionalDataHeadingType
 ) {
+  console.log(formData.getAll("trainerDetails"));
   const validateData = TrainerAdditionalDataSchema.safeParse({
     trainerDetails: formData.getAll("trainerDetails"),
   });

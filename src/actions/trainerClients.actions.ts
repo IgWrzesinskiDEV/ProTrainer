@@ -41,7 +41,7 @@ export async function addEmptyWorkoutPlan(
     await client.save();
 
     revalidatePath(`/dashboard/clients/${clientId}/plans`);
-    return { success: "Plan created" };
+    return { success: "Plan created", newPlanId: newPlan._id };
   } catch {
     return { errors: ["Plan not created"] };
   }
@@ -76,7 +76,6 @@ export async function saveSingleDayExercises(
   });
 
   if (!validateWeekData.success) {
-    console.log(validateWeekData.error.errors);
     const errors = [
       ...new Set(validateWeekData.error.errors.map((error) => error.message)),
     ];
@@ -91,22 +90,8 @@ export async function saveSingleDayExercises(
   if (hasEmptyTrainerData) {
     return { errors: ["Trainer data required"] };
   }
-  // const validateWeekData = AddWeekDataSchema.safeParse({
-  //   weekData: singleDay.exercises[0].weekData.map((weekData) => ({
-  //     weekNumber: weekData.weekNumber,
-  //     trainerData: weekData.trainerData,
-  //     userData: weekData.userData,
-  //   })),
-  // });
 
-  // if (!validateWeekData.success) {
-  //   const errors = [
-  //     ...new Set(validateWeekData.error.errors.map((error) => error.message)),
-  //   ];
-
-  //   return { errors: errors };
-  // }
-  console.log(singleDay.exercises[0]);
+  console.log("after validation");
   try {
     const plan = await Plan.findById(planId);
     if (!plan) {

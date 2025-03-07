@@ -1,6 +1,12 @@
 "use client";
 
-import { Fragment, useActionState, useState, useTransition } from "react";
+import {
+  Fragment,
+  useActionState,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 
 import type { WeekData, WorkoutDay } from "@/interfaces/workout/IWorkout";
 import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
@@ -39,6 +45,12 @@ export default function SingleDayWorkout({
     () => saveSingleDayExercisesClientData(singleDay, planId),
     initialState
   );
+
+  useEffect(() => {
+    if (saveSingleDayState?.success) {
+      toastify(<SaveChangesToast />, 3000);
+    }
+  }, [saveSingleDayState]);
   if (!singleDay && !singleDayData.isRestDay)
     return (
       <div className="flex flex-col gap-3 w-full items-center justify-center p-4 sm:p-6">
@@ -347,7 +359,6 @@ export default function SingleDayWorkout({
             onClick={() =>
               startTransition(() => {
                 saveSingleDayAction();
-                toastify(<SaveChangesToast />, 3000);
               })
             }
             className="flex w-fit h-10 sm:h-12 mb-4 sm:mb-5 border-2 border-blue-500 disabled:bg-transparent disabled:border-blue-500 items-center gap-2 px-3 sm:px-4 py-1 sm:py-2 mx-auto bg-blue-500 text-white text-sm sm:text-base rounded-lg hover:bg-blue-600 mt-3 sm:mt-4"

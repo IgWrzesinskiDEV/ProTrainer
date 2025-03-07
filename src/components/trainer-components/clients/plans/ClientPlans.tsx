@@ -50,6 +50,7 @@ export default function ClientPlans({
     workoutPlans[0] || null
   );
 
+  console.log("selectedPlan", selectedPlan);
   useEffect(() => {
     if (clientPlans) {
       const plans: WorkoutPlan[] = JSON.parse(clientPlans);
@@ -58,7 +59,16 @@ export default function ClientPlans({
       );
     }
   }, [clientPlans, selectedPlan?._id]);
-
+  useEffect(() => {
+    if (formState.success) {
+      setSelectedPlan(
+        workoutPlans.find((plan) => {
+          return plan._id === formState.newPlanId;
+        }) || null
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formState]);
   const [isPendingAddWeek, startTransitionAddWeek] = useTransition();
   const [isPendingRemoveLatestWeek, startTransitionRemoveLatestWeek] =
     useTransition();
@@ -123,7 +133,7 @@ export default function ClientPlans({
               isLoading={isPendingRemoveLatestWeek}
               isDisabled={selectedPlan.weekCount === 0}
               loadingClass="bg-opacity-50 hover:bg-red-600 pointer-events-none"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+              className="flex items-center justify-center disabled:hover:bg-red-600 gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
               onClick={() =>
                 startTransitionRemoveLatestWeek(async () => {
                   await deleteLatestWeek(selectedPlan._id, clientId);

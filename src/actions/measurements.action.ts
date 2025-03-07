@@ -23,9 +23,9 @@ export async function saveMessurement(prevState: unknown, formData: FormData) {
   }
   const { user } = await verifyAuth();
   const userId = user?.id;
-  console.log(user);
+
   const exisitingMeasurements = await MeasurementModel.findOne({ userId });
-  //const SingleMeasurementId=generateIdFromEntropySize(24);
+
   const currentMeasurements = {
     _id: generateIdFromEntropySize(24),
     ...validatedData.data,

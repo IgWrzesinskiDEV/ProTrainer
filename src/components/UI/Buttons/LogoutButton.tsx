@@ -12,7 +12,6 @@ export default function LogoutButton({ className }: { className?: string }) {
       onClick={logout}
     >
       {/* Background animation on hover */}
-      <span className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
 
       {/* Logout icon */}
       <svg

@@ -102,7 +102,7 @@ export default function DashboardHeader({
 
             {/* Mobile-optimized logout button */}
 
-            <LogoutButton className="hidden sm:block" />
+            <LogoutButton className="hidden sm:flex" />
 
             {/* Mobile logout icon only */}
             <button

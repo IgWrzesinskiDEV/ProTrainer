@@ -65,7 +65,7 @@ export default function PlanSelect({
   const weekCount = selectedPlan?.days[0]?.exercises[0]?.weekData?.length || 0;
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full sm:w-80">
       <button
         ref={buttonRef}
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}

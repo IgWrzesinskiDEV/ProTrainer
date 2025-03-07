@@ -1,13 +1,27 @@
 "use client";
 
+import { removeTrainer } from "@/actions/trainers.actions";
+import CustomToastContent from "@/components/UI/toastify/CustomToast";
+import useTransitionWithError from "@/hooks/useTrainsitionWithError";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { RiUserMinusLine } from "react-icons/ri";
 
 export default function RemoveClient({ clientId }: { clientId: string }) {
   const [isConfirming, setIsConfirming] = useState(false);
-
+  const { isPending, onClickHandler } = useTransitionWithError(
+    <CustomToastContent
+      message="Client removed!"
+      CustomIcon={
+        <RiUserMinusLine className="text-xl sm:text-2xl text-red-500" />
+      }
+    />,
+    () => removeTrainer(clientId, true)
+  );
   const handleRemove = () => {
     // Implementation for removing client
+    setIsConfirming(false);
+    onClickHandler();
     console.log("Removing client:", clientId);
   };
 
@@ -16,7 +30,7 @@ export default function RemoveClient({ clientId }: { clientId: string }) {
       <div className="flex items-center gap-1.5 sm:gap-2">
         <button
           onClick={() => setIsConfirming(false)}
-          className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-md sm:rounded-lg transition-colors duration-300"
+          className="px-2 sm:px-3 py-1.5  sm:py-2 text-xs sm:text-sm font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-md sm:rounded-lg transition-colors duration-300"
           aria-label="Cancel removal"
         >
           Cancel
@@ -36,7 +50,8 @@ export default function RemoveClient({ clientId }: { clientId: string }) {
   return (
     <button
       onClick={() => setIsConfirming(true)}
-      className="px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white bg-slate-800 hover:bg-red-600 rounded-md sm:rounded-lg border border-slate-700 hover:border-red-700 transition-all duration-300 flex items-center gap-1.5 sm:gap-2"
+      disabled={isPending}
+      className="px-2.5 sm:px-4 disabled:hover:bg-slate-800 disabled:hover:border-slate-700 disabled:opacity-30 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white bg-slate-800 hover:bg-red-600 rounded-md sm:rounded-lg border border-slate-700 hover:border-red-700 transition-all duration-300 flex items-center gap-1.5 sm:gap-2"
       aria-label="Remove client"
     >
       <MdDelete className="text-base sm:text-lg" />

@@ -285,7 +285,7 @@ export default function WorkoutPlan({
                     >
                       <Link
                         href={`plans/${selectedPlan._id}/${day.weekDay}`}
-                        className="inline-block w-full px-4 py-3 hover:bg-blue-500/10 transition-all duration-300"
+                        className="inline-block w-full h-full px-4 py-3 hover:bg-blue-500/10 transition-all duration-300"
                       >
                         <div className="flex flex-col">
                           <div className="flex items-center gap-3 mb-4">

@@ -17,7 +17,6 @@ export default async function ClientLayout({
 }: {
   params: Promise<{ clientSlug: string }>;
   children: ReactNode;
-  modal: ReactNode;
 }) {
   const clientId = (await params).clientSlug;
   await checkTrainerClient(clientId);
