@@ -1,0 +1,44 @@
+{
+  "name": "ProTrainer - Professional Training Platform",
+  "short_name": "ProTrainer",
+  "icons": [
+    {
+      "src": "/favicon/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "description": "Achieve your fitness goals with personalized workout plans, expert guidance, and comprehensive progress tracking.",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["fitness", "health", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshots/app.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Workout",
+      "url": "/auth/signup",
+      "description": "Begin your daily workout"
+    }
+  ],
+
+  "prefer_related_applications": false
+}

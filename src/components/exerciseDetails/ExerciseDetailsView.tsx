@@ -34,7 +34,7 @@ export default function ExerciseDetailsView({
   const isModal = !!modalCloseHandler;
 
   return (
-    <div className="bg-[#1e1e24] z-10 rounded-lg overflow-hidden shadow-xl w-full">
+    <div className="bg-[#1e1e24] h-[87vh]  lg:h-full z-10 rounded-lg overflow-y-auto shadow-xl w-full">
       {/* Header */}
       <div className="flex justify-between items-center p-3 sm:p-4 border-b border-gray-700">
         <h2 className="text-base sm:text-lg font-thin text-white">

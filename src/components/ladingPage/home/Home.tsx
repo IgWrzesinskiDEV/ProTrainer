@@ -11,7 +11,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pt-20 lg:pt-0">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary-950 to-secondary-900 h-[109vh] -z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary-950 to-secondary-900 h-[200vh] -z-10"></div>
 
         <div className="container  mx-auto px-4 lg:min-h-[85vh] flex flex-col lg:flex-row items-center">
           <div className="pt-16 lg:pt-0 lg:w-1/2 z-30 text-center lg:text-left">
@@ -147,7 +147,7 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 310"
+            viewBox="0 0 1440 290"
             className="w-full"
           >
             <path

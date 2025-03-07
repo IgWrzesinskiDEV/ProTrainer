@@ -22,7 +22,7 @@ export default function ExerciseDetailsModal({
 
   return (
     <ModalUnstyled ref={modalRef} isIntercepted isBackDropClickClose={false}>
-      <div className="w-full max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mx-auto">
+      <div className="w-full max-w-[95vw]  md:max-w-[90vw] lg:max-w-4xl mx-auto planScrollbar trainerDataSquareScrollbar overflow-y-auto ">
         <ExerciseDetailsView
           exerciseDetailJSON={exerciseDetailsJSON}
           modalCloseHandler={closeHandler}

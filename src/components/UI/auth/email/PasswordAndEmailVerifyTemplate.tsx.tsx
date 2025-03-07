@@ -20,7 +20,7 @@ interface EmailTemplateProps {
   isEmailVerify?: boolean;
 }
 
-const domain = process.env.NEXT_BASE_URL;
+const domain = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const EmailTemplate = ({
   userName = "User",
@@ -38,7 +38,7 @@ export const EmailTemplate = ({
       <Container style={container}>
         <Section style={logoContainer}>
           <Img
-            src={`${domain}/static/logo.png`}
+            src={`${domain}/logo/logo.png`}
             width="80"
             height="80"
             alt="Logo"

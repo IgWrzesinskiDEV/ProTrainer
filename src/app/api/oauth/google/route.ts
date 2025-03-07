@@ -88,8 +88,7 @@ export const GET = async (req: NextRequest) => {
               _id: generateIdFromEntropySize(24),
               email: googleData.email,
               userName: googleData.name,
-              emailVerified: true
-
+              emailVerified: true,
             },
           ],
 
@@ -170,7 +169,7 @@ export const GET = async (req: NextRequest) => {
       });
 
       return NextResponse.redirect(
-        new URL("/dashboard/profile", process.env.NEXT_BASE_URL),
+        new URL("/dashboard/profile", process.env.NEXT_PUBLIC_BASE_URL),
         {
           status: 302,
         }

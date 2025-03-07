@@ -1,0 +1,25 @@
+# www.robotstxt.org
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://protrainer.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /internal/
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Disallow: /private/
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /private/
+

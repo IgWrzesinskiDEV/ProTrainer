@@ -42,7 +42,8 @@ export default function ImagePicker({
           <Avatar
             src={
               (pickedImage as string) ||
-              `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${avatarFileName}?v=${avatarFileName}` ||
+              (avatarFileName &&
+                `https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${avatarFileName}?v=${avatarFileName}`) ||
               undefined
             }
             className="h-full w-full text-gray-300 bg-[#4B5563] "

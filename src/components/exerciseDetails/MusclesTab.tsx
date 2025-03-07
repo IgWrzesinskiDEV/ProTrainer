@@ -35,7 +35,7 @@ export default function MusclesTab({
 
         <div className="bg-[#1e1e24] p-4 rounded-lg text-blue-500">
           <h3 className="text-lg font-medium text-white mb-3">Muscle Model</h3>
-          <div className="aspect-square bg-gray-800 rounded-lg flex items-center justify-center">
+          <div className="aspect-square w-[80%] lg:w-full mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
             {/* <p className="text-gray-400">Muscle visualization not available</p> */}
 
             <Model

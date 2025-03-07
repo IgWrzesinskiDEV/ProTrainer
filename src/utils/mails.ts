@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import EmailTemplate from "@/components/UI/auth/email/PasswordAndEmailVerifyTemplate.tsx";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const domain = process.env.NEXT_BASE_URL;
+const domain = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function sendVerificationEmail(
   email: string,
@@ -13,7 +13,7 @@ export async function sendVerificationEmail(
   const confirmLink = `${domain}/auth/email-verification?token=${token}`;
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "noreply@protrainer.pro",
     to: email,
     subject: "Confirm your ProTrainer account",
     react: EmailTemplate({
@@ -32,7 +32,7 @@ export async function sendPasswordResetEmail(
   const confirmLink = `${domain}/auth/set-new-password?token=${token}`;
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "noreply@protrainer.pro",
     to: email,
     subject: "Reset your ProTrainer password",
     react: EmailTemplate({

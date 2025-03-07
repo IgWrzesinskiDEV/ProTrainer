@@ -43,7 +43,7 @@ export default function MeasurementWrapper({
         title="Body Measurements"
         Icon={<LuRuler className="w-6 h-6 text-blue-400" />}
         additionaTitleComponent={
-          hasData && (
+          false && (
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
@@ -61,15 +61,6 @@ export default function MeasurementWrapper({
                   <span>{measurementsData.length} records</span>
                 </div>
               </div>
-              {isClientSide && (
-                <button
-                  onClick={() => modalRef.current?.open()}
-                  className="w-full sm:w-auto flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  <MdAddCircleOutline className="mr-1.5 sm:mr-2 text-base sm:text-lg" />
-                  Add Measurement
-                </button>
-              )}
             </div>
           )
         }
@@ -137,7 +128,7 @@ export default function MeasurementWrapper({
 
         {/* Empty State */}
         {!hasData && (
-          <div className="text-center py-12">
+          <div className="text-center py-12 flex flex-col items-center gap-4">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-800/50 flex items-center justify-center">
               <LuRuler className="w-8 h-8 text-gray-400" />
             </div>
@@ -145,9 +136,19 @@ export default function MeasurementWrapper({
               No measurements recorded
             </h3>
             <p className="text-gray-400 text-sm max-w-md mx-auto">
-              This client hasn&apos;t recorded any body measurements yet.
-              Measurements will appear here once they&apos;re added.
+              {isClientSide
+                ? " Add your first measurement! "
+                : "This client hasn&apos;t recorded any body measurements yet. Measurements will appear here once they&apos;re added."}
             </p>
+            {isClientSide && (
+              <button
+                onClick={() => modalRef.current?.open()}
+                className="w-full sm:w-auto flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <MdAddCircleOutline className="mr-1.5 sm:mr-2 text-base sm:text-lg" />
+                Add Measurement
+              </button>
+            )}
           </div>
         )}
       </ClientSectionWraper>
