@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import screen from "/public/screenshots/main3.png";
+import screen from "/public/screenshots/app.png";
 
 import { testimonailsData } from "@/utils/ladingPage/Testimonials";
 import Testimonial from "./Testimonial";
@@ -80,7 +80,7 @@ export default function Home() {
               {/* Main app screenshot */}
               <div className="relative z-10 rounded-xl overflow-hidden shadow-2xl border border-gray-800 animate-float">
                 <Image
-                  src={screen || "/placeholder.svg"}
+                  src={screen}
                   priority
                   alt="ProTrainer App"
                   width={400}
