@@ -113,7 +113,7 @@ export default function ExerciseSelecter({
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          classNameAdded={`${inputClassName} touch-manipulation`}
+          classNameAdded={`${inputClassName} touch-manipulation truncate pr-7`}
           classNameLabel={labelClassName}
         />
 
