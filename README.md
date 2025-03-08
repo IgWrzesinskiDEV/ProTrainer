@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ProTrainer
 
-## Getting Started
+![ProTrainer Logo](/public/logo/logo.png)
 
-First, run the development server:
+## 🚀 About ProTrainer
+
+**ProTrainer** is a cutting-edge fitness web application that connects trainers and clients, offering personalized workout plans, exercise tracking, and progress monitoring. It streamlines the fitness journey by providing an intuitive platform where users can set goals, track their progress, and receive expert guidance from certified trainers.
+
+## ✨ Features
+
+- 📋 **Personalized Workout Plans** – Trainers can create custom workout plans tailored to clients' needs.
+- 📊 **Progress Tracking** – Monitor performance, body measurements, and exercise history.
+- 📅 **Workout Scheduling** – Plan workouts with an intuitive calendar and reminders.
+- 💬 **Trainer-Client Communication** – Real-time messaging and feedback.
+- 📌 **Exercise Library** – Access a rich library of exercises with video demonstrations.
+- 🔒 **Secure Authentication** – Powered by Lucia Auth.
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js
+- **Authentication**: Lucia Auth & OAuth2
+- **Database**: MongoDB
+- **Storage**: AWS S3
+- **Email Services**: Resend
+- **UI & Styling**: TailwindCSS, Material-UI, Framer Motion
+
+## 🎥 Demo
+
+🔗 **Live App:** [ProTrainer](https://www.protrainer.pro)
+
+## 📂 Installation & Setup
+
+To set up ProTrainer locally, follow these steps:
+
+### 1️⃣ Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/IgWrzesinskiDEV/ProTrainer.git
+cd ProTrainer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn install  # or npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3️⃣ Create a `.env.local` File
 
-## Learn More
+Configure environment variables like MongoDB URL, authentication secrets, etc.
 
-To learn more about Next.js, take a look at the following resources:
+### 4️⃣ Run the Development Server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+yarn dev  # or npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app will be available at `http://localhost:3000`.
 
-## Deploy on Vercel
+## 📬 Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For inquiries or support, reach out to **[contact@igorwrzesinski.dev](mailto:contact@igorwrzesinski.dev)**.
