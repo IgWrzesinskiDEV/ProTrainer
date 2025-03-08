@@ -86,7 +86,7 @@ export const EmailTemplate = ({
           <Row style={footerRow}>
             <Column>
               <Img
-                src={`${domain}/static/logo.png`}
+                src={`${domain}/logo/logo.png`}
                 width="40"
                 height="40"
                 alt="Logo"
@@ -166,6 +166,8 @@ const instructionText = {
   lineHeight: "24px",
   color: "#555",
   marginBottom: "20px",
+  margin: "0 auto",
+  textAlign: "center" as const,
 };
 
 const buttonStyle = {
@@ -190,7 +192,8 @@ const divider = {
 
 const helpSection = {
   marginBottom: "30px",
-  marginLeft: "20px",
+  margin: "0 auto",
+  textAlign: "center" as const,
 };
 
 const helpText = {
@@ -211,4 +214,5 @@ const footerText = {
   color: "#9ca3af",
   textAlign: "center" as const,
   margin: "0",
+  marginBottom: "10px",
 };

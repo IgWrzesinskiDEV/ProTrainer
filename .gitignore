@@ -16,10 +16,10 @@
 # next.js
 /.next/
 /out/
-
+/addMongoDBsets/
 # production
 /build
-/addMongoDBsets
+
 # misc
 .DS_Store
 *.pem
