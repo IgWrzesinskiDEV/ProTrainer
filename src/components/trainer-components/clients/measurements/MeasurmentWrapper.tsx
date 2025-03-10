@@ -13,18 +13,22 @@ import { useRef } from "react";
 import ModalUnstyled from "@/components/UI/Modal";
 import MeasurementsForm from "@/components/measurements/MeasurementsForm";
 import { deleteMeasurement } from "@/actions/measurements.action";
+import { unitsInterface } from "@/interfaces/user/IUser";
 export default function MeasurementWrapper({
   measurements,
   units,
   isClientSide,
+  clientUnits,
 }: {
   measurements: string;
   units: string;
   isClientSide?: boolean;
+  clientUnits?: string;
 }) {
   const measurementsData: ISingleMeasurement[] = measurements
     ? JSON.parse(measurements)
     : [];
+
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
   const hasData = measurementsData && measurementsData.length > 0;
   const sortedMeasurmentsByDate = measurementsData.sort(
@@ -33,18 +37,76 @@ export default function MeasurementWrapper({
   const closeModal = () => {
     modalRef.current?.close();
   };
-  const formatedUnits = JSON.parse(units);
+  const formatedUnits = JSON.parse(units) as unitsInterface;
+  const formatedClientUnits = clientUnits
+    ? (JSON.parse(clientUnits) as unitsInterface)
+    : null;
   const role = isClientSide
     ? { roleName: "client" as const, deleteHandler: deleteMeasurement }
     : { roleName: "trainer" as const };
+
+  if (formatedClientUnits) {
+    if (formatedUnits.weight === "kg" && formatedClientUnits.weight === "lbs") {
+      measurementsData.forEach((measurement) => {
+        measurement.weight = +(measurement.weight * 0.4535).toFixed(1);
+      });
+    } else if (
+      formatedUnits.weight === "lbs" &&
+      formatedClientUnits.weight === "kg"
+    ) {
+      measurementsData.forEach((measurement) => {
+        measurement.weight = +(measurement.weight * 2.20462).toFixed(1);
+      });
+    }
+    if (
+      formatedUnits.bodyMeasurement === "cm" &&
+      formatedClientUnits.bodyMeasurement === "in"
+    ) {
+      measurementsData.forEach((measurement) => {
+        Object.keys(measurement).forEach((key) => {
+          if (
+            key !== "date" &&
+            key !== "weight" &&
+            typeof measurement[key as keyof ISingleMeasurement] === "number"
+          ) {
+            (measurement[key as keyof ISingleMeasurement] as
+              | number
+              | undefined) = +(
+              (measurement[key as keyof ISingleMeasurement] as number) * 2.54
+            ).toFixed(1);
+          }
+        });
+      });
+    } else if (
+      formatedUnits.bodyMeasurement === "in" &&
+      formatedClientUnits.bodyMeasurement === "cm"
+    ) {
+      measurementsData.forEach((measurement) => {
+        Object.keys(measurement).forEach((key) => {
+          if (
+            key !== "date" &&
+            key !== "weight" &&
+            typeof measurement[key as keyof ISingleMeasurement] === "number"
+          ) {
+            (measurement[key as keyof ISingleMeasurement] as
+              | number
+              | undefined) = +(
+              (measurement[key as keyof ISingleMeasurement] as number) *
+              0.393701
+            ).toFixed(1);
+          }
+        });
+      });
+    }
+  }
   return (
     <>
       <ClientSectionWraper
         title="Body Measurements"
         Icon={<LuRuler className="w-6 h-6 text-blue-400" />}
         additionaTitleComponent={
-          false && (
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+          hasData && (
+            <div className="flex flex-col  justify-between items-start sm:items-end gap-3 sm:gap-4 mb-6 sm:mb-8">
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <LuCalendarDays className="w-4 h-4" />
@@ -61,6 +123,13 @@ export default function MeasurementWrapper({
                   <span>{measurementsData.length} records</span>
                 </div>
               </div>
+              <button
+                onClick={() => modalRef.current?.open()}
+                className="w-full sm:w-auto flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <MdAddCircleOutline className="mr-1.5 sm:mr-2 text-base sm:text-lg" />
+                Add Measurement
+              </button>
             </div>
           )
         }
@@ -117,7 +186,7 @@ export default function MeasurementWrapper({
           <div className="bg-gray-800/50  rounded-xl border border-gray-700/50 overflow-hidden">
             <div className="p-4 sm:p-6">
               <MeasurementsTable
-                measurementsData={measurements}
+                measurementsData={measurementsData}
                 units={units}
                 TABLE_HEAD={TABLE_HEAD}
                 role={role}

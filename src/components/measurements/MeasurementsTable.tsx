@@ -22,7 +22,7 @@ export default function MeasurementsTable({
   role,
 }: {
   TABLE_HEAD: string[];
-  measurementsData: string;
+  measurementsData: ISingleMeasurement[];
   units: string;
   role:
     | { roleName: "trainer" }
@@ -61,7 +61,8 @@ export default function MeasurementsTable({
     }
   };
 
-  const rawTableRows = measurementsData ? JSON.parse(measurementsData) : [];
+  //const rawTableRows = measurementsData ? JSON.parse(measurementsData) : [];
+  const rawTableRows = measurementsData || [];
   const sortedArray = getSortedArray(rawTableRows);
   const userUnits: unitsInterface = JSON.parse(units);
 
