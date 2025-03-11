@@ -4,10 +4,14 @@ import { PasswordReset } from "@/lib/models/passwordReset.model";
 import { getPasswordResetTokenByToken } from "@/utils/data/passwordResetToken";
 import { getUserByEmail } from "@/utils/data/user";
 import { User } from "@/lib/models/user.model";
-import { createAuthSession } from "@/lib/lucia/auth";
+import { createAuthSession, verifyAuth } from "@/lib/lucia/auth";
 import { createPasswordResetToken } from "@/utils/tokens";
 import { hashUserPassword, verifyPassword } from "@/utils/hash";
-import { ResetPasswordSchema, NewPasswordSchema } from "@/schemas/zSchemas";
+import {
+  ResetPasswordSchema,
+  NewPasswordSchema,
+  ChangePasswordSchema,
+} from "@/schemas/zSchemas";
 import { sendPasswordResetEmail } from "@/utils/mails";
 export async function sendPasswordReset(
   prevState: unknown,
@@ -45,7 +49,6 @@ export async function CreateNewPassword(
   token: string
 ) {
   const validateData = NewPasswordSchema.safeParse({
-    oldPassword: formData.get("oldPassword") as string,
     password: formData.get("password") as string,
     confirmPassword: formData.get("confirmPassword") as string,
   });
@@ -54,7 +57,7 @@ export async function CreateNewPassword(
     return { errors: errors };
   }
 
-  const { oldPassword, password } = validateData.data;
+  const { password } = validateData.data;
 
   if (!token) {
     return { errors: ["Token is required"] };
@@ -78,12 +81,6 @@ export async function CreateNewPassword(
     return { errors: ["User not found"] };
   }
 
-  const isOldPasswordValid = verifyPassword(existingUser.password, oldPassword);
-
-  if (!isOldPasswordValid) {
-    return { errors: ["Old password is incorrect"] };
-  }
-
   const hashedPassword = hashUserPassword(password);
 
   await User.updateOne(
@@ -93,6 +90,43 @@ export async function CreateNewPassword(
 
   await PasswordReset.findByIdAndDelete(existingToken._id);
   await createAuthSession(existingUser._id.toString());
+
+  return { success: "Password has been changed" };
+}
+
+export async function changePassword(prevState: unknown, formData: FormData) {
+  const validateData = ChangePasswordSchema.safeParse({
+    currentPassword: formData.get("currentPassword") as string,
+    password: formData.get("newPassword") as string,
+    confirmPassword: formData.get("confirmPassword") as string,
+  });
+  if (!validateData.success) {
+    const errors = validateData.error.errors.map((error) => error.message);
+    return { errors: errors };
+  }
+
+  const { currentPassword, password } = validateData.data;
+
+  const user = (await verifyAuth()).user;
+
+  if (!user) {
+    return { errors: ["User not found"] };
+  }
+
+  const existingUser = await getUserByEmail(user.email);
+
+  const isCurrentPasswordValid = verifyPassword(
+    existingUser.password,
+    currentPassword
+  );
+
+  if (!isCurrentPasswordValid) {
+    return { errors: ["Current password is incorrect"] };
+  }
+
+  const hashedPassword = hashUserPassword(password);
+
+  await User.updateOne({ email: user.email }, { password: hashedPassword });
 
   return { success: "Password has been changed" };
 }

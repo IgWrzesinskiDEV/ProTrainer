@@ -24,11 +24,23 @@ export const ResetPasswordSchema = z.object({
 // New Password Schema
 export const NewPasswordSchema = z
   .object({
-    oldPassword: z.string().trim().min(1, {
-      message: "Old password is required",
-    }),
     password: z.string().min(8, {
       message: "Minimum 8 characters required",
+    }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z.string().trim().min(1, {
+      message: "Current password is required",
+    }),
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters",
     }),
     confirmPassword: z.string(),
   })

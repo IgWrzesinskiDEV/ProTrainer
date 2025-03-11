@@ -1,7 +1,7 @@
 import ProfileDescriptionForm from "./ProfileDescriptionForm";
 import ProfileUnitsForm from "./ProfileUnitsForm";
 
-import ProfileStats from "./ProfileStats";
+//import ProfileStats from "./ProfileStats";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { getUserUnitsById } from "@/utils/data/user";
 
@@ -18,7 +18,7 @@ export default async function Profile() {
       <div className="lg:col-span-2">
         <ProfileUnitsForm key={Date.now()} units={plainUnits} />
 
-        <ProfileStats />
+        {/* <ProfileStats /> */}
       </div>
     </div>
   );

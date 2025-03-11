@@ -207,7 +207,7 @@ export default function MeasurementWrapper({
             <p className="text-gray-400 text-sm max-w-md mx-auto">
               {isClientSide
                 ? " Add your first measurement! "
-                : "This client hasn&apos;t recorded any body measurements yet. Measurements will appear here once they&apos;re added."}
+                : "This client hasn't recorded any body measurements yet. Measurements will appear here once they're added."}
             </p>
             {isClientSide && (
               <button

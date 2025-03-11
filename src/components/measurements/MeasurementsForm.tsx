@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { saveMessurement } from "@/actions/measurements.action";
 import DatePickerMeasurements from "./DatePickerMeasurements";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
@@ -25,6 +25,11 @@ export default function MeasurementsForm({
     saveMessurement,
     initialState
   );
+  useEffect(() => {
+    if (formState.success && closeModal) {
+      closeModal();
+    }
+  }, [formState.success, closeModal]);
 
   return (
     <div className="w-full max-w-3xl  mx-auto p-4 sm:p-6 outline-none bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-2xl planScrollbar trainerDataSquareScrollbar text-gray-100 max-h-[92vh] overflow-y-auto relative">
@@ -121,19 +126,20 @@ export default function MeasurementsForm({
           </p>
         )}
 
-        <div className="flex justify-center gap-3 sm:gap-4 pt-2">
+        <div className="flex justify-around   pt-2">
           <ButtonWithLoading
-            className="flex-1 sm:flex-initial bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className=" sm:flex-initial min-w-32 min-h-12 disabled:hover:bg-blue-600 disabled:bg-opacity-20 border-blue-600 border bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-2 sm:py-2.5 sm:px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             type="submit"
+            isDisabled={isPending}
             isLoading={isPending}
           >
-            Save Measurements
+            Save
           </ButtonWithLoading>
 
           <button
             type="button"
             onClick={closeModal}
-            className="flex-1 sm:flex-initial bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2.5 px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className=" sm:flex-initial min-w-32 min-h-11 bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2 px-2 sm:py-2.5 sm:px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
           >
             Cancel
           </button>

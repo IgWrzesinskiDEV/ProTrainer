@@ -25,8 +25,9 @@ export async function signup(prevState: unknown, formData: FormData) {
 
   const hashedPassword = hashUserPassword(password);
   try {
+    const _id = generateIdFromEntropySize(24);
     await createUser({
-      _id: generateIdFromEntropySize(24),
+      _id,
       email,
       password: hashedPassword,
       userName,
@@ -40,7 +41,7 @@ export async function signup(prevState: unknown, formData: FormData) {
       verificationToken.token,
       userName
     );
-    redirect("/auth/verify-email-send");
+    redirect(`/auth/verify-email-send?id=${_id}`);
   } catch (error: unknown) {
     if (
       error &&
@@ -70,6 +71,19 @@ export async function login(prevState: unknown, formData: FormData) {
 
   if (!existingUser || !existingUser.password || !existingUser.email) {
     return { errors: ["User not found"] };
+  }
+  if (!existingUser.emailVerified) {
+    const verificationToken = await createEmailVerificationToken(
+      existingUser.email
+    );
+
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+      existingUser.userName
+    );
+
+    redirect(`/auth/verify-email-send?id=${existingUser._id}`);
   }
   const isValid = verifyPassword(existingUser.password, password);
   if (!isValid) {

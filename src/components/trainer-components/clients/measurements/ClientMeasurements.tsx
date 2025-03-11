@@ -12,7 +12,7 @@ export default async function ClientMeasurements({
   const clientData = await getClientById(clientId);
   const measurements = JSON.stringify(clientData?.measurements);
   const clientUnits = JSON.stringify(clientData?.units);
-  //const units = JSON.stringify(clientData?.units);
+
   return (
     <MeasurementWrapper
       measurements={measurements}

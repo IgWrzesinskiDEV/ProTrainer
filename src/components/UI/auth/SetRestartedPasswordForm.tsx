@@ -47,12 +47,12 @@ export default function SetRestartedPasswordForm() {
 
   return (
     <form className="w-full max-w-md space-y-4" action={formAction}>
-      <AuthInput
-        label="old password"
-        name="oldPassword"
+      {/* <AuthInput
+        label="Current password"
+        name="currentPassword"
         type="password"
         disabled={isPending}
-      />
+      /> */}
 
       <AuthInput
         label="password"
