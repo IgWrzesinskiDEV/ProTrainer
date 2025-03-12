@@ -11,7 +11,7 @@ import {
 import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
 import { redirect } from "next/navigation";
 import { sentNotification } from "./notification.action";
-import { notificationType } from "@/lib/models/notification.model";
+import { NotificationType } from "@/lib/models/notification.model";
 
 export async function sendInviteToTrainer(trainerId: string) {
   try {
@@ -43,7 +43,7 @@ export async function sendInviteToTrainer(trainerId: string) {
     await sentNotification(
       trainerId,
       user.userName,
-      notificationType.INVITATION_SENT
+      NotificationType.INVITATION_SENT
     );
     revalidatePath(`/dashboard/trainers/${trainerId}`);
   } catch (e) {
@@ -125,7 +125,7 @@ export async function acceptInvite(clientId: string) {
     await sentNotification(
       clientId,
       trainer?.profileDetails?.fullName || trainer.userName,
-      notificationType.INVITATION_SENT
+      NotificationType.INVITATION_SENT
     );
 
     revalidatePath("/dashboard/invites");
@@ -156,7 +156,7 @@ export async function declineInvite(clientId: string) {
     await sentNotification(
       clientId,
       trainer?.profileDetails?.fullName || trainer.userName,
-      notificationType.INVITATION_REJECTED
+      NotificationType.INVITATION_REJECTED
     );
     revalidatePath("/dashboard/invites");
   } catch (e) {
