@@ -123,13 +123,15 @@ export default function MeasurementWrapper({
                   <span>{measurementsData.length} records</span>
                 </div>
               </div>
-              <button
-                onClick={() => modalRef.current?.open()}
-                className="w-full sm:w-auto flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <MdAddCircleOutline className="mr-1.5 sm:mr-2 text-base sm:text-lg" />
-                Add Measurement
-              </button>
+              {isClientSide && (
+                <button
+                  onClick={() => modalRef.current?.open()}
+                  className="w-full sm:w-auto flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <MdAddCircleOutline className="mr-1.5 sm:mr-2 text-base sm:text-lg" />
+                  Add Measurement
+                </button>
+              )}
             </div>
           )
         }

@@ -1,5 +1,6 @@
 import { LuTarget } from "react-icons/lu";
 import Model, { Muscle } from "react-body-highlighter";
+import textWithDashTransform from "@/utils/textWithDashTransform";
 
 export default function MusclesTab({
   muscleGroup,
@@ -24,7 +25,7 @@ export default function MusclesTab({
                   className="flex items-center text-xs sm:text-base  text-gray-200 capitalize"
                 >
                   <div className="w-2 h-2 rounded-full bg-blue-500 mr-2 "></div>
-                  {muscle}
+                  {textWithDashTransform(muscle)}
                 </li>
               ))}
             </ul>
@@ -35,7 +36,7 @@ export default function MusclesTab({
 
         <div className="bg-[#1e1e24] p-4 rounded-lg text-blue-500">
           <h3 className="text-lg font-medium text-white mb-3">Muscle Model</h3>
-          <div className="aspect-square w-[80%] lg:w-full mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
+          <div className="aspect-square w-[80%]  mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
             {/* <p className="text-gray-400">Muscle visualization not available</p> */}
 
             <Model

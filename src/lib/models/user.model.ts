@@ -29,6 +29,8 @@ export interface IUser {
     bodyMeasurement: "cm" | "in";
     distance: "km" | "mi";
   };
+
+  notifications: string[];
 }
 
 const trainerDetailsSchema = new Schema(
@@ -107,6 +109,7 @@ const userSchema = new Schema<IUser>(
       bodyMeasurement: { type: String, default: "cm" },
       distance: { type: String, default: "km" },
     },
+    notifications: [{ type: String, ref: "Notification" }], // 🔔 Store notification IDs here
   } as const,
   { _id: false }
 );

@@ -57,7 +57,7 @@ export default function Measurement({
         </div>
         <div className="bg-gray-800 rounded-xl p-3 sm:p-5 shadow-inner overflow-hidden">
           <MeasurementsTable
-            measurementsData={measurementsData}
+            measurementsData={JSON.parse(measurementsData)}
             TABLE_HEAD={TABLE_HEAD}
             units={units}
             role={{ roleName: "client", deleteHandler: deleteMeasurement }}

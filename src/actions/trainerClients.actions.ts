@@ -10,7 +10,8 @@ import { revalidatePath } from "next/cache";
 import { User } from "@/lib/models/user.model";
 import { WeekDays, WorkoutDay } from "@/interfaces/workout/IWorkout";
 import { Plan } from "@/lib/models/plan.model";
-
+import { sentNotification } from "./notification.action";
+import { NotificationType } from "@/lib/models/notification.model";
 export async function addEmptyWorkoutPlan(
   prevState: unknown,
   formData: FormData,
@@ -39,6 +40,7 @@ export async function addEmptyWorkoutPlan(
       client.plansIds = [newPlan._id];
     }
     await client.save();
+    await sentNotification(client._id, "Trainer", NotificationType.NEW_PLAN);
 
     revalidatePath(`/dashboard/clients/${clientId}/plans`);
     return { success: "Plan created", newPlanId: newPlan._id };
@@ -79,7 +81,7 @@ export async function saveSingleDayExercises(
     const errors = [
       ...new Set(validateWeekData.error.errors.map((error) => error.message)),
     ];
-    console.log(errors);
+
     return { errors: errors };
   }
 
@@ -158,8 +160,10 @@ export async function addEmptyWeek(planId: string, clientId: string) {
       });
     });
     await plan.save();
+    await sentNotification(clientId, "Trainer", NotificationType.NEW_WEEK);
     revalidatePath(`/dashboard/clients/${clientId}/plans`);
-  } catch {
+  } catch (e) {
+    console.log(e);
     throw new Error("Week not added");
   }
 }

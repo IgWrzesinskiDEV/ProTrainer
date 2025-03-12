@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import getNotificationsByUserId from "@/utils/data/notifications/getNotificationsByUserId";
 export default async function AuthLayout({
   children,
 }: Readonly<{
@@ -14,6 +15,7 @@ export default async function AuthLayout({
   if (!user) {
     return redirect("/auth/login");
   }
+  const notifications = await getNotificationsByUserId(user.id);
 
   return (
     <>
@@ -23,6 +25,7 @@ export default async function AuthLayout({
           userName={user.userName}
           currentTrainer={user?.currentTrainer}
           role={user.role}
+          notifications={JSON.parse(JSON.stringify(notifications))}
         />
 
         {/* Main Navigation Tabs */}

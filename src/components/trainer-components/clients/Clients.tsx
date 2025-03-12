@@ -61,6 +61,7 @@ export default function ClientsList({ clients }: { clients: string }) {
       title="Your Clients"
       Icon={<LuUsers className="text-blue-400" />}
       text="Manage and track your clients progress all in one place"
+      placeholder="Search clients by name..."
       searchValue={searchValue}
       setSearchValue={setSearchValue}
     >

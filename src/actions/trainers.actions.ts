@@ -10,6 +10,8 @@ import {
 } from "@/schemas/zSchemas";
 import convertSocialMediaDatatoDB from "@/utils/convertSocialMediaDatatoDB";
 import { redirect } from "next/navigation";
+import { sentNotification } from "./notification.action";
+import { notificationType } from "@/lib/models/notification.model";
 
 export async function sendInviteToTrainer(trainerId: string) {
   try {
@@ -38,6 +40,11 @@ export async function sendInviteToTrainer(trainerId: string) {
 
     trainer.trainerDetails.clientsInvites.push(userId);
     await trainer.save();
+    await sentNotification(
+      trainerId,
+      user.userName,
+      notificationType.INVITATION_SENT
+    );
     revalidatePath(`/dashboard/trainers/${trainerId}`);
   } catch (e) {
     return { error: e instanceof Error ? e.message : String(e) };
@@ -115,6 +122,11 @@ export async function acceptInvite(clientId: string) {
 
     await trainer.save();
     await client.save();
+    await sentNotification(
+      clientId,
+      trainer?.profileDetails?.fullName || trainer.userName,
+      notificationType.INVITATION_SENT
+    );
 
     revalidatePath("/dashboard/invites");
   } catch (e) {
@@ -141,7 +153,11 @@ export async function declineInvite(clientId: string) {
     trainer.trainerDetails.clientsInvites.splice(index, 1);
 
     await trainer.save();
-
+    await sentNotification(
+      clientId,
+      trainer?.profileDetails?.fullName || trainer.userName,
+      notificationType.INVITATION_REJECTED
+    );
     revalidatePath("/dashboard/invites");
   } catch (e) {
     throw new Error(e instanceof Error ? e.message : String(e));

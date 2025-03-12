@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { LuX } from "react-icons/lu";
+import { LuArrowLeft, LuX } from "react-icons/lu";
 import ExerciseTabs from "./ExerciseTabs";
 import InstructionsTab from "./InstructionsTab";
 import MusclesTab from "./MusclesTab";
 import DemoTab from "./DemoTab";
 import { Muscle } from "react-body-highlighter";
+import Link from "next/link";
 
 export interface ExerciseDetails {
   _id: string;
@@ -34,10 +35,25 @@ export default function ExerciseDetailsView({
   const isModal = !!modalCloseHandler;
 
   return (
-    <div className="bg-[#1e1e24] h-[87vh]  lg:h-full z-10 rounded-lg overflow-y-auto shadow-xl w-full">
+    <div className="bg-[#1e1e24] h-[87vh]  lg:h-full z-10 rounded-lg overflow-y-auto shadow-xl w-full lg:w-3/4 lg:mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-center p-3 sm:p-4 border-b border-gray-700">
-        <h2 className="text-base sm:text-lg font-thin text-white">
+      <div className="flex  items-center justify-between p-3 sm:p-4 border-b border-gray-700">
+        {!isModal && (
+          <Link
+            href="/dashboard/exercises"
+            className="group flex items-center justify-center rounded-lg p-1.5 text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+            aria-label="Back to exercises"
+          >
+            <LuArrowLeft
+              size={20}
+              className="transform group-hover:-translate-x-0.5 transition-transform duration-200"
+            />
+            <span className="ml-1.5 text-sm font-medium hidden sm:inline">
+              Back
+            </span>
+          </Link>
+        )}
+        <h2 className="text-base  sm:text-lg font-thin text-white">
           Exercise Details
         </h2>
         {modalCloseHandler && (

@@ -12,8 +12,15 @@ export default function DashboardNav({ role }: { role: IUserRole }) {
   const path = usePathname();
   const NavLinks =
     role === IUserRole.CLIENT
-      ? ["Profile", "Account", "Plans", "Measurement", "Trainers"]
-      : ["Profile", "Account", "Clients", "Trainer profile", "Invites"];
+      ? ["Profile", "Account", "Plans", "Measurement", "Trainers", "Exercises"]
+      : [
+          "Profile",
+          "Account",
+          "Clients",
+          "Trainer profile",
+          "Invites",
+          "Exercises",
+        ];
 
   // Toggle mobile menu
   const toggleMenu = () => {

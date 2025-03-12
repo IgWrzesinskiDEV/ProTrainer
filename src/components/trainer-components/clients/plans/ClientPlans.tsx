@@ -50,7 +50,6 @@ export default function ClientPlans({
     workoutPlans[0] || null
   );
 
-  console.log("selectedPlan", selectedPlan);
   useEffect(() => {
     if (clientPlans) {
       const plans: WorkoutPlan[] = JSON.parse(clientPlans);

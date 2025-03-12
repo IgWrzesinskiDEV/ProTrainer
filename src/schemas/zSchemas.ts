@@ -149,3 +149,11 @@ export const AddWeekDataClientSchema = z.object({
     })
   ),
 });
+
+export const DeleteAccount = z.object({
+  deleteConfirm: z.literal("DELETE", {
+    errorMap: () => ({
+      message: "Please type DELETE to confirm account deletion",
+    }),
+  }),
+});

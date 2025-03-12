@@ -1,30 +1,19 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
+import { useActionState, useState } from "react";
+import { deleteAccount } from "@/actions/deleteAccount.actions";
 
 export default function DeleteAccountSection() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [deleteConfirmText, setDeleteConfirmText] = useState("");
 
-  const handleDeleteAccount = async () => {
-    if (deleteConfirmText !== "DELETE") {
-      // setErrorMessage("Please type DELETE to confirm account deletion");
-      return;
-    }
-
-    //setIsSubmitting(true);
-    //setErrorMessage("");
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Redirect to login page after successful deletion
-      //router.push("/login");
-    } catch (error) {
-      //setErrorMessage("Failed to delete account. Please try again.");
-      //setIsSubmitting(false);
-    }
+  const initialState = {
+    errors: [],
   };
+  const [formState, formAction, isPending] = useActionState(
+    deleteAccount,
+    initialState
+  );
+
   return (
     <div className="bg-gradient-to-br from-[#2A1E2F] to-[#1E1E2F] rounded-xl p-8 shadow-xl border border-red-900/20 ">
       <div className="flex items-center mb-6">
@@ -123,41 +112,57 @@ export default function DeleteAccountSection() {
           >
             <p className="text-red-300 font-medium">
               To confirm deletion, please type{" "}
-              <span className="font-bold text-white bg-red-900/30 px-2 py-0.5 rounded">
+              <span className="font-bold select-none text-white bg-red-900/30 px-2 py-0.5 rounded">
                 DELETE
               </span>{" "}
               in the field below:
             </p>
-            <div className="relative">
-              <input
-                type="text"
-                value={deleteConfirmText}
-                onChange={(e) => setDeleteConfirmText(e.target.value)}
-                className="w-full px-4 py-3 bg-[#0F1C2E] bg-opacity-50 border border-red-800/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all duration-200"
-                placeholder="Type DELETE to confirm"
-              />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button
-                type="button"
-                onClick={handleDeleteAccount}
-                //disabled={isSubmitting}
-                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg font-medium shadow-lg shadow-red-500/20 hover:shadow-red-500/40 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:ring-offset-2 focus:ring-offset-[#1E1E2F] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5"
-              >
-                confirm
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowDeleteConfirm(false);
-                  setDeleteConfirmText("");
-                  //setErrorMessage("");
-                }}
-                className="px-6 py-3 bg-gray-700/50 text-white rounded-lg font-medium hover:bg-gray-600/50 focus:outline-none focus:ring-2 focus:ring-gray-500/30 focus:ring-offset-2 focus:ring-offset-[#1E1E2F] transition-all duration-200"
-              >
-                Cancel
-              </button>
-            </div>
+            <form action={formAction} className="space-y-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  name="deleteConfirm"
+                  className="w-full px-4 py-3 bg-[#0F1C2E] bg-opacity-50 border border-red-800/50 rounded-lg text-white focus:outline-none outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all duration-200"
+                  placeholder="Type DELETE to confirm"
+                />
+                {(formState?.errors?.length ?? 0) > 0 && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-2 text-sm text-red-400 flex items-center"
+                  >
+                    <svg
+                      className="w-4 h-4 mr-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {formState?.errors[0]}
+                  </motion.p>
+                )}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <ButtonWithLoading
+                  type="submit"
+                  isDisabled={isPending}
+                  isLoading={isPending}
+                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg font-medium shadow-lg shadow-red-500/20 hover:shadow-red-500/40 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:ring-offset-2 focus:ring-offset-[#1E1E2F] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5"
+                >
+                  Confirm
+                </ButtonWithLoading>
+                <button
+                  type="button"
+                  className="px-6 py-3 bg-gray-700/50 text-white rounded-lg font-medium hover:bg-gray-600/50 focus:outline-none focus:ring-2 focus:ring-gray-500/30 focus:ring-offset-2 focus:ring-offset-[#1E1E2F] transition-all duration-200"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>
