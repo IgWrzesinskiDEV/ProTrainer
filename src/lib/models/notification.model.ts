@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { User } from "./user.model";
 
 export enum NotificationType {
   INVITATION_ACCEPTED = "invitation_accepted",
@@ -26,7 +27,20 @@ const notificationSchema = new Schema<INotification>({
     enum: NotificationType,
   },
   isRead: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now, expires: "120s" },
+});
+
+notificationSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    try {
+      await User.findByIdAndUpdate(doc.userId, {
+        $pull: { notifications: doc._id }, // Remove notification ID from user's array
+      });
+      console.log(`Notification ${doc._id} removed from user ${doc.userId}`);
+    } catch (error) {
+      console.error("Error removing notification from user:", error);
+    }
+  }
 });
 
 export const Notification =

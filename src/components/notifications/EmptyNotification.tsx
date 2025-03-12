@@ -5,18 +5,18 @@ import { motion } from "framer-motion";
 export function EmptyNotifications() {
   return (
     <motion.div
-      className="py-12 px-4 text-center"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        transition: {
-          delay: 0.3,
-          type: "spring",
-          stiffness: 300,
-          damping: 20,
-        },
-      }}
+      className="py-12 px-4 text-center overflow-hidden"
+      // initial={{ opacity: 0, scale: 0.9 }}
+      // animate={{
+      //   opacity: 1,
+      //   scale: 1,
+      //   transition: {
+      //     delay: 0.3,
+      //     type: "spring",
+      //     stiffness: 300,
+      //     damping: 20,
+      //   },
+      // }}
     >
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ export function EmptyNotifications() {
         animate={{
           scale: 1,
           opacity: 1,
-          transition: { delay: 0.4, duration: 0.3 },
+          transition: { delay: 0.3, duration: 0.3 },
         }}
       >
         <path
@@ -39,23 +39,23 @@ export function EmptyNotifications() {
         />
       </motion.svg>
       <motion.p
-        className="text-gray-400 font-medium"
-        initial={{ y: 10, opacity: 0 }}
+        className="text-gray-400 font-medium "
+        initial={{ y: 0, opacity: 0 }}
         animate={{
           y: 0,
           opacity: 1,
-          transition: { delay: 0.5, duration: 0.3 },
+          transition: { delay: 0.3, duration: 0.3 },
         }}
       >
         No notifications yet
       </motion.p>
       <motion.p
         className="text-gray-500 text-sm mt-1"
-        initial={{ y: 10, opacity: 0 }}
+        initial={{ y: 0, opacity: 0 }}
         animate={{
           y: 0,
           opacity: 1,
-          transition: { delay: 0.6, duration: 0.3 },
+          transition: { delay: 0.3, duration: 0.3 },
         }}
       >
         We&apos;ll notify you when something happens

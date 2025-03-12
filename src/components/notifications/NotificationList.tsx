@@ -23,7 +23,7 @@ export function NotificationList({
 
   return (
     <motion.div
-      className="overflow-y-auto scrollBarRectangle trainerDataSquareScrollbar"
+      className="overflow-y-auto overflow-x-hidden scrollBarRectangle trainerDataSquareScrollbar"
       style={{ maxHeight: "min(calc(100vh - 180px), 350px)" }}
       initial={{ opacity: 0 }}
       animate={{
