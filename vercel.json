@@ -3,6 +3,10 @@
     {
       "schedule": "0 0 * * *",
       "path": "/api/cleanup"
+    },
+    {
+      "schedule": "0 0 * * *",
+      "path": "/api/deleteExpiredSessions"
     }
   ]
 }

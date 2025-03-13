@@ -9,7 +9,7 @@ import { IUserRole } from "../models/user.model";
 //import connectMongoDb from "../mongodb/mogodb";
 //await connectMongoDb();
 export const luciaAuth = new Lucia(adapter, {
-  sessionExpiresIn: new TimeSpan(5, "d"),
+  sessionExpiresIn: new TimeSpan(1, "d"),
   sessionCookie: {
     expires: false,
 

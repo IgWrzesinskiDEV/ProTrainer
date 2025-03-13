@@ -71,17 +71,20 @@ export const verifyAuth = cache(async function verifyAuth() {
 });
 
 export async function destroySession() {
-  const { session } = await verifyAuth();
-  if (!session) {
-    return {
-      error: "Unautorized",
-    };
-  }
-  luciaAuth.invalidateSession(session.id);
-  const sessionCookie = luciaAuth.createBlankSessionCookie();
-  (await cookies()).set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  try {
+    const { session } = await verifyAuth();
+    if (!session) {
+      return {
+        error: "Unautorized",
+      };
+    }
+    await luciaAuth.invalidateSession(session.id);
+    await luciaAuth.deleteExpiredSessions();
+    const sessionCookie = luciaAuth.createBlankSessionCookie();
+    (await cookies()).set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes
+    );
+  } catch {}
 }
