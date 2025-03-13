@@ -1,6 +1,6 @@
 import ExerciseDetailsModal from "@/components/trainer-components/clients/plans/ExerciseDetailsModal";
 import { ExerciseDetails } from "@/interfaces/workout/IWorkout";
-import { getExerciseDetailsById } from "@/utils/data/getExerciseById";
+import { getExerciseDetailsById } from "@/utils/data/exercises/getExerciseById";
 
 export default async function ExerciseModalPage({
   params,

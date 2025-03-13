@@ -7,8 +7,10 @@ import { useEffect, useRef } from "react";
 
 export default function ExerciseDetailsModal({
   exerciseDetailsJSON,
+  isCustom,
 }: {
   exerciseDetailsJSON: string;
+  isCustom?: boolean;
 }) {
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
 
@@ -26,6 +28,7 @@ export default function ExerciseDetailsModal({
         <ExerciseDetailsView
           exerciseDetailJSON={exerciseDetailsJSON}
           modalCloseHandler={closeHandler}
+          isCustom={isCustom}
         />
       </div>
     </ModalUnstyled>

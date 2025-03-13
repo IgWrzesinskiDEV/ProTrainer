@@ -76,6 +76,7 @@ export default function SingleDay({
       toastify(<SaveChangesToast />, 3000);
     }
   }, [saveSingleDayState]);
+
   function addExercise() {
     const newExercise: Exercise = {
       number: (singleDay.exercises.length || 0) + 1,
@@ -98,7 +99,8 @@ export default function SingleDay({
     exerciseNumber: number,
     field: keyof Exercise,
     value: string,
-    exerciseDetailsIdValue?: string
+    exerciseDetailsIdValue?: string,
+    isCustom?: boolean
   ) {
     const updatedDay = {
       ...singleDay,
@@ -108,6 +110,14 @@ export default function SingleDay({
             exerciseDetailsIdValue !== undefined &&
             exerciseDetailsIdValue !== ""
           ) {
+            if (isCustom) {
+              return {
+                ...ex,
+                [field]: value,
+                exerciseDetailsId: exerciseDetailsIdValue,
+                isCustom: true,
+              };
+            }
             return {
               ...ex,
               [field]: value,

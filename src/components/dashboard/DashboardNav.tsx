@@ -20,6 +20,7 @@ export default function DashboardNav({ role }: { role: IUserRole }) {
           "Trainer profile",
           "Invites",
           "Exercises",
+          "My exercises",
         ];
 
   // Toggle mobile menu

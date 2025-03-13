@@ -3,16 +3,18 @@ import Link from "next/link";
 import { LuInfo } from "react-icons/lu";
 
 export default function ExerciseDetailsLink({
+  isCustom,
   exerciseId,
   className,
 }: {
+  isCustom?: boolean;
   exerciseId?: string;
   className?: string;
 }) {
   if (!exerciseId) return null;
   return (
     <Link
-      href={`/dashboard/exercises/${exerciseId}`}
+      href={`/dashboard/${isCustom ? "my-exercises" : "exercises"}/${exerciseId}`}
       className={cn(
         "block absolute top-1/2 bg-gray-800 -translate-y-1/2 right-1 z-50 p-1.5 hover:bg-slate-600 rounded-full transition-colors",
         className

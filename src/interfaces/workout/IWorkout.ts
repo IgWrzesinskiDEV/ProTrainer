@@ -2,6 +2,7 @@ export interface Exercise {
   number: number;
   name: string;
   exerciseDetailsId?: string;
+  isCustom?: boolean;
   tempo: string;
   weekData: WeekData[];
 }
@@ -14,6 +15,10 @@ export interface ExerciseDetails {
   category?: string;
   muscleGroup?: MuscleGroups[];
   videoUrl?: string;
+}
+
+export interface CustomExerciseDetails extends ExerciseDetails {
+  trainerId: string;
 }
 
 export enum MuscleGroups {
@@ -29,17 +34,21 @@ export enum MuscleGroups {
   Abs = "abs",
   Obliques = "obliques",
   Adductor = "adductor",
+  Abductors = "abductors",
   Hamstring = "hamstring",
   Quadriceps = "quadriceps",
-  Abductors = "abductors",
   Calves = "calves",
   Gluteal = "gluteal",
   Head = "head",
   Neck = "neck",
+  Knees = "knees",
+  LeftSoleus = "left-soleus",
+  RightSoleus = "right-soleus",
 }
 
 export interface ExerciseDetailsShort {
   _id: string;
+  trainerId?: string;
   name: string;
 }
 export enum WeekDays {

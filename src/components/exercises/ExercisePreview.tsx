@@ -1,25 +1,32 @@
+import { CustomExerciseDetails } from "@/interfaces/workout/IWorkout";
 import { ExerciseDetails } from "../exerciseDetails/ExerciseDetailsView";
 import textWithDashTransform from "@/utils/textWithDashTransform";
 import Link from "next/link";
 
 export default function ExercisePreview({
   exercise,
+  isCustom,
 }: {
-  exercise: ExerciseDetails;
+  exercise: ExerciseDetails | CustomExerciseDetails;
+  isCustom: boolean;
 }) {
   return (
     <Link
-      href={`/dashboard/exercises/${exercise._id}`}
+      href={`/dashboard/${isCustom ? "my-exercises" : "exercises"}/${exercise._id}`}
       key={exercise._id}
       className="group relative min-h-52 flex flex-col bg-slate-800/50 rounded-xl overflow-hidden hover:bg-slate-800/70 transition-all duration-300"
     >
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-start justify-between mb-4">
           <span className="px-3 py-1 text-sm font-medium rounded-lg bg-blue-500/20 text-blue-400">
-            {exercise.category}
+            {exercise?.category || "No category"}
           </span>
+
           {exercise.videoUrl && (
-            <div className="flex items-center text-sm text-slate-400">
+            <div
+              className="flex items-center text-sm text-slate-400"
+              title="Has video"
+            >
               <svg
                 className="w-4 h-4 mr-1"
                 fill="none"
@@ -74,7 +81,7 @@ export default function ExercisePreview({
               d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
             />
           </svg>
-          {exercise.equipment}
+          {exercise?.equipment || "No equipment added"}
         </div>
       </div>
 

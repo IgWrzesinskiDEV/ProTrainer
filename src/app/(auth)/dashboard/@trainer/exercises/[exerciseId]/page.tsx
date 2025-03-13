@@ -1,6 +1,7 @@
 import ExerciseDetailsView from "@/components/exerciseDetails/ExerciseDetailsView";
+import ExerciseWrapper from "@/components/UI/exercises/exerciseWrapper";
 import { ExerciseDetails as IExerciseDetails } from "@/interfaces/workout/IWorkout";
-import { getExerciseDetailsById } from "@/utils/data/getExerciseById";
+import { getExerciseDetailsById } from "@/utils/data/exercises/getExerciseById";
 
 export default async function ExerciseDetailsPage({
   params,
@@ -12,6 +13,10 @@ export default async function ExerciseDetailsPage({
   const exerciseDetails: IExerciseDetails =
     await getExerciseDetailsById(exerciseId);
   return (
-    <ExerciseDetailsView exerciseDetailJSON={JSON.stringify(exerciseDetails)} />
+    <ExerciseWrapper>
+      <ExerciseDetailsView
+        exerciseDetailJSON={JSON.stringify(exerciseDetails)}
+      />
+    </ExerciseWrapper>
   );
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { MuscleGroups } from "@/interfaces/workout/IWorkout";
 export const SignUpSchema = z.object({
   email: z
     .string({ required_error: "Email required" })
@@ -125,6 +126,39 @@ export const AddExercisesSchema = z.object({
       tempo: z.string().min(1, { message: "Tempo is required" }),
     })
   ),
+});
+
+export const AddCustomExerciseSchema = z.object({
+  exerciseName: z
+    .string()
+    .trim()
+    .min(1, { message: "Exercise name is required" }),
+  category: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.trim().length > 0, {
+      message: "Category cannot be just spaces",
+    }),
+  equipment: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.trim().length > 0, {
+      message: "Equipment cannot be just spaces",
+    }),
+  muscleGroup: z
+    .array(z.nativeEnum(MuscleGroups, { message: "Invalid muscle group" }))
+    .optional(),
+  instructions: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.trim().length > 0, {
+      message: "Instructions cannot be just spaces",
+    }),
+  videoUrl: z
+    .string()
+    .url({ message: "Invalid URL" })
+    .or(z.literal(""))
+    .optional(),
 });
 
 export const AddWeekDataSchema = z.object({

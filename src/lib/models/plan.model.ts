@@ -21,6 +21,7 @@ const ExerciseSchema = new Schema<Exercise>(
     number: { type: Number, required: true },
     name: { type: String, required: true },
     exerciseDetailsId: { type: String },
+    isCustom: { type: Boolean },
     tempo: { type: String, required: true },
     weekData: { type: [WeekDataSchema], required: true },
   },

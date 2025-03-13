@@ -1,6 +1,6 @@
 import ExerciseDetailsView from "@/components/exerciseDetails/ExerciseDetailsView";
 import ExerciseWrapper from "@/components/UI/exercises/exerciseWrapper";
-import { ExerciseDetails as IExerciseDetails } from "@/interfaces/workout/IWorkout";
+import { CustomExerciseDetails as ICustomExerciseDetails } from "@/interfaces/workout/IWorkout";
 import { getExerciseDetailsById } from "@/utils/data/exercises/getExerciseById";
 
 export default async function ExerciseDetailsPage({
@@ -10,12 +10,15 @@ export default async function ExerciseDetailsPage({
 }) {
   const exerciseId = (await params).exerciseId;
 
-  const exerciseDetails: IExerciseDetails =
-    await getExerciseDetailsById(exerciseId);
+  const exerciseDetails: ICustomExerciseDetails = await getExerciseDetailsById(
+    exerciseId,
+    true
+  );
   return (
     <ExerciseWrapper>
       <ExerciseDetailsView
         exerciseDetailJSON={JSON.stringify(exerciseDetails)}
+        isCustom
       />
     </ExerciseWrapper>
   );

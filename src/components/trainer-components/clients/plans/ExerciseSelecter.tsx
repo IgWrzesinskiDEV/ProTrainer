@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import InputFloatingLabel from "@/components/UI/input/InputWithFloatingLabel";
 import type {
+  CustomExerciseDetails,
   Exercise,
   ExerciseDetailsShort,
   WeekDays,
@@ -18,7 +19,8 @@ interface ExerciseSelectorProps {
     exerciseNumber: number,
     field: keyof Exercise,
     value: string,
-    exerciseDetailsIdValue?: string
+    exerciseDetailsIdValue?: string,
+    isCustom?: boolean
   ) => void;
   weekDay: WeekDays;
   availableExercises: ExerciseDetailsShort[];
@@ -38,7 +40,7 @@ export default function ExerciseSelecter({
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(defaultValue);
   const [filteredExercises, setFilteredExercises] =
-    useState<ExerciseDetails[]>(availableExercises);
+    useState<(ExerciseDetails | CustomExerciseDetails)[]>(availableExercises);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const popperRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -78,13 +80,28 @@ export default function ExerciseSelecter({
     setFilteredExercises(filtered);
   }, [searchTerm, availableExercises]);
 
-  const handleSelect = (exerciseDetails: ExerciseDetails) => {
-    updateExercise(
-      exerciseNumber,
-      "name",
-      exerciseDetails.name,
-      exerciseDetails._id
-    );
+  const handleSelect = (
+    exerciseDetails: ExerciseDetails | CustomExerciseDetails
+  ) => {
+    console.log(exerciseDetails);
+    if ("trainerId" in exerciseDetails) {
+      updateExercise(
+        exerciseNumber,
+        "name",
+        exerciseDetails.name,
+        exerciseDetails._id,
+        !!exerciseDetails?.trainerId
+      );
+    } else {
+      // Handle predefined exercise
+      updateExercise(
+        exerciseNumber,
+        "name",
+        exerciseDetails.name,
+        exerciseDetails._id
+      );
+    }
+
     setSearchTerm(exerciseDetails.name);
     setIsOpen(false);
   };
@@ -98,6 +115,10 @@ export default function ExerciseSelecter({
   const preDefinedExerciseId = availableExercises.find(
     (ex) => ex.name.toLowerCase() === searchTerm.toLowerCase()
   )?._id;
+
+  const isCustom = availableExercises.some(
+    (ex) => ex?.trainerId && ex.name.toLowerCase() === searchTerm.toLowerCase()
+  );
 
   return (
     <div ref={wrapperRef} className="relative">
@@ -118,7 +139,10 @@ export default function ExerciseSelecter({
         />
 
         {isPreDefinedExercise() && (
-          <ExerciseDetailsLink exerciseId={preDefinedExerciseId} />
+          <ExerciseDetailsLink
+            exerciseId={preDefinedExerciseId}
+            isCustom={isCustom}
+          />
         )}
       </div>
 

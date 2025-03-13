@@ -12,7 +12,7 @@ export async function createUser(user: {
     email: user.email,
     userName: user.userName,
     password: user.password,
-    role: user.role || "USER",
+    role: user.role || "CLIENT",
   });
   return newUser;
 }

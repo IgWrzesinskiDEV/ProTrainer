@@ -30,10 +30,12 @@ export default function ClientPlans({
   clientId,
   clientPlans,
   availableExercises,
+  availableCustomExercises,
 }: {
   clientId: string;
   clientPlans: string;
   availableExercises: string;
+  availableCustomExercises: string;
 }) {
   const [formState, addEmptyPlanAction, isPending] = useActionState(
     (prevState: unknown, formData: FormData) =>
@@ -43,8 +45,12 @@ export default function ClientPlans({
 
   const hasError = (formState?.errors?.length ?? 0) > 0;
   const workoutPlans: WorkoutPlan[] = JSON.parse(clientPlans);
+  const exercisesList: ExerciseDetailsShort[] = JSON.parse(availableExercises);
+  const customExercisesList: ExerciseDetailsShort[] = JSON.parse(
+    availableCustomExercises
+  );
   const availableExercisesNamesList: ExerciseDetailsShort[] =
-    JSON.parse(availableExercises);
+    exercisesList.concat(customExercisesList);
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<WorkoutPlan | null>(
     workoutPlans[0] || null

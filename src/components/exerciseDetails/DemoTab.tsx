@@ -29,7 +29,11 @@ export default function DemoTab({
           />
         </div>
       ) : (
-        <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
+        <div
+          className={`aspect-video bg-gray-800 mx-auto rounded-lg flex items-center justify-center ${
+            isModal ? "w-full" : "w-full sm:w-3/4 md:w-1/2 my-3 sm:my-5"
+          }`}
+        >
           <div className="text-center">
             <LuPlay size={36} className="text-blue-500 mx-auto mb-2" />
             <p className="text-gray-400 text-sm sm:text-base">
