@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { CustomExercise } from "@/lib/models/customExercise.model";
 import { verifyAuth } from "@/lib/lucia/auth";
+import type { NextRequest } from "next/server";
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { user } = await verifyAuth();
   if (!user)

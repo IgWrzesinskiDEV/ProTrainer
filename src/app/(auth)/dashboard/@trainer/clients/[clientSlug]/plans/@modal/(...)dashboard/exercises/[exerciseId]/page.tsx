@@ -14,6 +14,7 @@ export default async function ExerciseModalPage({
   return (
     <ExerciseDetailsModal
       exerciseDetailsJSON={JSON.stringify(exerciseDetails)}
+      isCustom={false}
     />
   );
 }
