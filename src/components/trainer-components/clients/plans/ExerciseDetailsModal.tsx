@@ -10,7 +10,7 @@ export default function ExerciseDetailsModal({
   isCustom,
 }: {
   exerciseDetailsJSON: string;
-  isCustom?: boolean;
+  isCustom: boolean;
 }) {
   const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
 

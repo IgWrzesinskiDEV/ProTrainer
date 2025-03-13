@@ -38,6 +38,7 @@
     "react-multi-date-picker": "^4.5.2",
     "react-toastify": "^11.0.3",
     "resend": "^4.1.1",
+    "swr": "^2.3.3",
     "tailwind-datepicker-react": "^1.4.3",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",

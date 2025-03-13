@@ -3,5 +3,5 @@ import { getAvaliableExercises } from "@/utils/data/exercises/getAvailableExerci
 
 export default async function ExerciseDetailsPage() {
   const exercises = JSON.stringify(await getAvaliableExercises());
-  return <Exercises exercises={exercises} />;
+  return <Exercises exercises={exercises} isCustom={false} />;
 }

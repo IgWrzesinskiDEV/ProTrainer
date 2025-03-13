@@ -4,6 +4,7 @@ import {
   Fragment,
   useActionState,
   useEffect,
+  useRef,
   useState,
   useTransition,
 } from "react";
@@ -20,6 +21,12 @@ import BackToLink from "@/components/UI/Buttons/BackToLink";
 
 import ExerciseDetailsLink from "@/components/UI/links/ExerciseDetailsLink";
 import { LuArrowLeft, LuMoon, LuSave } from "react-icons/lu";
+
+import ExerciseDetailsView from "@/components/exerciseDetails/ExerciseDetailsView";
+import ModalUnstyled from "@/components/UI/Modal";
+import { useClientExercise } from "@/hooks/useCustomClientExercise";
+import CustomExerciseLoader from "@/components/exercises/CustomExerciseLoader";
+import CustomExerciseError from "@/components/exercises/CustomExerciseError";
 const initialState = {
   errors: [],
 };
@@ -45,6 +52,26 @@ export default function SingleDayWorkout({
     () => saveSingleDayExercisesClientData(singleDay, planId),
     initialState
   );
+  const modalRef = useRef<{ open: () => void; close: () => void } | null>(null);
+  const [selectedCustomExerciseId, setSelectedCustomExerciseId] = useState<
+    string | null
+  >(null);
+  const {
+    data: exerciseDetails,
+    isLoading,
+    error,
+  } = useClientExercise(selectedCustomExerciseId || undefined);
+  function openHandler(customExerciseId: string) {
+    setSelectedCustomExerciseId(customExerciseId); // Set exercise ID to fetch
+
+    modalRef.current?.open();
+  }
+
+  function closeHandler() {
+    setSelectedCustomExerciseId(null); // Reset ID when modal closes
+
+    modalRef.current?.close();
+  }
 
   useEffect(() => {
     if (saveSingleDayState?.success) {
@@ -118,7 +145,7 @@ export default function SingleDayWorkout({
       </div>
     );
   }
-
+  console.log(singleDay);
   return (
     <>
       <div className="relative overflow-hidden rounded-lg border w-full border-gray-800 bg-gray-900">
@@ -157,6 +184,9 @@ export default function SingleDayWorkout({
                   <ExerciseDetailsLink
                     exerciseId={exercise.exerciseDetailsId}
                     className="p-1.5 hover:bg-gray-700 static translate-y-0  text-gray-400 hover:text-gray-200 transition-colors"
+                    buttonOpenHandler={
+                      exercise.isCustom ? openHandler : undefined
+                    }
                   />
                 )}
               </div>
@@ -278,6 +308,9 @@ export default function SingleDayWorkout({
                         <ExerciseDetailsLink
                           exerciseId={exercise.exerciseDetailsId}
                           className="p-1.5 hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors"
+                          buttonOpenHandler={
+                            exercise.isCustom ? openHandler : undefined
+                          }
                         />
                       )}
                     </p>
@@ -372,6 +405,27 @@ export default function SingleDayWorkout({
           </p>
         )}
       </div>
+      <ModalUnstyled ref={modalRef} isBackDropClickClose={true}>
+        <div className="w-full max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mx-auto planScrollbar trainerDataSquareScrollbar overflow-y-auto">
+          {isLoading ? (
+            <CustomExerciseLoader closeHandler={closeHandler} />
+          ) : error ? (
+            <CustomExerciseError
+              resetHandler={() =>
+                setSelectedCustomExerciseId(selectedCustomExerciseId)
+              }
+              closeHandler={closeHandler}
+            />
+          ) : (
+            <ExerciseDetailsView
+              exerciseDetailJSON={
+                exerciseDetails ? JSON.stringify(exerciseDetails) : ""
+              }
+              modalCloseHandler={closeHandler}
+            />
+          )}
+        </div>
+      </ModalUnstyled>
     </>
   );
 }

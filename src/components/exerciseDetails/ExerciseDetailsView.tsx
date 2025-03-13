@@ -31,6 +31,7 @@ export default function ExerciseDetailsView({
   modalCloseHandler,
   isCustom,
 }: ExerciseDetailsProps) {
+  console.log(exerciseDetailJSON);
   const exercise = JSON.parse(exerciseDetailJSON) as
     | ExerciseDetails
     | CustomExerciseDetails;
