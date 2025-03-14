@@ -12,12 +12,14 @@ export default async function ClientMeasurements({
   const clientData = await getClientById(clientId);
   const measurements = JSON.stringify(clientData?.measurements);
   const clientUnits = JSON.stringify(clientData?.units);
+  const profileInfo = JSON.stringify(clientData?.profileInformation);
 
   return (
     <MeasurementWrapper
       measurements={measurements}
       units={trainerUnits}
       clientUnits={clientUnits}
+      profileInfo={profileInfo}
     />
   );
 }

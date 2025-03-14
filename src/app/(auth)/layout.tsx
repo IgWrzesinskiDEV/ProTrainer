@@ -19,7 +19,7 @@ export default async function AuthLayout({
 
   return (
     <>
-      <div className="min-h-screen bg-[#2a2522] text-white">
+      <div className="min-h-screen bg-[#2a2522] text-white" aria-hidden="false">
         <DashboardHeader
           profileDetails={user?.profileDetails}
           userName={user.userName}

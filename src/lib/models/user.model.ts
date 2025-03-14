@@ -3,11 +3,18 @@ import {
   ITrainerDetails,
   TrainerAdditionalDataHeadingType,
 } from "@/interfaces/trainers/ITrainer";
+import {
+  profileDetailsInterface,
+  profileInformationInterface,
+  unitsInterface,
+  userSex,
+} from "@/interfaces/user/IUser";
 export enum IUserRole {
   CLIENT = "CLIENT",
   TRAINER = "TRAINER",
   ADMIN = "ADMIN",
 }
+
 export interface IUser {
   _id: string;
   userName: string;
@@ -17,18 +24,10 @@ export interface IUser {
   role: IUserRole;
   currentTrainer?: string;
   plansIds?: string[];
-  profileDetails: {
-    fullName?: string;
-    bio?: string;
-    avatarFileName?: string;
-  };
+  profileDetails: profileDetailsInterface;
+  profileInformation?: profileInformationInterface;
   trainerDetails?: ITrainerDetails;
-  units: {
-    weight: "kg" | "lbs";
-    height: "cm" | "ft";
-    bodyMeasurement: "cm" | "in";
-    distance: "km" | "mi";
-  };
+  units: unitsInterface;
 
   notifications: string[];
 }
@@ -101,6 +100,15 @@ const userSchema = new Schema<IUser>(
       fullName: { type: String },
       bio: { type: String },
       avatarFileName: { type: String },
+    },
+    profileInformation: {
+      height: { type: Number },
+      sex: {
+        type: String,
+        default: userSex.MALE,
+        enum: Object.values(userSex),
+      },
+      age: { type: Number },
     },
     trainerDetails: trainerDetailsSchema,
     units: {

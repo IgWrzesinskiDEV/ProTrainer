@@ -47,7 +47,7 @@ export const getClientById = cache(async function getClientById(
   try {
     const client = await User.findById(
       clientId,
-      "userName email  profileDetails units"
+      "userName email  profileDetails profileInformation units"
     );
     if (!client) return null;
     const clientMeasurements: IMeasurement | null =

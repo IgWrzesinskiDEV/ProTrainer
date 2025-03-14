@@ -4,11 +4,21 @@ export interface unitsInterface {
   bodyMeasurement: "cm" | "in";
   distance: "km" | "mi";
 }
+export enum userSex {
+  MALE = "male",
+  FEMALE = "female",
+}
 
 export interface profileDetailsInterface {
   fullName?: string;
   bio?: string;
   avatarFileName?: string;
+}
+
+export interface profileInformationInterface {
+  height?: number;
+  sex: userSex;
+  age?: number;
 }
 
 export interface IUserBacisDetails {

@@ -197,3 +197,14 @@ export const DeleteAccount = z.object({
     }),
   }),
 });
+
+export const ProfileInformationSchema = z.object({
+  height: z.number().positive({ message: "Height must be a positive number" }),
+  sex: z.enum(["male", "female"], {
+    message: "Sex must be either 'male' or 'female'",
+  }),
+  age: z
+    .number()
+    .positive({ message: "Age must be a positive number" })
+    .int({ message: "Age must be an integer" }),
+});
