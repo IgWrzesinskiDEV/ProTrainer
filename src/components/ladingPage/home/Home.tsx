@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-20 lg:pt-0">
+      <section className="relative pt-20 lg:pt-0 overflow-hidden">
         {/* Background with gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-secondary-950 to-secondary-900 h-[200vh] -z-10"></div>
 
@@ -56,7 +56,7 @@ export default function Home() {
                   </div>
                 ))} */}
               </div>
-              <div className="ml-4">
+              {/* <div className="ml-4">
                 <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <svg
@@ -72,7 +72,7 @@ export default function Home() {
                 <p className="text-sm text-primary-500">
                   Trusted by 1000+ fitness enthusiasts
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="lg:w-1/2 mt-12 lg:mt-0 relative">
@@ -144,7 +144,7 @@ export default function Home() {
         </div>
 
         {/* Wave separator */}
-        <div className="absolute bottom-0 left-0 right-0">
+        <div className="absolute bottom-0 left-0 right-0 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 290"
@@ -160,7 +160,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-20 bg-white  relative ">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -400,7 +400,7 @@ export default function Home() {
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+            {/* <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
                 <svg
                   className="w-8 h-8 text-primary-600"
@@ -471,10 +471,10 @@ export default function Home() {
                   <span className="text-gray-700">Flexible rescheduling</span>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             {/* Feature 5 */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+            {/* <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
                 <svg
                   className="w-8 h-8 text-primary-600"
@@ -545,10 +545,10 @@ export default function Home() {
                   <span className="text-gray-700">Plan adjustments</span>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             {/* Feature 6 */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+            {/* <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
                 <svg
                   className="w-8 h-8 text-primary-600"
@@ -619,7 +619,7 @@ export default function Home() {
                   <span className="text-gray-700">Challenges & events</span>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
