@@ -96,7 +96,7 @@ export async function acceptInvite(clientId: string) {
     const { user } = await verifyAuth();
     const trainerId = user?.id;
 
-    const trainer = await User.findById(trainerId, "trainerDetails");
+    const trainer = await User.findById(trainerId, "userName trainerDetails");
     const client = await User.findById(clientId);
 
     if (!trainer) {
@@ -139,7 +139,7 @@ export async function declineInvite(clientId: string) {
     const { user } = await verifyAuth();
     const trainerId = user?.id;
 
-    const trainer = await User.findById(trainerId, "trainerDetails");
+    const trainer = await User.findById(trainerId, "userName trainerDetails");
     if (!trainer) {
       throw new Error("Trainer not found");
     }

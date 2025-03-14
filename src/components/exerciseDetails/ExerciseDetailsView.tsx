@@ -39,7 +39,7 @@ export default function ExerciseDetailsView({
     "demo" | "muscles" | "instructions"
   >("demo");
   const isModal = !!modalCloseHandler;
-
+  console.log(exercise);
   return (
     <div className="bg-[#1e1e24] portrait:h-[75vh]  h-[87vh] trainerDataSquareScrollbar scrollBarRectangle  lg:h-full z-10 rounded-lg overflow-y-auto shadow-xl w-full lg:w-3/4 lg:mx-auto">
       {/* Header */}
