@@ -115,8 +115,11 @@ export default function TrainerProfileDescriptionForm({
         <div className="flex justify-center pt-1 sm:pt-2 md:pt-4">
           <ButtonWithLoading
             type="submit"
-            className="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white text-xs sm:text-sm md:text-base font-medium rounded-lg sm:rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 touch-manipulation"
+            loaderclassname="text-white "
+            className="w-full sm:w-auto  min-w-44 disabled:opacity-30 disabled:hover:from-blue-600 disabled:shadow-none  disabled:hover:to-blue-500 px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white text-xs sm:text-sm md:text-base font-medium rounded-lg sm:rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 touch-manipulation"
             isLoading={isPending}
+            size={20}
+            isDisabled={isPending}
           >
             Save Changes
           </ButtonWithLoading>

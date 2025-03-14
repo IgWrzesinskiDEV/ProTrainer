@@ -68,7 +68,7 @@ export default function VerifyEmailSendPage() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
+      <div className="bg-gray-800/40  border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
         <div className="flex justify-center mb-6">
           <div className="bg-blue-600/20 p-4 rounded-full">
             <HiOutlineMailOpen className="text-blue-400 text-5xl" />

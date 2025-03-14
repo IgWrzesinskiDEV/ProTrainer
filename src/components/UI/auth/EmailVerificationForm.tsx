@@ -47,7 +47,7 @@ export default function EmailVerificationForm() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
+      <div className="bg-gray-800/40  border border-gray-700 rounded-2xl shadow-xl p-6 sm:p-8">
         {isLoading && (
           <div className="text-center space-y-4">
             <div className="flex justify-center">

@@ -10,6 +10,7 @@ import { addAdditionalTrainerData } from "@/actions/trainers.actions";
 import { useActionState } from "react";
 import type { TrainerAdditionalDataHeadingType } from "@/interfaces/trainers/ITrainer";
 import { motion, AnimatePresence } from "framer-motion";
+import { MdOutlineErrorOutline } from "react-icons/md";
 
 const initialState = {
   errors: [],
@@ -32,7 +33,7 @@ export default function TrainerProfileModal({
       addAdditionalTrainerData(prevState, formData, heading),
     initialState
   );
-
+  const errors = Array.from(new Set(formState.errors)) || undefined;
   useEffect(() => {
     if (formState.success) {
       closeModalHandler();
@@ -80,7 +81,7 @@ export default function TrainerProfileModal({
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-3 sm:p-4 md:p-6 overflow-y-auto custom-scrollbar">
+        <div className="flex-1 p-3 sm:p-4 md:p-6 overflow-y-auto trainerDataSquareScrollbar scrollBarRectangle">
           <AnimatePresence mode="popLayout">
             {trainerDataState.length > 0 ? (
               <motion.ol className="space-y-2 sm:space-y-3" layout>
@@ -141,25 +142,19 @@ export default function TrainerProfileModal({
 
           {/* Error Messages */}
           <AnimatePresence>
-            {formState.errors && formState.errors.length > 0 && (
+            {errors && errors.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 className="space-y-1.5 sm:space-y-2"
               >
-                {formState.errors.map((err) => (
+                {errors.map((err) => (
                   <div
                     key={err}
                     className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-lg bg-red-500/10 border border-red-500/20"
                   >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400 flex-shrink-0"
-                      fill="currentColor"
-                    >
-                      <path d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8zm0 1c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 9.5c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1zm0-8c.552 0 1 .448 1 1v4c0 .552-.448 1-1 1s-1-.448-1-1v-4c0-.552.448-1 1-1z" />
-                    </svg>
+                    <MdOutlineErrorOutline className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400 flex-shrink-0" />
                     <p className="text-[10px] sm:text-xs md:text-sm text-red-400 font-medium">
                       {err}
                     </p>
@@ -181,11 +176,14 @@ export default function TrainerProfileModal({
             </button>
             <ButtonWithLoading
               isLoading={isPending}
-              className="px-4 sm:px-6 md:px-8 py-1.5 sm:py-2 bg-blue-500 hover:bg-blue-600
+              isDisabled={isPending}
+              size={24}
+              className="px-4 min-w-28 min-h-9 sm:min-w-44 sm:px-6 md:px-8 py-1.5 sm:py-2 bg-blue-500 hover:bg-blue-600
+              disabled:bg-blue-500/30 disabled:hover:bg-blue-500/30
                        text-xs sm:text-sm md:text-base font-medium text-white
                        rounded-lg shadow-lg shadow-blue-500/20
                        transition-all duration-200
-                       disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                        disabled:cursor-not-allowed touch-manipulation"
             >
               Save Changes
             </ButtonWithLoading>

@@ -72,7 +72,7 @@ export default function CustomPopper({
               className={`
                 z-50 rounded-lg w-12 h-12 p-3 
                 border border-solid flex items-center justify-center 
-                border-red-500 bg-gray-800 
+                border-red-500 bg-gray-800 disabled:hover:shadow-none disabled: disabled:scale-100
                 shadow-lg hover:shadow-xl transition-all duration-300
                 transform hover:scale-105 active:scale-95
               `}

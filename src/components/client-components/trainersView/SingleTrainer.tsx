@@ -264,10 +264,11 @@ export default async function SingleTrainer({
                     relative overflow-hidden
                     px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base sm:text-lg font-medium
                     transition-all duration-300 transform
+                    disabled:bg-opacity-50  disabled:pointer-events-none
                     ${
                       currentTrainer
                         ? "bg-gray-800 text-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5 active:translate-y-0"
+                        : "bg-gradient-to-r disabled:opacity-50 from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5 active:translate-y-0"
                     }
                   `}
                 />

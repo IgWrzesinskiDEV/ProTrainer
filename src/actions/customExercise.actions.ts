@@ -7,6 +7,7 @@ import { Muscle } from "react-body-highlighter";
 import { AddCustomExerciseSchema } from "@/schemas/zSchemas";
 import { CustomExercise } from "@/lib/models/customExercise.model";
 import { generateIdFromEntropySize } from "lucia";
+import { redirect } from "next/navigation";
 
 export async function addCustomExercise(
   prevState: unknown,
@@ -59,5 +60,20 @@ export async function addCustomExercise(
     return { success: "Exercise added" };
   } catch {
     return { errors: ["Error saving profile"] };
+  }
+}
+
+export async function deleteCustomExercise(exerciseId: string) {
+  try {
+    console.log(exerciseId);
+    await CustomExercise.deleteOne({
+      _id: exerciseId,
+    });
+  } catch (e) {
+    console.log(e);
+    return { errors: ["Error deleting exercise"] };
+  } finally {
+    revalidatePath("/dashboard/my-exercises");
+    redirect("/dashboard/my-exercises");
   }
 }

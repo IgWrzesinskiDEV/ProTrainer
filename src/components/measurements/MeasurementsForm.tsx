@@ -128,7 +128,7 @@ export default function MeasurementsForm({
 
         <div className="flex justify-around   pt-2">
           <ButtonWithLoading
-            className=" sm:flex-initial min-w-32 min-h-12 disabled:hover:bg-blue-600 disabled:bg-opacity-20 border-blue-600 border bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-2 sm:py-2.5 sm:px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className=" sm:flex-initial min-w-32 min-h-12  disabled:hover:bg-blue-600/20 disabled:bg-opacity-20 border-blue-600 border bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-2 sm:py-2.5 sm:px-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             type="submit"
             isDisabled={isPending}
             isLoading={isPending}

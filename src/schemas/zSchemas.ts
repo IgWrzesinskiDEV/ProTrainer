@@ -1,16 +1,22 @@
 import { z } from "zod";
 import { MuscleGroups } from "@/interfaces/workout/IWorkout";
-export const SignUpSchema = z.object({
-  email: z
-    .string({ required_error: "Email required" })
-    .email({ message: "Invalid email address" }),
-  userName: z
-    .string()
-    .min(3, { message: "Name must be at least 3 characters long" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
-});
+export const SignUpSchema = z
+  .object({
+    email: z
+      .string({ required_error: "Email required" })
+      .email({ message: "Invalid email address" }),
+    userName: z
+      .string()
+      .min(3, { message: "Username must be at least 3 characters long" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export const SignInSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),

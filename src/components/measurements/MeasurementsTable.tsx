@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
@@ -14,6 +14,7 @@ import CustomPopper from "../UI/Popper";
 import TablePaginationComponent from "./TablePagination";
 import camelize from "@/utils/camelizeString";
 import { cn } from "@/lib/twMergeUtill";
+import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 
 export default function MeasurementsTable({
   TABLE_HEAD,
@@ -35,6 +36,7 @@ export default function MeasurementsTable({
   });
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const getSortedArray = (array: ISingleMeasurement[]) => {
     if (sort.order === "asc") {
@@ -370,12 +372,17 @@ export default function MeasurementsTable({
 
                   {role.roleName === "client" && (
                     <div className="mt-3 flex justify-end">
-                      <button
-                        onClick={() => role.deleteHandler(data._id)}
-                        className="text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-md transition-colors"
+                      <ButtonWithLoading
+                        onClick={() =>
+                          startTransition(() => role.deleteHandler(data._id))
+                        }
+                        isDisabled={isPending}
+                        isLoading={isPending}
+                        size={18}
+                        className="text-xs  text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-md transition-colors"
                       >
                         Delete
-                      </button>
+                      </ButtonWithLoading>
                     </div>
                   )}
                 </motion.div>

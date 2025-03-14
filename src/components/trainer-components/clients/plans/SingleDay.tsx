@@ -550,7 +550,8 @@ export default function SingleDay({
                       // }
                     })
                   }
-                  className="flex w-full sm:w-auto h-10 items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-md text-sm justify-center sm:ml-auto"
+                  loadingClass="bg-opacity-50 hover:bg-blue-600 pointer-events-none"
+                  className="flex w-full sm:w-auto h-10 items-center min-w-40 disabled:hover:bg-blue-600 disabled:bg-opacity-40 gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-md text-sm justify-center sm:ml-auto"
                 >
                   <LuSave className="w-4 h-4" />
                   Save Changes

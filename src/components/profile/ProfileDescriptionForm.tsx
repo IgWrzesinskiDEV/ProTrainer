@@ -5,17 +5,19 @@ import Input from "../UI/Input";
 import ImagePicker from "./ImagePicker";
 import ButtonWithLoading from "../UI/Buttons/ButtonWithLoading";
 
-import useUserData from "@/hooks/useUserData";
+import { profileDetailsInterface } from "@/interfaces/user/IUser";
 const initialState = {
   errors: [],
 };
-export default function ProfileDescriptionForm() {
+export default function ProfileDescriptionForm({
+  profileDetails,
+}: {
+  profileDetails: profileDetailsInterface;
+}) {
   const [formState, formAction, isPending] = useActionState(
     saveProfileData,
     initialState
   );
-  const { userData } = useUserData(formState);
-  const profileDetails = userData?.profileDetails;
 
   return (
     <div className="lg:col-span-1">
@@ -30,6 +32,7 @@ export default function ProfileDescriptionForm() {
               label="Full Name"
               name="fullName"
               type="text"
+              placeholder="Enter your full name"
               defaultValue={profileDetails?.fullName}
             />
             <Input

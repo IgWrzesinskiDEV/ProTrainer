@@ -35,7 +35,15 @@ export default function AuthForm() {
         type="password"
         disabled={isPending}
       />
-
+      {!isLogin && (
+        <AuthInput
+          label="confirm password"
+          name="confirmPassword"
+          placeholder="Enter your password"
+          type="password"
+          disabled={isPending}
+        />
+      )}
       {formState?.errors && formState.errors.length > 0 && (
         <div className="bg-red-900/30 border border-red-800 rounded-lg p-3">
           <ul className="text-red-400 text-sm space-y-1">

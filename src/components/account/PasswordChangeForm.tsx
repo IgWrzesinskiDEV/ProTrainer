@@ -12,65 +12,6 @@ export default function PasswordChangeForm() {
     changePassword,
     initialState
   );
-  console.log(formState);
-  // Password change form state
-  //   const [passwordForm, setPasswordForm] = useState({
-  //     currentPassword: "",
-  //     newPassword: "",
-  //     confirmPassword: "",
-  //   });
-  //   const [passwordErrors, setPasswordErrors] = useState({
-  //     currentPassword: "",
-  //     newPassword: "",
-  //     confirmPassword: "",
-  //   });
-
-  //   // Handle password form changes
-  //   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const { name, value } = e.target;
-  //     setPasswordForm((prev) => ({ ...prev, [name]: value }));
-
-  //     // Clear error when user types
-  //     if (passwordErrors[name as keyof typeof passwordErrors]) {
-  //       setPasswordErrors((prev) => ({ ...prev, [name]: "" }));
-  //     }
-  //   };
-
-  // Validate password form
-  //   const validatePasswordForm = () => {
-  //     const errors = {
-  //       currentPassword: "",
-  //       newPassword: "",
-  //       confirmPassword: "",
-  //     };
-  //     let isValid = true;
-
-  //     if (!passwordForm.currentPassword) {
-  //       errors.currentPassword = "Current password is required";
-  //       isValid = false;
-  //     }
-
-  //     if (!passwordForm.newPassword) {
-  //       errors.newPassword = "New password is required";
-  //       isValid = false;
-  //     } else if (passwordForm.newPassword.length < 8) {
-  //       errors.newPassword = "Password must be at least 8 characters";
-  //       isValid = false;
-  //     }
-
-  //     if (!passwordForm.confirmPassword) {
-  //       errors.confirmPassword = "Please confirm your new password";
-  //       isValid = false;
-  //     } else if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-  //       errors.confirmPassword = "Passwords do not match";
-  //       isValid = false;
-  //     }
-
-  //     setPasswordErrors(errors);
-  //     return isValid;
-  //   };
-
-  // Handle password form submission
 
   // Handle account deletion
   useEffect(() => {
@@ -111,53 +52,6 @@ export default function PasswordChangeForm() {
       </div>
 
       <form action={formAction} className="space-y-6">
-        {/* <div>
-            <label
-              htmlFor="currentPassword"
-              className="block text-sm font-medium text-blue-200 mb-2"
-            >
-              Current Password
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                id="currentPassword"
-                name="currentPassword"
-                className={`w-full px-4 py-3 bg-[#0F1C2E] bg-opacity-50 border rounded-lg text-white focus:outline-none focus:ring-2 transition-all duration-200 ${
-                  passwordErrors.currentPassword
-                    ? "border-red-500/50 focus:ring-red-500/30"
-                    : "border-blue-800/50 focus:ring-blue-500/30 focus:border-blue-500/50"
-                }`}
-                aria-invalid={!!passwordErrors.currentPassword}
-                aria-describedby={
-                  passwordErrors.currentPassword
-                    ? "current-password-error"
-                    : undefined
-                }
-              />
-              {passwordErrors.currentPassword && (
-                <motion.p
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  id="current-password-error"
-                  className="mt-2 text-sm text-red-400 flex items-center"
-                >
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {passwordErrors.currentPassword}
-                </motion.p>
-              )}
-            </div>
-          </div> */}
         <PasswordChangeInput
           text="Current Password"
           passwordError={formState?.errors?.find((val) =>
@@ -171,7 +65,12 @@ export default function PasswordChangeForm() {
           )}
           passwordRequirments
         />
-        <PasswordChangeInput text="Confirm password" passwordError={""} />
+        <PasswordChangeInput
+          text="Confirm password"
+          passwordError={formState?.errors?.find((val) =>
+            val.includes("match")
+          )}
+        />
 
         <div className="pt-2">
           <ButtonWithLoading

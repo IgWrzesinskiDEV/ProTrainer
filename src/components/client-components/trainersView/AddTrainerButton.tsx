@@ -30,6 +30,7 @@ export default function AddTrainerButton({
       isDisabled={isPending || isDisabled}
       onClick={onClickHandler}
       className={className}
+      loaderclassname="text-white"
     >
       Hire me!
     </ButtonWithLoading>

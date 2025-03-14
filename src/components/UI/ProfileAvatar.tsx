@@ -25,7 +25,7 @@ export default function ProfileAvatar({
                       transition-all duration-300 shadow-lg"
         >
           <Avatar
-            src={`https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${fileName}?v=${fileName}`}
+            src={`${process.env.NEXT_PUBLIC_AWS_BASE_URL}/${fileName}?v=${fileName}`}
             className="w-full h-full object-cover "
           />
           <div

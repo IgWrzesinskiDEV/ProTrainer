@@ -21,10 +21,10 @@ export default function AuthInput({
       <input
         {...props}
         name={name}
-        placeholder={`Enter your ${label}`}
+        placeholder={props.placeholder || `Enter your ${label}`}
         className={twMerge(
           `w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg 
-          text-white placeholder-gray-500 focus:outline-none focus:ring-2 
+          text-white outline-none placeholder-gray-500 focus:outline-none focus:ring-2 
           focus:ring-blue-500 focus:border-transparent transition-all duration-300
           disabled:opacity-60 disabled:cursor-not-allowed`,
           className

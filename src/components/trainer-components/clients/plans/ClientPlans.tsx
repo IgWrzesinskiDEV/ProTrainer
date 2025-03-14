@@ -37,7 +37,7 @@ export default function ClientPlans({
   availableExercises: string;
   availableCustomExercises: string;
 }) {
-  const [formState, addEmptyPlanAction, isPending] = useActionState(
+  const [formState, addEmptyPlanAction, isPendingAddPlan] = useActionState(
     (prevState: unknown, formData: FormData) =>
       addEmptyWorkoutPlan(prevState, formData, clientId),
     initialState
@@ -108,9 +108,11 @@ export default function ClientPlans({
             </div>
 
             <ButtonWithLoading
-              isLoading={isPending}
+              isLoading={isPendingAddPlan}
+              isDisabled={isPendingAddPlan}
+              loadingClass="bg-opacity-50 hover:bg-blue-600 pointer-events-none"
               type="submit"
-              className="flex items-center justify-center w-full sm:w-auto text-sm gap-2 px-5 py-2.5 h-11 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md font-medium"
+              className="flex items-center justify-center w-full sm:w-auto text-sm gap-2 px-5 py-2.5 h-11 disabled:hover:bg-blue-600 min-w-32 disabled:bg-opacity-40  bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md font-medium"
             >
               <LuPlus className="w-4 h-4" />
               Add New Plan
@@ -123,7 +125,9 @@ export default function ClientPlans({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <ButtonWithLoading
               isLoading={isPendingAddWeek}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-md text-sm font-medium"
+              isDisabled={isPendingAddWeek}
+              loadingClass="bg-opacity-50 hover:bg-emerald-600 pointer-events-none"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 h-11 disabled:hover:bg-emerald-600 disabled:bg-opacity-40 disabled:cursor-not-allowed bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-md text-sm font-medium"
               onClick={() =>
                 startTransitionAddWeek(async () => {
                   await addEmptyWeek(selectedPlan._id, clientId);
@@ -136,9 +140,11 @@ export default function ClientPlans({
 
             <ButtonWithLoading
               isLoading={isPendingRemoveLatestWeek}
-              isDisabled={selectedPlan.weekCount === 0}
+              isDisabled={
+                selectedPlan.weekCount === 0 || isPendingRemoveLatestWeek
+              }
               loadingClass="bg-opacity-50 hover:bg-red-600 pointer-events-none"
-              className="flex items-center justify-center disabled:hover:bg-red-600 gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+              className="flex items-center justify-center disabled:hover:bg-red-600 gap-2 px-4 py-2.5 h-11 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md disabled:bg-opacity-40 disabled:cursor-not-allowed text-sm font-medium"
               onClick={() =>
                 startTransitionRemoveLatestWeek(async () => {
                   await deleteLatestWeek(selectedPlan._id, clientId);

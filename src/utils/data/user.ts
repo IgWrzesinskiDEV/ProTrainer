@@ -56,3 +56,13 @@ export async function getUserUnitsById(id: string) {
     return null;
   }
 }
+
+export async function getUserProfileDetails(id: string) {
+  try {
+    const units = User.findById(id, "profileDetails");
+    return units;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}

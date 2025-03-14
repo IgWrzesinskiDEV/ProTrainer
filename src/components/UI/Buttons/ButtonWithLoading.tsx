@@ -7,6 +7,8 @@ interface ButtonWithLoadingProps {
   children: React.ReactNode | string;
   type?: "button" | "submit" | "reset";
   className?: string;
+  loaderclassname?: string;
+  size?: number;
   onClick?: () => void;
 }
 
@@ -32,7 +34,14 @@ export default function ButtonWithLoading({
         isLoading && loadingClass
       )}
     >
-      {isLoading ? <CircularProgress size={28} /> : children}
+      {isLoading ? (
+        <CircularProgress
+          size={props.size || 28}
+          className={props?.loaderclassname || undefined}
+        />
+      ) : (
+        children
+      )}
     </button>
   );
 }

@@ -36,7 +36,7 @@ export default function ClientPreview({
       />,
       () => (onDecline ? onDecline(client._id) : Promise.resolve())
     );
-
+  console.log(client);
   const content = (
     <div className="p-6 flex flex-col h-full relative group">
       {/* Hover Effect Overlay */}
@@ -53,7 +53,8 @@ export default function ClientPreview({
                            transition-all duration-300"
             >
               <Avatar
-                src={`https://pro-client-app.s3.eu-north-1.amazonaws.com/${client.profileDetails.avatarFileName}`}
+                src={`${process.env.NEXT_PUBLIC_AWS_BASE_URL}/${client.profileDetails.avatarFileName}`}
+                alt={client?.profileDetails?.fullName || client.userName}
                 className="w-full h-full object-cover"
               />
             </div>
