@@ -36,7 +36,7 @@ export default function ClientPreview({
       />,
       () => (onDecline ? onDecline(client._id) : Promise.resolve())
     );
-  console.log(client);
+
   const content = (
     <div className="p-6 flex flex-col h-full relative group">
       {/* Hover Effect Overlay */}

@@ -32,7 +32,7 @@ export default function ProfileModal({
       onClose();
     }
   }, [formState.success, onClose]);
-  console.log(formState?.errors);
+
   return (
     <form
       action={formAction}

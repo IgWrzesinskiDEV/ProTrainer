@@ -30,7 +30,7 @@ export default function TrainerPreview({ trainer }: { trainer: ITrainer }) {
             {trainer?.profileDetails?.avatarFileName ? (
               <div className="w-20 h-20 rounded-2xl overflow-hidden ring-2 ring-gray-700 group-hover:ring-blue-500/50 transition-all duration-300">
                 <Avatar
-                  src={`https://pro-trainer-app.s3.eu-north-1.amazonaws.com/${trainer.profileDetails.avatarFileName}`}
+                  src={`${process.env.NEXT_PUBLIC_AWS_BASE_UR}/${trainer.profileDetails.avatarFileName}`}
                   alt={trainer?.profileDetails?.fullName || trainer.userName}
                   className="w-full h-full object-cover"
                 />

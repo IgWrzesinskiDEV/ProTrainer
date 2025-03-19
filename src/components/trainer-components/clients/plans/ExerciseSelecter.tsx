@@ -83,7 +83,6 @@ export default function ExerciseSelecter({
   const handleSelect = (
     exerciseDetails: ExerciseDetails | CustomExerciseDetails
   ) => {
-    console.log(exerciseDetails);
     if ("trainerId" in exerciseDetails) {
       updateExercise(
         exerciseNumber,

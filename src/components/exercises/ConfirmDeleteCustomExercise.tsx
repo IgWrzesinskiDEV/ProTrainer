@@ -14,8 +14,7 @@ export default function ConfirmDeleteCustomExercise({
     <DeleteModalConent
       closeModal={closeModal}
       deleteHandler={async () => {
-        const errors = await deleteCustomExercise(exerciseId);
-        console.log(errors);
+        await deleteCustomExercise(exerciseId);
       }}
       buttonText="Remove Exercise"
     >

@@ -16,7 +16,7 @@ export default async function Profile() {
   const plainProfileDetails = JSON.parse(JSON.stringify(profileDetails))
     .profileDetails as profileDetailsInterface;
   const plainUnits = JSON.parse(JSON.stringify(units.units));
-  console.log(plainProfileDetails);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-[100rem] mx-auto">
       <ProfileDescriptionForm profileDetails={plainProfileDetails} />

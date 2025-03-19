@@ -145,7 +145,7 @@ export default function SingleDayWorkout({
       </div>
     );
   }
-  console.log(singleDay);
+
   return (
     <>
       <div className="relative overflow-hidden rounded-lg border w-full border-gray-800 bg-gray-900">

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "pro-trainer-app.s3.amazonaws.com",
+        hostname: `${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com`,
         port: "",
         pathname: "/**",
       },
