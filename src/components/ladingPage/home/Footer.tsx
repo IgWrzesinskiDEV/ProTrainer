@@ -31,7 +31,7 @@ export default function Footer() {
               Elevate your fitness journey with personalized training plans and
               progress tracking.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-primary-500">
                 <svg
                   className="w-5 h-5"
@@ -70,7 +70,7 @@ export default function Footer() {
                   ></path>
                 </svg>
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div>
@@ -146,7 +146,7 @@ export default function Footer() {
                   support@protrainer.com
                 </span>
               </li>
-              <li className="flex items-start">
+              {/* <li className="flex items-start">
                 <svg
                   className="w-5 h-5 text-primary-500 mr-2 mt-0.5"
                   fill="none"
@@ -185,7 +185,7 @@ export default function Footer() {
                 <span className="text-gray-400">
                   123 Fitness Street, Gym City, 10001
                 </span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

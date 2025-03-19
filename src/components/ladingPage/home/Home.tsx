@@ -719,12 +719,12 @@ export default function Home() {
               >
                 Get Started Free
               </Link>
-              <Link
+              {/* <Link
                 href="/pricing"
                 className="bg-primary-700 hover:bg-primary-800 text-white font-medium py-3 px-8 rounded-full border border-primary-500 transition-all hover:shadow-lg text-center"
               >
                 View Pricing
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
