@@ -19,6 +19,7 @@ export default function ClientsList({ clients }: { clients: string }) {
       title="Your Clients"
       text="Manage and track your clients progress all in one place"
       Icon={<LuUsers className="text-blue-400" />}
+      fallBackText="clients"
     />
   );
 }

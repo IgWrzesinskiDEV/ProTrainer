@@ -30,6 +30,7 @@ export default function InviteList({
       title="Client Invitations"
       text="Manage your pending client invitations"
       Icon={<AiOutlineUsergroupAdd className="text-blue-400" />}
+      fallBackText="invites"
     />
   );
 }

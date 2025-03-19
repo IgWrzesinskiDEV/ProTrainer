@@ -45,6 +45,7 @@ export default function Exercises({
         Icon={<LuDumbbell className="text-blue-400" />}
         isCustom={isCustom}
         onAddCustom={openModal}
+        fallBackText="exercises"
       />
       <ModalUnstyled ref={modalRef}>
         <AddCustomExerciseModal closeModal={closeModal} />

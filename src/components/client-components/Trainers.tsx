@@ -20,6 +20,7 @@ export default function TrainersList({ trainerList }: { trainerList: string }) {
       text="Browse through our expert trainers and find the perfect match for your fitness journey"
       Icon={<LuUsers className="text-blue-400" />}
       gridClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" // Custom grid layout
+      fallBackText="trainers"
     />
   );
 }

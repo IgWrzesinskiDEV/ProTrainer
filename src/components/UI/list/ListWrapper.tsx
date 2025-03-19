@@ -6,6 +6,7 @@ import { LuSearch } from "react-icons/lu";
 import SearchBar from "../input/SearchBar";
 import PaginationControls from "../pagination/PaginationControls";
 import { AnimatePresence, motion } from "framer-motion";
+import { CgPlayListAdd } from "react-icons/cg";
 
 interface ListWrapperProps<T> {
   items: T[];
@@ -18,6 +19,7 @@ interface ListWrapperProps<T> {
   isCustom?: boolean;
   onAddCustom?: () => void;
   gridClassName?: string; // Add this line
+  fallBackText?: string;
 }
 
 export default function ListWrapper<T>({
@@ -31,6 +33,7 @@ export default function ListWrapper<T>({
   isCustom,
   onAddCustom,
   gridClassName = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4", // Add this line with default value
+  fallBackText,
 }: ListWrapperProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
@@ -97,7 +100,10 @@ export default function ListWrapper<T>({
               onClick={onAddCustom}
               className="flex items-center justify-center text-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-lg whitespace-nowrap sm:ml-4 w-full sm:w-auto"
             >
-              <span className="block text-center">Add Custom</span>
+              <span className="text-center flex items-center gap-1.5 justify-center">
+                <CgPlayListAdd className="text-xl" />
+                Add Custom
+              </span>
             </button>
           )}
         </div>
@@ -153,12 +159,12 @@ export default function ListWrapper<T>({
                   {Icon || <LuSearch className="w-8 h-8 text-slate-400" />}
                 </div>
                 <h3 className="text-lg sm:text-xl font-medium text-slate-300 mb-2">
-                  No items found
+                  No {fallBackText || "items"} found
                 </h3>
                 <p className="text-sm sm:text-base text-slate-400 text-center max-w-md">
                   {searchValue
-                    ? "No items match your search. Try different keywords."
-                    : "There are no items available at the moment."}
+                    ? `No ${fallBackText || "items"} match your search. Try different keywords.`
+                    : `There are no ${fallBackText || "items"} available at the moment.`}
                 </p>
               </motion.div>
             )}
