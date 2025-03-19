@@ -3,6 +3,7 @@ import ProfileAvatar from "@/components/UI/ProfileAvatar";
 import checkTrainerClient from "@/utils/data/checkTrainerClient";
 import { getClientById } from "@/utils/data/getClients";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import {
   MdOutlineChevronLeft,
@@ -21,6 +22,9 @@ export default async function ClientLayout({
   const clientId = (await params).clientSlug;
   await checkTrainerClient(clientId);
   const clientInfo = await getClientById(clientId);
+  if (!clientInfo) {
+    notFound();
+  }
 
   return (
     <div className="w-full max-w-[100rem] mx-auto px-3 py-4 sm:px-4 md:px-6 md:py-6 lg:px-8 xl:px-12 lg:py-8">

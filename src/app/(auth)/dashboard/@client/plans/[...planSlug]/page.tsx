@@ -2,6 +2,7 @@ import SingleDayWorkout from "@/components/client-components/plans/SingleDayWork
 import { getSinglePlanDay } from "@/utils/data/getClientPlans";
 import { WeekDays } from "@/interfaces/workout/IWorkout";
 import { LuCalendarDays } from "react-icons/lu";
+import { notFound } from "next/navigation";
 
 export default async function Plans({
   params,
@@ -13,6 +14,9 @@ export default async function Plans({
   const weekDay = planSlug[1] as WeekDays;
 
   const singleDayWorkout = await getSinglePlanDay(planId, weekDay);
+  if (!singleDayWorkout) {
+    notFound();
+  }
 
   return (
     <div className="flex flex-col items-start w-full  mx-auto px-4 py-6 gap-6">

@@ -1,7 +1,7 @@
 "use server";
 import { verifyAuth } from "@/lib/lucia/auth";
 import { User } from "@/lib/models/user.model";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function checkTrainerClient(clientId: string) {
   try {
@@ -23,8 +23,8 @@ export default async function checkTrainerClient(clientId: string) {
     ) {
       return;
     }
-  } catch (e) {
-    throw new Error(e instanceof Error ? e.message : String(e));
+  } catch {
+    notFound();
   }
   redirect("/dashboard/clients");
 }

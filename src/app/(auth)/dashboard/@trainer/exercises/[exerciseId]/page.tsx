@@ -2,6 +2,7 @@ import ExerciseDetailsView from "@/components/exerciseDetails/ExerciseDetailsVie
 import ExerciseWrapper from "@/components/UI/exercises/exerciseWrapper";
 import { ExerciseDetails as IExerciseDetails } from "@/interfaces/workout/IWorkout";
 import { getExerciseDetailsById } from "@/utils/data/exercises/getExerciseById";
+import { notFound } from "next/navigation";
 
 export default async function ExerciseDetailsPage({
   params,
@@ -12,6 +13,9 @@ export default async function ExerciseDetailsPage({
 
   const exerciseDetails: IExerciseDetails =
     await getExerciseDetailsById(exerciseId);
+  if (!exerciseDetails) {
+    notFound();
+  }
   return (
     <ExerciseWrapper>
       <ExerciseDetailsView

@@ -22,6 +22,7 @@ import TrainerInfoColumn from "./TrainerInfoColumn";
 import { verifyAuth } from "@/lib/lucia/auth";
 import RemoveTrainerButton from "./RemoveTrainerButton";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function SingleTrainer({
   params,
@@ -30,6 +31,9 @@ export default async function SingleTrainer({
 }) {
   const trainerId = (await params).trainerSlug;
   const trainer = await getTrainerById(trainerId);
+  if (!trainer) {
+    notFound();
+  }
   const { user } = await verifyAuth();
   const currentTrainer = user?.currentTrainer;
 

@@ -2,6 +2,7 @@ import ExerciseDetailsView from "@/components/exerciseDetails/ExerciseDetailsVie
 import ExerciseWrapper from "@/components/UI/exercises/exerciseWrapper";
 import { CustomExerciseDetails as ICustomExerciseDetails } from "@/interfaces/workout/IWorkout";
 import { getExerciseDetailsById } from "@/utils/data/exercises/getExerciseById";
+import { notFound } from "next/navigation";
 
 export default async function ExerciseDetailsPage({
   params,
@@ -14,6 +15,9 @@ export default async function ExerciseDetailsPage({
     exerciseId,
     true
   );
+  if (!exerciseDetails) {
+    notFound();
+  }
   return (
     <ExerciseWrapper>
       <ExerciseDetailsView
