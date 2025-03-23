@@ -43,6 +43,9 @@ export default function ExerciseDetailsView({
     "demo" | "muscles" | "instructions"
   >("demo");
   const isModal = !!modalCloseHandler;
+  function closeHandler() {
+    modalRef.current?.close();
+  }
 
   return (
     <>
@@ -127,7 +130,7 @@ export default function ExerciseDetailsView({
       {isCustom && !isModal && (
         <ModalUnstyled ref={modalRef} isBackDropClickClose={false}>
           <ConfirmDeleteCustomExercise
-            closeModal={modalRef.current?.close}
+            closeModal={closeHandler}
             exerciseId={exercise._id}
             exerciseName={exercise.name}
           />

@@ -87,19 +87,19 @@ export default function TrainerProfileDescriptionForm({
               <SocialMediaInput
                 Icon={FaInstagram}
                 name="instagram"
-                defaultValue={fetchedData?.socialMedia.instagram}
+                defaultValue={fetchedData?.socialMedia?.instagram}
                 error={err?.instagram}
               />
               <SocialMediaInput
                 Icon={FaFacebook}
                 name="facebook"
-                defaultValue={fetchedData?.socialMedia.facebook}
+                defaultValue={fetchedData?.socialMedia?.facebook}
                 error={err?.facebook}
               />
               <SocialMediaInput
                 Icon={FaWhatsapp}
                 name="whatsapp"
-                defaultValue={fetchedData?.socialMedia.whatsapp}
+                defaultValue={fetchedData?.socialMedia?.whatsapp}
                 error={err?.whatsapp}
               />
             </div>
