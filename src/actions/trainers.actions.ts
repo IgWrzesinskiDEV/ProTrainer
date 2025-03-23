@@ -125,7 +125,7 @@ export async function acceptInvite(clientId: string) {
     await sentNotification(
       clientId,
       trainer?.profileDetails?.fullName || trainer.userName,
-      NotificationType.INVITATION_SENT
+      NotificationType.INVITATION_ACCEPTED
     );
 
     revalidatePath("/dashboard/invites");
