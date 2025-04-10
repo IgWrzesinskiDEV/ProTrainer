@@ -12,7 +12,15 @@ export default function DashboardNav({ role }: { role: IUserRole }) {
   const path = usePathname();
   const NavLinks =
     role === IUserRole.CLIENT
-      ? ["Profile", "Account", "Plans", "Measurement", "Trainers", "Exercises"]
+      ? [
+          "Profile",
+          "Account",
+          "Plans",
+          "Measurement",
+          "Trainers",
+          "Exercises",
+          "Chat",
+        ]
       : [
           "Profile",
           "Account",
