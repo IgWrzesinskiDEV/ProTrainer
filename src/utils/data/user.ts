@@ -59,8 +59,18 @@ export async function getUserUnitsById(id: string) {
 
 export async function getUserProfileDetails(id: string) {
   try {
-    const units = User.findById(id, "profileDetails");
-    return units;
+    const profileDetails = User.findById(id, "profileDetails");
+    return profileDetails;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function getUserNamesById(id: string) {
+  try {
+    const names = User.findById(id, "userName profileDetails");
+    return names;
   } catch (e) {
     console.error(e);
     return null;

@@ -6,10 +6,12 @@ export default function ProfileLink({
   href,
   text,
   fullWidth = false,
+  isDisabled = false,
   onClick,
 }: {
   href: string;
   text: string;
+  isDisabled?: boolean;
   fullWidth?: boolean;
   onClick?: () => void;
 }) {
@@ -25,7 +27,7 @@ export default function ProfileLink({
         isActive
           ? "bg-[#2673e8] text-white"
           : "text-gray-300 hover:bg-[#3a3633] hover:text-white"
-      }`}
+      } ${isDisabled && "pointer-events-none opacity-50"}`}
       onClick={onClick}
     >
       {text}

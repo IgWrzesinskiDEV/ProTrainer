@@ -6,7 +6,13 @@ import { LuChevronDown } from "react-icons/lu";
 import MobileNav from "./MobileNav";
 import { usePathname } from "next/navigation";
 
-export default function DashboardNav({ role }: { role: IUserRole }) {
+export default function DashboardNav({
+  role,
+  hasActiveTrainer,
+}: {
+  role: IUserRole;
+  hasActiveTrainer?: boolean;
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const path = usePathname();
@@ -41,14 +47,30 @@ export default function DashboardNav({ role }: { role: IUserRole }) {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-1 py-2">
-          {NavLinks.map((tab) => (
-            <ProfileLink
-              href={`/dashboard/${tab.split(" ").join("-").toLowerCase()}`}
-              key={tab}
-              text={tab}
-              // onClick={() => setActiveTab(tab)}
-            />
-          ))}
+          {NavLinks.map((tab) => {
+            if (tab === "Chat" && role === IUserRole.CLIENT) {
+              return (
+                <ProfileLink
+                  href={`/dashboard/${tab.split(" ").join("-").toLowerCase()}`}
+                  key={tab}
+                  text={tab}
+                  isDisabled={!hasActiveTrainer}
+
+                  // onClick={() => setActiveTab(tab)}
+                />
+              );
+            }
+
+            return (
+              <ProfileLink
+                href={`/dashboard/${tab.split(" ").join("-").toLowerCase()}`}
+                key={tab}
+                text={tab}
+
+                // onClick={() => setActiveTab(tab)}
+              />
+            );
+          })}
         </div>
 
         {/* Mobile Navigation */}

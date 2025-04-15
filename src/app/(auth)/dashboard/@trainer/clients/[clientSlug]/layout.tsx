@@ -10,6 +10,7 @@ import {
   MdInfo,
   MdStraighten,
   MdFitnessCenter,
+  MdChat,
 } from "react-icons/md";
 
 export default async function ClientLayout({
@@ -74,7 +75,7 @@ export default async function ClientLayout({
 
         {/* Navigation Tabs - Static, no horizontal scrolling, responsive for all screen sizes */}
         <div className="px-3 sm:px-6 md:px-8 lg:px-10 xl:px-16">
-          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-4 lg:gap-6 pb-2">
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2 md:gap-4 lg:gap-6 pb-2">
             <TabLink
               href={`/dashboard/clients/${clientId}/info`}
               icon={<MdInfo className="text-lg sm:text-xl lg:text-2xl" />}
@@ -94,6 +95,12 @@ export default async function ClientLayout({
               }
               label="Plans"
               fullLabel="Workout Plans"
+            />
+            <TabLink
+              href={`/dashboard/clients/${clientId}/chat`}
+              icon={<MdChat className="text-lg sm:text-xl lg:text-2xl" />}
+              label="Chat"
+              fullLabel="Chat"
             />
           </div>
         </div>
