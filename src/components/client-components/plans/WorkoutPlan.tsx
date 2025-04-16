@@ -16,6 +16,7 @@ import type { WorkoutPlan as IWorkoutPlan } from "@/interfaces/workout/IWorkout"
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { exportWorkoutPlanToPDF } from "@/actions/pdf/exportPdfPlan.action";
+import { exportWorkoutPlanToXLSX } from "@/actions/xlsx/exportXlsxPlan.action";
 
 export default function WorkoutPlan({
   selectedPlan,
@@ -44,9 +45,21 @@ export default function WorkoutPlan({
     });
   };
 
-  const handleExportXLSX = () => {
+  const handleExportXLSX = async () => {
     // Implement XLSX export functionality
-    console.log("Exporting to XLSX");
+    if (!selectedPlan) return;
+    const buffer = await exportWorkoutPlanToXLSX(selectedPlan);
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${selectedPlan.planName || "WorkoutPlan"}.xlsx`;
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
 
   if (!selectedPlan) {
