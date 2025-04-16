@@ -180,7 +180,7 @@ export default function Chat({
         <div className="space-y-3 sm:space-y-4">
           {messages.map((msg, i) => {
             const isUser = msg.sender === userId;
-            console.log("msg.sender", msg.sender, "userId", userId);
+
             const senderName = isUser
               ? isTrainer
                 ? trainerName
